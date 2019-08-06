@@ -45,12 +45,46 @@ public class GoodsService {
     }
 
     public Goods queryGoodsByPrimaryKey(Integer getGoodsId) {
-            return goodsMapper.findById(getGoodsId);
+        return goodsMapper.findById(getGoodsId);
     }
 
     public void addGoods(Goods goods, int i) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         goods.setStartTime(sdf.format(new Date()));
-        goodsMapper.save(goods);
+        goodsMapper.saveOrUpdate(goods);
+    }
+
+    public void updateGoodsInfo(int id, int status) {
+        // 0 下架,1 上架
+        Goods goods = goodsMapper.findById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (status == 1) {
+            // 商品下架
+            goods.setEndTime(sdf.format(new Date()));
+            goods.setStatus(0);
+        } else if (status == 0) {
+            // 商品上架
+            goods.setPolishTime(sdf.format(new Date()));
+            goods.setStatus(1);
+        }
+        goodsMapper.update(goods);
+    }
+
+    public Goods buyGoods(int goods) {
+        Goods id = goodsMapper.findById(goods);
+        id.setStatus(0);
+        goodsMapper.update(id);
+        return id;
+    }
+
+    public void updateGoodsTime(int id) {
+        Goods goods = goodsMapper.findById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        goods.setPolishTime(sdf.format(new Date()));
+        goodsMapper.update(goods);
+    }
+
+    public Goods queryGoodsById(int id) {
+        return goodsMapper.findById(id);
     }
 }

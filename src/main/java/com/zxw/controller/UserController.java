@@ -54,6 +54,7 @@ public class UserController extends BaseController<User> {
         user.setStatus((byte) 1);
         user.setPassword(MD5.md5(user.getPassword()));
         userService.register(user);
+        purseService.initPurse(user.getId());
         return "success";
     }
 
@@ -98,6 +99,7 @@ public class UserController extends BaseController<User> {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         // 获取所有关注
         List<Focus> focusList = focusService.queryFocusByUserId(user.getId());
+        // 存放商品和图片的信息
         List<GoodsExtend> goodsExtendList = new ArrayList<>();
         for (Focus focus : focusList) {
             GoodsExtend goodsExtend = new GoodsExtend();
@@ -114,10 +116,26 @@ public class UserController extends BaseController<User> {
     }
 
     /**
-     * 个人信息
+     * 查询个人信息
+     */
+    public String basic() {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        Purse purse = purseService.queryByUserId(user.getId());
+        ServletActionContext.getRequest().setAttribute("myPurse", purse);
+        ServletActionContext.getRequest().setAttribute("user", user);
+        return "basic";
+    }
+
+    /**
+     * 修改个人信息
      */
     public String updateUserInfo() {
-        return NONE;
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        user.setQq(getModel().getQq());
+        user.setUsername(getModel().getUsername());
+        userService.updateUserInfo(user);
+        ServletActionContext.getRequest().setAttribute("cur_user", user);
+        return "updateUserInfo";
     }
 
 

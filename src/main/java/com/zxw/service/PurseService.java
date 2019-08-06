@@ -28,6 +28,29 @@ public class PurseService {
     }
 
     public void updatePurse(Purse purse) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Purse.class);
+        detachedCriteria.add(Restrictions.eq("userId", purse.getUserId()));
+        List<Purse> list = purseMapper.findByCriteria(detachedCriteria);
+        if (list.size() > 0) {
+            Purse purse1 = list.get(0);
+            purse1.setBalance(purse1.getBalance() + purse.getRecharge());
+            purseMapper.update(purse1);
+
+        }
+    }
+
+    public void updatePurseOfDel(int id, Double balance) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Purse.class);
+        detachedCriteria.add(Restrictions.eq("userId", id));
+        Purse purse = purseMapper.findByCriteria(detachedCriteria).get(0);
+        purse.setBalance(purse.getBalance() - balance);
         purseMapper.update(purse);
+    }
+
+    public void initPurse(int id) {
+        Purse p = new Purse();
+        p.setBalance(0.0);
+        p.setUserId(id);
+        purseMapper.save(p);
     }
 }

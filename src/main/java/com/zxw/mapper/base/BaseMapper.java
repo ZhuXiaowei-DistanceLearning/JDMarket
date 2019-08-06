@@ -75,6 +75,7 @@ public class BaseMapper<T> extends HibernateDaoSupport implements Mapper<T> {
         if(offset == 0){
             offset = rows;
         }
+        detachedCriteria.add(Restrictions.eq("status",1));
         List<?> list = this.getHibernateTemplate().findByCriteria(detachedCriteria, page-1, offset);
         return (List<T>) list;
     }

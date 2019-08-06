@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>鲁大二手工坊</title>
+    <title>吉大二手工坊</title>
     <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
     <link rel="stylesheet" href="<%=basePath%>css/index.css" />
     <script type="text/javascript" src="<%=basePath%>js/jquery.js" ></script>
@@ -50,150 +50,8 @@
 
     描述：顶部
 -->
-<div ng-controller="headerController" class="header stark-components navbar-fixed ng-scope">
-    <nav class="white nav1">
-        <div class="nav-wrapper">
-            <a href="<%=basePath%>goods/homeGoods" class="logo">
-                <em class="em1">鲁大</em>
-                <em class="em2">二手工坊</em>
-                <em class="em3">ldu.market</em>
-            </a>
-            <div class="nav-wrapper search-bar">
-                <form submit="search()" class="ng-pristine ng-invalid ng-invalid-required" action="<%=basePath%>goods/search">
-                    <div class="input-field">
-                        <input id="search" placeholder="搜点什么吧..." name="str" style="height: 40px;"
-                               class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" value="<c:out value="${search}"></c:out>"/>
-                        <input type="submit" class="btn"value="搜索"></input>
-                        <label for="search" class="active">
-                            <i onclick="search()" class="iconfont"></i>
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <ul class="right">
-                <c:if test="${empty cur_user}">
-                    <li class="publish-btn">
-                        <button onclick="showLogin()" data-toggle="tooltip" 
-                                title="您需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" 	>
-                            我要发布</button>
-                    </li>
-                </c:if>
-                <c:if test="${!empty cur_user}">
-                    <li class="publish-btn">
-                        <button data-position="bottom" class="red lighten-1 waves-effect waves-light btn">
-                            <a href="<%=basePath%>goods/publishGoods">我要发布</a>
-                        </button>
-                    </li>
-                    <li>
-                        <a href="<%=basePath%>user/allGoods">我发布的商品</a>
-                    </li>
-                    <li>
-                        <a>${cur_user.username}</a>
-                    </li>
-                    <!-- <li class="notification">
-                        <i ng-click="showNotificationBox()" class="iconfont"></i>
-                        <div ng-show="notification.tagIsShow" class="notification-amount red lighten-1 ng-binding ng-hide">0 </div>
-                    </li> -->
-                    <li class="changemore">
-                        <a class="changeMoreVertShow()">
-                            <i class="iconfont"></i>
-                        </a>
-                        <div class="more-vert">
-                            <ul class="dropdown-content">
-                                <li><a href="<%=basePath%>user/home">个人中心</a></li>
-                                <li><a href="<%=basePath%>user/allFocus">我的关注</a></li>
-                                <li><a onclick="ChangeName()">更改用户名</a></li>
-                                <li><a href="<%=basePath%>user/logout">退出登录</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </c:if>
-                <c:if test="${empty cur_user}">
-                    <li>
-                        <a onclick="showLogin()">登录</a>
-                    </li>
-                    <li>
-                        <a onclick="showSignup()">注册</a>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-    </nav>
-</div>
-<!--
-
-    描述：登录
--->
-<div ng-controller="loginController" class="ng-scope">
-    <div id="login-show" class="login stark-components">
-        <div class="publish-box z-depth-4">
-            <div class="row">
-                <a onclick="showLogin()">
-                    <div class="col s12 title"></div>
-                </a>
-                <form:form action="../user/login" method="post" commandName="user" role="form">
-                    <div class="input-field col s12">
-                        <input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
-                        <label>手机</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="password" name="password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
-                        <label>密码</label>
-                        <!-- <a ng-click="showForget()" class="forget-btn">忘记密码？</a> -->
-                    </div>
-                    <button type="submit" class="waves-effect waves-light btn login-btn red lighten-1">
-                        <i class="iconfont left"></i>
-                        <em>登录</em>
-                    </button>
-                    <div class="col s12 signup-area">
-                        <em>没有账号？赶快</em>
-                        <a onclick="showSignup()" class="signup-btn">注册</a>
-                        <em>吧！</em>
-                    </div>
-                </form:form>
-            </div>
-        </div>
-    </div>
-</div>
-<!--
-
-    描述：注册
--->
-<div ng-controller="signupController" class="ng-scope">
-    <div id="signup-show" class="signup stark-components">
-        <div class="publish-box z-depth-4">
-            <div class="row">
-                <a onclick="showSignup()">
-                    <div class="col s12 title"></div>
-                </a>
-                <form:form action="../user/addUser" method="post" commandName="user" role="form">
-                    <div class="input-field col s12">
-                        <input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
-                        <label>昵称</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
-                        <label>手机</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="password" name="password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
-                        <label>密码</label>
-                    </div>
-                    <div ng-show="checkTelIsShow" class="col s12">
-                        <button type="submit" class="waves-effect waves-light btn verify-btn red lighten-1">
-                            <i class="iconfont left"></i>
-                            <em>点击注册</em>
-                        </button>
-                    </div>
-                    <div ng-show="checkTelIsShow" class="login-area col s12">
-                        <em>已有账号？去</em>
-                        <a onclick="showLogin()">登录</a>
-                    </div>
-                </form:form>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include file="/WEB-INF/pages/common/header.jsp"%>
+<%@include file="/WEB-INF/pages/common/user_login.jsp"%>
 <!--更改用户名-->
 <div ng-controller="changeNameController" class="ng-scope">
     <div id="changeName" class="change-name stark-components">
@@ -306,7 +164,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>

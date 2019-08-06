@@ -112,164 +112,8 @@
 <!--
     描述：顶部
 -->
-<div ng-controller="headerController" class="header stark-components navbar-fixed ng-scope">
-    <nav class="white nav1">
-        <div class="nav-wrapper">
-            <a href="<%=basePath%>goods/homeGoods" class="logo">
-                <em class="em1">鲁大</em>
-                <em class="em2">二手工坊</em>
-                <em class="em3">ldu.market</em>
-            </a>
-            <div class="nav-wrapper search-bar">
-                <form class="ng-pristine ng-invalid ng-invalid-required" action="<%=basePath%>goods/search">
-                    <div class="input-field">
-                        <input id="search" name="str" placeholder="搜点什么吧..." style="height: 40px;"
-                               class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
-                        <input type="submit" class="btn" value="搜索"></input>
-                        <label for="search" class="active">
-                            <i ng-click="search()" class="iconfont"></i>
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <ul class="right">
-                <c:if test="${empty cur_user}">
-                    <li class="publish-btn">
-                        <button onclick="showLogin()" data-toggle="tooltip"
-                                title="您需要先登录哦！" class="red lighten-1 waves-effect waves-light btn">
-                            我要发布
-                        </button>
-                    </li>
-                </c:if>
-                <c:if test="${!empty cur_user}">
-                    <li class="publish-btn">
-                        <button data-position="bottom" class="red lighten-1 waves-effect waves-light btn">
-                            <a href="<%=basePath%>goods_publishGoods">我要发布</a>
-                        </button>
-                    </li>
-                    <li>
-                        <a href="<%=basePath%>user_queryBySellProduct">我发布的商品</a>
-                    </li>
-                    <li>
-                        <a>${cur_user.username}</a>
-                    </li>
-                    <!-- <li class="notification">
-                    <i ng-click="showNotificationBox()" class="iconfont"></i>
-                    </li> -->
-                    <li class="changemore">
-                        <a class="changeMoreVertShow()">
-                            <i class="iconfont"></i>
-                        </a>
-                        <div class="more-vert">
-                            <ul class="dropdown-content">
-                                <li><a href="<%=basePath%>user/home">个人中心</a></li>
-                                <li><a href="<%=basePath%>user/allFocus">我的关注</a></li>
-                                <li><a onclick="ChangeName()">更改用户名</a></li>
-                                <li><a href="<%=basePath%>user/logout">退出登录</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </c:if>
-                <c:if test="${empty cur_user}">
-                    <li>
-                        <a onclick="showLogin()">登录</a>
-                    </li>
-                    <li>
-                        <a onclick="showSignup()">注册</a>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-    </nav>
-</div>
-<!--
-    描述：登录
--->
-<div ng-controller="loginController" class="ng-scope">
-    <div id="login-show" class="login stark-components">
-        <div class="publish-box z-depth-4">
-            <div class="row">
-                <a onclick="showLogin()">
-                    <div class="col s12 title"></div>
-                </a>
-                <form action="<%=basePath%>user_login" method="post" role="form">
-                    <div class="input-field col s12">
-                        <input type="text" name="phone" id="login_phone" required="required" pattern="^1[0-9]{10}$"
-                               class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched"/>
-                        <label>手机&nbsp;&nbsp;<div id="login_errorPhone" style="color:red;display:inline;"></div>
-                        </label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="password" id="login_password" name="password" required="required"
-                               class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
-                        <label>密码&nbsp;&nbsp;<div id="errorPassword" style="color:red;display:inline;"></div>
-                        </label>
-                        <!--   <a ng-click="showForget()" class="forget-btn">忘记密码？</a> -->
-                    </div>
-                    <button type="submit" id="loginIn" class="waves-effect waves-light btn login-btn red lighten-1">
-                        <i class="iconfont left"></i>
-                        <em>登录</em>
-                    </button>
-                    <div class="col s12 signup-area">
-                        <em>没有账号？赶快</em>
-                        <a onclick="showSignup()" class="signup-btn">注册</a>
-                        <em>吧！</em>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!--
-
-    描述：注册
--->
-<div ng-controller="signupController" class="ng-scope">
-    <div id="signup-show" class="signup stark-components">
-        <div class="publish-box z-depth-4">
-            <div class="row">
-                <a onclick="showSignup()">
-                    <div class="col s12 title"></div>
-                </a>
-                <form action="<%=basePath%>user_register" method="POST" role="form" id="signup_form">
-                    <div class="input-field col s12">
-                        <input type="text" name="username" required="required"
-                               class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched"/>
-                        <label>昵称</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="text" name="phone" id="phone" required="required" pattern="^1[0-9]{10}$"
-                               class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched"/>
-                        <label>手机&nbsp;&nbsp;<div id="errorPhone" style="color:red;display:inline;"></div>
-                        </label>
-
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="password" name="password" required="required"
-                               class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
-                        <label>密码</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <input type="text" name="qq" required="required"
-                               class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
-                        <label>QQ</label>
-                    </div>
-                    <div ng-show="checkTelIsShow" class="col s12">
-                        <button type="submit" id="register"
-                                class="waves-effect waves-light btn verify-btn red lighten-1">
-                            <i class="iconfont left"></i>
-                            <em>点击注册</em>
-                        </button>
-                    </div>
-                    <div ng-show="checkTelIsShow" class="login-area col s12">
-                        <em>已有账号？去</em>
-                        <a onclick="showLogin()">登录</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include file="/WEB-INF/pages/common/header.jsp"%>
+<%@include file="/WEB-INF/pages/common/user_login.jsp"%>
 
 <!--更改用户名-->
 <div ng-controller="changeNameController" class="ng-scope">
@@ -353,7 +197,7 @@
     <div class="info">
         <a href="" target="_blank">关于我们</a><em>-</em>
         <a href="">联系我们</a>
-        <p>©2018 鲁大二手工坊</p>
+        <p>©2018 吉首二手工坊</p>
     </div>
 </div>
 <!--
@@ -374,9 +218,9 @@
                         <div class="bannerimg">
                             <ul class="bannerul">
                                 <p class="text1">Hello：</p>
-                                <p class="text2">欢迎来到鲁东大学secondHandMarket校园二手工坊。临近毕业季的</p>
+                                <p class="text2">欢迎来到吉首大学secondHandMarket校园二手工坊。临近毕业季的</p>
                                 <p class="text3">你，是否有太多的闲置与校友分享，为了追求更好的校园服</p>
-                                <p class="text4">务，我们打造了一个全新的校园平台——<span>鲁大二手工坊</p>
+                                <p class="text4">务，我们打造了一个全新的校园平台——<span>吉首二手工坊</p>
                                 <p class="text5">这里有更多的闲置分享，更自由的校园话题讨论，你想要的，都在这里。</p>
                                 <p class="text6">加入LDU-SecondHandMarket，你的大学，应更精彩。</p>
                             </ul>
@@ -402,7 +246,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -411,7 +255,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -432,7 +276,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods1}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById/?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -441,7 +285,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -462,7 +306,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods2}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -471,7 +315,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -488,7 +332,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods3}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -497,7 +341,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -514,7 +358,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods4}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -523,7 +367,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -540,7 +384,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods5}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -549,7 +393,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -566,7 +410,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods6}">
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -575,7 +419,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>
@@ -592,7 +436,7 @@
         <div class="item-wrapper normal">
             <c:forEach var="item" items="${catelogGoods7}">//
                 <div class="card col">
-                    <a href="<%=basePath%>goods/goodsId/${item.goods.id}">
+                    <a href="<%=basePath%>goods_queryGoodsById?id=${item.goods.id}">
                         <div class="card-image">
                             <img src="<%=basePath%>upload/${item.images[0].imgUrl}"/>
                         </div>
@@ -601,7 +445,7 @@
                             <p><c:out value="${item.goods.name}"></c:out></p>
                         </div>
                         <div class="card-content item-location">
-                            <p>鲁东大学</p>
+                            <p>吉首大学</p>
                             <p><c:out value="${item.goods.startTime}"></c:out></p>
                         </div>
                     </a>

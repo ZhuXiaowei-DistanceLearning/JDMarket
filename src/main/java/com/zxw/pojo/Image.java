@@ -1,9 +1,8 @@
 package com.zxw.pojo;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -17,6 +16,8 @@ public class Image {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     public int getId() {
         return id;
     }

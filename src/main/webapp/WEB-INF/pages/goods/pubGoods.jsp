@@ -52,36 +52,14 @@
 
             描述：左侧个人中心栏
         -->
-        <div id="user_nav">
-            <div class="user_info">
-                <div class="head_img">
-                    <img src="<%=basePath%>img/photo.jpg">
-                </div>
-                <div class="big_headimg">
-                    <img src="">
-                </div>
-                <span class="name">${cur_user.username}</span>
-                <hr>
-                <!--   <span class="school">鲁东大学</span> -->
-                <a class="btn" style="width: 98%;background-color: rgb(79, 190, 246);color:rgba(255, 255, 255, 1);"
-                   href="<%=basePath%>user/myPurse">我的钱包：￥${myPurse.balance}</a>
-                <input type="hidden" value="${myPurse.recharge}" id="recharge"/>
-                <input type="hidden" value="${myPurse.withdrawals}" id="withdrawals"/>
-                <span class="btn" data-toggle="modal" data-target="#myModal"
-                      style="width: 98%;background-color: rgb(79, 190, 246); color:rgba(255, 255, 255, 1);margin-top:0.5cm;">我的信用积分：${cur_user.power}</span>
-
-            </div>
-            <div class="home_nav">
-                <%@include file="/WEB-INF/pages/user/user_nav.jsp"%>
-            </div>
-        </div>
+        <%@include file="/WEB-INF/pages/common/user_nav.jsp" %>
         <!--
 
 	            描述：发布物品
         -->
         <div id="user_content">
             <div class="basic">
-                <form:form action="../goods_publishGoods" method="post" role="form" enctype="multipart/form-data">
+                <form action="${pageContext.servletContext.contextPath}/goods_publishGoods" method="post" role="form" enctype="multipart/form-data">
                     <h1 style="margin-left: 210px;">发布物品</h1>
                     <hr/>
                     <div class="changeinfo">
@@ -132,8 +110,7 @@
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <div class="form-group">
                                         <div class="col-sm-10">
-                                            <input type="file" name="myfile" data-ref="imgUrl" class="col-sm-10 myfile"
-                                                   value=""/>
+                                            <input type="file" name="myfile" data-ref="imgUrl" class="col-sm-10 myfile"/>
                                             <input type="hidden" name="imgUrl" value="">
                                         </div>
                                     </div>
@@ -143,56 +120,13 @@
                     </div>
                     <input type="submit" class="setting-save" value="发布物品"
                            style="margin-top: 20px;background-color: blue;"/>
-                </form:form>
+                </form>
             </div>
             <!--
 
                 描述：最右侧，可能认识的人
             -->
-            <div class="recommend">
-                <div class="title">
-                    <span class="text">可能认识的人</span>
-                    <span class="change">换一组</span>
-                    <span class="underline"></span>
-                </div>
-                <ul>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo1.jpg">
-                        </a>
-                        <span>Brudce</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo2.jpg">
-                        </a>
-                        <span>Graham</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo3.jpg">
-                        </a>
-                        <span>策马奔腾hly</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo4.jpg">
-                        </a>
-                        <span>Danger-XFH</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo5.jpg">
-                        </a>
-                        <span>Keithw</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                </ul>
-            </div>
+            <%@ include file="/WEB-INF/pages/common/user_recommed.jsp"%>
         </div>
     </div>
 </div>

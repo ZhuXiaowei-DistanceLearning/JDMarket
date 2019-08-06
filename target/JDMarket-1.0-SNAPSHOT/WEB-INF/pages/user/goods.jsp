@@ -44,29 +44,7 @@
 
             描述：左侧个人中心栏
         -->
-        <div id="user_nav">
-            <div class="user_info">
-                <div class="head_img">
-                    <img src="<%=basePath%>img/photo.jpg">
-                </div>
-                <div class="big_headimg">
-                    <img src="">
-                </div>
-                <span class="name">${cur_user.username}</span>
-                <hr>
-                <!--   <span class="school">鲁东大学</span> -->
-                <a class="btn" style="width: 98%;background-color: rgb(79, 190, 246);color:rgba(255, 255, 255, 1);"
-                   href="<%=basePath%>user/myPurse">我的钱包：￥${myPurse.balance}</a>
-                <input type="hidden" value="${myPurse.recharge}" id="recharge"/>
-                <input type="hidden" value="${myPurse.withdrawals}" id="withdrawals"/>
-                <span class="btn" data-toggle="modal" data-target="#myModal"
-                      style="width: 98%;background-color: rgb(79, 190, 246); color:rgba(255, 255, 255, 1);margin-top:0.5cm;">我的信用积分：${cur_user.power}</span>
-
-            </div>
-            <div class="home_nav">
-                <%@include file="/WEB-INF/pages/user/user_nav.jsp"%>
-            </div>
-        </div>
+        <%@include file="/WEB-INF/pages/common/user_nav.jsp" %>
         <!--
 
             描述：右侧内容区域
@@ -105,17 +83,36 @@
                                     </div>
                                     <div class="interact">
                                         <span class="fa fa-edit fa-lg"><a
-                                                href="<%=basePath%>goods/editGoods/${items.goods.id}">编辑</a></span>
-                                        <span class="fa fa-share fa-lg"><a href="">擦亮</a></span>
+                                                href="<%=basePath%>goods_editGoods?id=${items.goods.id}">编辑</a></span>
+                                        <c:if test="${items.goods.status ==1}">
+                                        <span class="fa fa-share fa-lg"><a
+                                                href="<%=basePath%>goods_updateGoodsTime?id=${items.goods.id}&status=${items.goods.status}">擦亮</a></span>
+                                        </c:if>
                                             <%--  <span class="fa fa-commenting"><a>${items.comments.commetNum}</a></span> --%>
-                                        <span class="time">${items.goods.startTime}</span>
-                                        <span class="fa fa-trash fa-lg"><a
-                                                href="<%=basePath%>goods/deleteGoods/${items.goods.id}">删除</a></span>
+                                        <c:if test="${items.goods.status ==1}">
+                                            <span class="time">${items.goods.startTime}</span>
+                                            <span class="fa fa-trash fa-lg"><a
+                                                    href="<%=basePath%>goods_myGoodsInfo?id=${items.goods.id}&status=${items.goods.status}">下架</a></span>
+                                        </c:if>
+                                        <c:if test="${items.goods.status ==0}">
+                                            <span class="fa fa-trash fa-lg"><a
+                                                    href="<%=basePath%>goods_myGoodsInfo?id=${items.goods.id}&status=${items.goods.status}">上架</a></span>
+                                        </c:if>
                                     </div>
                                     <br>
                                     <div class="like_detail">
                                         <div class="like_content">
-                                            <span>下架时间：${items.goods.endTime}</span>
+                                            <span>状态：${items.goods.status == 1 ? '正在销售':'已下架'}</span>
+                                        </div>
+                                        <div class="like_content">
+                                            <c:if test="${items.goods.status == 1}">
+                                                <span>最近更新时间：${items.goods.polishTime == null ? items.goods.startTime : items.goods.polishTime}</span>
+                                            </c:if>
+                                        </div>
+                                        <div class="like_content">
+                                            <c:if test="${items.goods.status == 0}">
+                                                <span>下架时间：${items.goods.endTime}</span>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>

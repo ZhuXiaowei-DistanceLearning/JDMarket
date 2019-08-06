@@ -66,27 +66,7 @@
 
             描述：左侧个人中心栏
         -->
-			<div id="user_nav">
-				<div class="user_info">
-					<div class="head_img">
-						<img src="<%=basePath%>img/photo.jpg">
-					</div>
-					<div class="big_headimg">
-						<img src="">
-					</div>
-					<span class="name">${cur_user.username}</span>
-					<hr>
-					<!--   <span class="school">莆田学院</span> -->
-				   <a class="btn" style="width: 98%;background-color: rgb(79, 190, 246);color:rgba(255, 255, 255, 1);" href="<%=basePath%>user/myPurse">我的钱包：￥${myPurse.balance}</a>
-                <input type="hidden" value="${myPurse.recharge}" id="recharge"/>
-                <input type="hidden" value="${myPurse.withdrawals}" id="withdrawals"/>
-               <span class="btn" data-toggle="modal" data-target="#myModal"style="width: 98%; background-color: rgb(79, 190, 246); color: rgba(255, 255, 255, 1); margin-top: 0.5cm;">我的信用积分：${cur_user.power}</span>
-
-				</div>
-				<div class="home_nav">
-					<%@include file="/WEB-INF/pages/user/user_nav.jsp"%>
-				</div>
-			</div>
+			<%@include file="/WEB-INF/pages/common/user_nav.jsp" %>
 			<!--
 
             描述：右侧内容区域
@@ -103,8 +83,8 @@
 					<hr />
 					<div class="share_content">
 						<div class="story">
-							<form class="form-horizontal" role="form" action="<%=basePath%>orders/addOrders" >
-							<h4 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单编号： <input name="orderNum" class="order-num" type="text" style="border:0px;background:rgba(0, 0, 0, 0);" value=""/>  <input name="goodsId" type="hidden" value="${goodsExtend.goods.id}"/> </h4>
+							<form class="form-horizontal" role="form" action="<%=basePath%>orders_addOrder" >
+							<h4 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单编号： <input name="orderNum" class="order-num" type="text" style="border:0px;background:rgba(0, 0, 0, 0);" value=""/>  <input name=" " type="hidden" value="${goodsExtend.goods.id}"/> </h4>
 								<div class="form-group">
 									<label for="firstname" class="col-sm-2 control-label">图片:</label>
 									<div class="col-sm-10">

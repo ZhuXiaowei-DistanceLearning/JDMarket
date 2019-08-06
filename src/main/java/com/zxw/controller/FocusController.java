@@ -33,4 +33,5 @@ public class FocusController extends BaseController<Focus> {
         focusService.deleteFocusByUserIdAndGoodsId(getModel().getGoodsId(), user.getId());
         return "clearCart";
     }
+
 }

@@ -40,4 +40,18 @@ public class UserService {
         List<User> list = userMapper.findByCriteria(detachedCriteria);
         return list.size() == 0 || list == null ? null : list.get(0);
     }
+
+    public void updateGoodsNum(int id, int i) {
+        User user = userMapper.findById(id);
+        user.setGoodsNum(i);
+        userMapper.update(user);
+    }
+
+    public void updateUserInfo(User user) {
+        userMapper.update(user);
+    }
+
+    public User queryUserInfo(int id) {
+        return userMapper.findById(id);
+    }
 }

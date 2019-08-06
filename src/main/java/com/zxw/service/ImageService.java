@@ -26,4 +26,8 @@ public class ImageService {
         List<Image> byCriteria = imageMapper.findByCriteria(detachedCriteria);
         return byCriteria;
     }
+
+    public void insert(Image image) {
+        imageMapper.save(image);
+    }
 }

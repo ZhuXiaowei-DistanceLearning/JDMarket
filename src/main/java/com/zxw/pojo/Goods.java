@@ -1,5 +1,7 @@
 package com.zxw.pojo;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -22,7 +24,8 @@ public class Goods {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment",strategy = "increment")
     public int getId() {
         return id;
     }

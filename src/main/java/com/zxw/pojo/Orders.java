@@ -1,6 +1,9 @@
 package com.zxw.pojo;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -31,7 +34,7 @@ public class Orders {
             // referencedColumnName后面写Teacher的属性id，JoinColumn写中间表的属性名称
             inverseJoinColumns = {@JoinColumn(name = "fid", referencedColumnName = "id", nullable = false
             )})*/
-   @JoinColumn(name="goods_id",insertable = false,updatable = false)
+    @JoinColumn(name = "goods_id", insertable = false, updatable = false)
     public Goods getGoods() {
         return goods;
     }
@@ -42,6 +45,8 @@ public class Orders {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     public int getId() {
         return id;
     }
@@ -118,25 +123,5 @@ public class Orders {
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Orders orders = (Orders) o;
-        return id == orders.id &&
-                userId == orders.userId &&
-                goodsId == orders.goodsId &&
-                Objects.equals(orderNum, orders.orderNum) &&
-                Objects.equals(orderPrice, orders.orderPrice) &&
-                Objects.equals(orderState, orders.orderState) &&
-                Objects.equals(orderInformation, orders.orderInformation) &&
-                Objects.equals(orderDate, orders.orderDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userId, goodsId, orderNum, orderPrice, orderState, orderInformation, orderDate);
     }
 }

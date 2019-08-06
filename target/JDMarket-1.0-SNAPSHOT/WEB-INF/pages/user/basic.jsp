@@ -40,33 +40,14 @@
 
             描述：左侧个人中心栏
         -->
-        <div id="user_nav">
-            <div class="user_info">
-                <div class="head_img">
-                    <img src="<%=basePath%>img/photo.jpg">
-                </div>
-                <div class="big_headimg">
-                    <img src="">
-                </div>
-                <span class="name">${cur_user.username}</span><hr>
-              <!--   <span class="school">鲁东大学</span> -->
-                  <a class="btn" style="width: 98%;background-color: rgb(79, 190, 246);color:rgba(255, 255, 255, 1);" href="<%=basePath%>user/myPurse">我的钱包：￥${myPurse.balance}</a>
-                <input type="hidden" value="${myPurse.recharge}" id="recharge"/>
-                <input type="hidden" value="${myPurse.withdrawals}" id="withdrawals"/>
-                <span class="btn" data-toggle="modal" data-target="#myModal" style="width: 98%;background-color: rgb(79, 190, 246); color:rgba(255, 255, 255, 1);margin-top:0.5cm;">我的信用积分：${cur_user.power}</span>
-                
-            </div>
-            <div class="home_nav">
-                <%@include file="/WEB-INF/pages/user/user_nav.jsp"%>
-            </div>
-        </div>
+        <%@include file="/WEB-INF/pages/common/user_nav.jsp" %>
         <!--
 
             描述：右侧内容区域
         -->
         <div id="user_content">
             <div class="basic">
-                <form:form action="../user/updateInfo" method="post" commandName="user" role="form">
+                <form:form action="../user_updateUserInfo" method="post" role="form">
                     <h1>完善与修改个人信息</h1><hr />
                     <div class="changeinfo">
                         <span>昵称：</span>
