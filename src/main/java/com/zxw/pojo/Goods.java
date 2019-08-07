@@ -25,7 +25,7 @@ public class Goods {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment",strategy = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     public int getId() {
         return id;
     }

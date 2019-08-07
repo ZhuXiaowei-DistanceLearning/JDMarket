@@ -42,12 +42,14 @@ public class GoodsController extends BaseController<Goods> {
 
     public String homeGoods() {
         // 商品种类数量
-        int rows = 7;
+        int rows = 4;
         // 每个种类显示商品数量
         List<Goods> goodsList = null;
         List<GoodsExtend> goodsAndImage = new ArrayList<>();
         // 获取最新发布的商品列表
-        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, "startTime", "", "");
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", 1);
+        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, "startTime", "", "",map);
         for (int i = 0; i < goodsList.size(); i++) {
             GoodsExtend goodsExtend = new GoodsExtend();
             Goods goods = goodsList.get(i);
@@ -58,7 +60,7 @@ public class GoodsController extends BaseController<Goods> {
         }
         ServletActionContext.getRequest().setAttribute("catelogGoods", goodsAndImage);
         // 获取其他发布列表
-        for (int i = 1; i <= rows; i++) {
+        for (int i = 1; i <= 7; i++) {
             goodsList = goodsService.queryByGoodsByCatelogOrderByDate(rows, i);
             goodsAndImage = new ArrayList<>();
             for (int j = 0; j < goodsList.size(); j++) {

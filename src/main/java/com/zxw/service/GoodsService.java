@@ -13,6 +13,8 @@ import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -24,9 +26,19 @@ public class GoodsService {
     @Autowired
     GoodsMapper goodsMapper;
 
-    public List<Goods> queryByGoodsOrderByDate(Integer page, Integer rows, String sortBy, String desc, String search) {
-        List<Goods> list = goodsMapper.findAll(page, rows, sortBy, desc, search);
-        list.stream().filter(e -> e.getStatus() == 1);
+  /*  public static void main(String[] args) {
+        List<Goods> list = new ArrayList<>();
+        list.add(new Goods(1, 1, 1, "a", 1.1, 1.1, "", "", "", "", 1));
+        list.add(new Goods(2, 1, 1, "a", 1.1, 1.1, "", "", "", "", 0));
+        list.add(new Goods(3, 1, 1, "a", 1.1, 1.1, "", "", "", "", 0));
+        list.add(new Goods(4, 1, 1, "a", 1.1, 1.1, "", "", "", "", 1));
+        list =  list.stream().filter( e -> e.getStatus() == 1).collect(Collectors.toList());
+        System.out.println(list);
+    }*/
+
+    public List<Goods> queryByGoodsOrderByDate(Integer page, Integer rows, String sortBy, String desc, String search,Map<String,Object>... map) {
+        List<Goods> list = goodsMapper.findAll(page, rows, sortBy, desc, search,map);
+        list = list.stream().filter(e -> e.getStatus() == 1).collect(Collectors.toList());
         return list;
     }
 

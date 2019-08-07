@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -59,13 +60,19 @@ public class BaseMapper<T> extends HibernateDaoSupport implements Mapper<T> {
     }
 
     @Override
-    public List<T> findAll(Integer page, Integer rows, String sortBy, String desc, String search) {
+    public List<T> findAll(Integer page, Integer rows, String sortBy, String desc, String search, Map<String, Object>... args) {
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(tClass);
         if (sortBy != "" && sortBy != null) {
             if (desc.equals("DESC")) {
                 detachedCriteria.addOrder(Order.asc(sortBy));
             } else {
                 detachedCriteria.addOrder(Order.desc(sortBy));
+            }
+        }
+        for (int i = 0; i < args.length; i++) {
+            Map<String, Object> map = args[i];
+            for (String s : map.keySet()) {
+                detachedCriteria.add(Restrictions.eq(s, map.get(s)));
             }
         }
         if (search != "" && search != null) {

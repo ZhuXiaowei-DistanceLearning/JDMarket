@@ -4,6 +4,7 @@ import org.hibernate.criterion.DetachedCriteria;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -19,7 +20,7 @@ public interface Mapper<T> {
 
     public T findById(Serializable id);
 
-    public List<T> findAll(Integer page, Integer rows, String sortBy, String desc, String search);
+    public List<T> findAll(Integer page, Integer rows, String sortBy, String desc, String search, Map<String, Object>... map);
 
     public void executeUpdate(String queryName, Object... objects);
 
