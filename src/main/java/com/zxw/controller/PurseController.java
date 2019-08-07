@@ -4,6 +4,7 @@ import com.zxw.controller.base.BaseController;
 import com.zxw.pojo.Purse;
 import com.zxw.pojo.User;
 import com.zxw.service.PurseService;
+import com.zxw.vo.PageResult;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,12 @@ public class PurseController extends BaseController<Purse> {
             purseService.updatePurse(purse);
         }
         return "updatePurse";
+    }
+
+    public String purseList() {
+        PageResult list = purseService.findAll(getiPage().getPage(), getiPage().getRows(), "", "", "");
+        ServletActionContext.getRequest().getSession().setAttribute("purseGrid", list);
+        return "purseList";
     }
 
 }

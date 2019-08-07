@@ -17,17 +17,23 @@ import java.util.List;
  */
 public class BaseController<T> extends ActionSupport implements ModelDriven<T> {
     protected T model;
-    private Page page;
-
-    public Page getPage() {
-        return page;
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
-    }
-
+    private Integer page;
+    private Integer rows;
+    private String sortBy;
+    private String desc;
+    private String search;
+    private Page iPage;
     private DetachedCriteria detachedCriteria = null;
+
+    public Page getiPage() {
+        Page iPage = new Page();
+        iPage.setDesc(desc);
+        iPage.setPage(page);
+        iPage.setRows(rows);
+        iPage.setSearch(search);
+        iPage.setSortBy(sortBy);
+        return iPage;
+    }
 
     @Override
     public T getModel() {
@@ -61,5 +67,53 @@ public class BaseController<T> extends ActionSupport implements ModelDriven<T> {
     public void writeList2Json(List list) throws IOException {
         ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
         ServletActionContext.getResponse().getWriter().print(JsonUtils.serialize(list));
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public DetachedCriteria getDetachedCriteria() {
+        return detachedCriteria;
+    }
+
+    public void setDetachedCriteria(DetachedCriteria detachedCriteria) {
+        this.detachedCriteria = detachedCriteria;
     }
 }

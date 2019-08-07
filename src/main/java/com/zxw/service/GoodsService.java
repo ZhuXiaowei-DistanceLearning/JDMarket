@@ -2,6 +2,7 @@ package com.zxw.service;
 
 import com.zxw.mapper.GoodsMapper;
 import com.zxw.pojo.Goods;
+import com.zxw.vo.PageResult;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -25,7 +26,14 @@ public class GoodsService {
 
     public List<Goods> queryByGoodsOrderByDate(Integer page, Integer rows, String sortBy, String desc, String search) {
         List<Goods> list = goodsMapper.findAll(page, rows, sortBy, desc, search);
+        list.stream().filter(e -> e.getStatus() == 1);
         return list;
+    }
+
+    public PageResult findAll(Integer page, Integer rows, String sortBy, String desc, String search) {
+        List<Goods> list = goodsMapper.findAll(page, rows, sortBy, desc, search);
+        long count = goodsMapper.count();
+        return new PageResult(count, list);
     }
 
     public List<Goods> queryByGoodsByCatelogOrderByDate(int rows, int catelogId) {

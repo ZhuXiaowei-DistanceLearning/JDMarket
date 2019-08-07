@@ -1,7 +1,5 @@
 package com.zxw.vo;
 
-import org.apache.poi.ss.formula.functions.T;
-
 import java.util.List;
 
 public class PageResult {
@@ -12,12 +10,12 @@ public class PageResult {
     public PageResult() {
     }
 
-    public PageResult(Long total, List<T> items) {
+    public PageResult(Long total, List items) {
         this.total = total;
         this.items = items;
     }
 
-    public PageResult(Long total, Integer totalPage, List<T> items) {
+    public PageResult(Long total, Integer totalPage, List items) {
         this.total = total;
         this.totalPage = totalPage;
         this.items = items;
@@ -31,11 +29,11 @@ public class PageResult {
         this.total = total;
     }
 
-    public List<T> getItems() {
+    public List getItems() {
         return items;
     }
 
-    public void setItems(List<T> items) {
+    public void setItems(List items) {
         this.items = items;
     }
 

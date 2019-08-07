@@ -3,6 +3,7 @@ package com.zxw.controller;
 import com.zxw.controller.base.BaseController;
 import com.zxw.pojo.*;
 import com.zxw.service.*;
+import com.zxw.vo.PageResult;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,6 +222,17 @@ public class GoodsController extends BaseController<Goods> {
         ServletActionContext.getRequest().setAttribute("myPurse", purse);
         ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
         return "buy";
+    }
+
+    /**
+     * GoodsList
+     *
+     * @return
+     */
+    public String goodsList() {
+        PageResult list = goodsService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
+        ServletActionContext.getRequest().getSession().setAttribute("goodsGrid", list);
+        return "goodsList";
     }
 
 

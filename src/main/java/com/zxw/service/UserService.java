@@ -3,6 +3,8 @@ package com.zxw.service;
 import com.zxw.mapper.UserMapper;
 import com.zxw.pojo.User;
 import com.zxw.util.MD5;
+import com.zxw.vo.Page;
+import com.zxw.vo.PageResult;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +55,11 @@ public class UserService {
 
     public User queryUserInfo(int id) {
         return userMapper.findById(id);
+    }
+
+    public PageResult findAll(Page page) {
+        List<User> list = userMapper.findAll(page.getPage(), page.getRows(), null, null, null);
+        long count = userMapper.count();
+        return new PageResult(count, list);
     }
 }

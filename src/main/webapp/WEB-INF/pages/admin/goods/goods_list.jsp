@@ -98,7 +98,7 @@ table td{
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${goodsGrid.rows}" var="item">
+					<c:forEach items="${goodsGrid.items}" var="item">
 						<tr>
 							<td ><input type="checkbox" name="itemIds" value="${item.id}"></td>
 							<td>${item.id}</td>
@@ -149,8 +149,8 @@ table td{
 				<div class="pagination">
 					<ul>
 						<li><a>总商品数:${goodsGrid.total }个</a></li>
-						<li><a>第${goodsGrid.current }页</a></li>
-						<c:if test="${goodsGrid.current ne 1 }">
+						<li><a>第${page }页</a></li>
+						<%--<c:if test="${goodsGrid.current ne 1 }">
 							<li><a 
 								href="<%=basePath%>admin/goodsList?pageNum=${goodsGrid.current-1 }">上一页</a>
 								</li>
@@ -160,7 +160,7 @@ table td{
 							<li><a
 								href="<%=basePath%>admin/goodsList?pageNum=${goodsGrid.current+1 }">下一页</a>
 							</li>
-						</c:if>
+						</c:if>--%>
 					</ul>
 				</div>
 			</div>

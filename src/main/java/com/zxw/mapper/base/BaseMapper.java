@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -72,11 +73,10 @@ public class BaseMapper<T> extends HibernateDaoSupport implements Mapper<T> {
         }
         // 页数调整
         int offset = (page - 1) * rows;
-        if(offset == 0){
+        if (offset == 0) {
             offset = rows;
         }
-        detachedCriteria.add(Restrictions.eq("status",1));
-        List<?> list = this.getHibernateTemplate().findByCriteria(detachedCriteria, page-1, offset);
+        List<?> list = this.getHibernateTemplate().findByCriteria(detachedCriteria, page - 1, offset);
         return (List<T>) list;
     }
 
@@ -119,5 +119,11 @@ public class BaseMapper<T> extends HibernateDaoSupport implements Mapper<T> {
 
     public List<T> findByCriteria(DetachedCriteria detachedCriteria, Integer page, Integer rows) {
         return (List<T>) this.getHibernateTemplate().findByCriteria(detachedCriteria, page, rows);
+    }
+
+    public long count() {
+        Session session = this.getSessionFactory().openSession();
+        Optional optional = session.createSQLQuery("select count(*) from " + tClass.getSimpleName()).uniqueResultOptional();
+        return new Long(optional.get().toString());
     }
 }

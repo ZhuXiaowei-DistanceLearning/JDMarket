@@ -9,6 +9,7 @@ import com.zxw.service.CatelogService;
 import com.zxw.service.GoodsService;
 import com.zxw.service.OrdersService;
 import com.zxw.service.PurseService;
+import com.zxw.vo.PageResult;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,8 +68,14 @@ public class OrdersController extends BaseController<Orders> {
         return "addOrder";
     }
 
-    public String deliver(){
+    public String deliver() {
         ordersService.updateDeliverInfo(getModel().getGoodsId());
         return "updateGoodsInfo";
+    }
+
+    public String ordersList() {
+        PageResult list = ordersService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
+        ServletActionContext.getRequest().getSession().setAttribute("ordersGrid", list);
+        return "ordersList";
     }
 }

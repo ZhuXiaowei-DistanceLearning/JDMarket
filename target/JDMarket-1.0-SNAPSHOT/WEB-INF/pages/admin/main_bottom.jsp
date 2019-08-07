@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div class="row-fluid">
-		<div id="footer" class="span12">2018 &copy;吉首二手工坊</div>
+		<div id="footer" class="span12">2018 &copy;鲁大二手工坊</div>
 	</div>
 </body>
 </html>

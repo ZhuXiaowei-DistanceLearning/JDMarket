@@ -4,6 +4,7 @@ import com.zxw.mapper.GoodsMapper;
 import com.zxw.mapper.OrdersMapper;
 import com.zxw.pojo.Goods;
 import com.zxw.pojo.Orders;
+import com.zxw.vo.PageResult;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,11 @@ public class OrdersService {
             orders.setOrderState(3);
             ordersMapper.update(orders);
         }
+    }
+
+    public PageResult findAll(Integer page, Integer rows, String o, String o1, String o2) {
+        List<Orders> all = ordersMapper.findAll(page, rows, o, o1, o2);
+        long count = ordersMapper.count();
+        return new PageResult(count, all);
     }
 }

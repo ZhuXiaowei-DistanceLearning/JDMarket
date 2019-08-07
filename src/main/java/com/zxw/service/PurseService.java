@@ -2,6 +2,7 @@ package com.zxw.service;
 
 import com.zxw.mapper.PurseMapper;
 import com.zxw.pojo.Purse;
+import com.zxw.vo.PageResult;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,11 @@ public class PurseService {
         p.setBalance(0.0);
         p.setUserId(id);
         purseMapper.save(p);
+    }
+
+    public PageResult findAll(Integer page, Integer rows, String s, String s1, String s2) {
+        List<Purse> list = purseMapper.findAll(page, rows, s, s1, s2);
+        long count = purseMapper.count();
+        return new PageResult(count, list);
     }
 }

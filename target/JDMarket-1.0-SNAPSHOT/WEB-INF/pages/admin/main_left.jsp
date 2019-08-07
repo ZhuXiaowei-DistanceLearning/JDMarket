@@ -21,28 +21,28 @@
 			<li class="submenu"><a href="#"><i class="icon icon-group"></i>
 					<span>用户管理</span> </a>
 				<ul>
-					<li><a href="<%=basePath%>admin/userList?pageNum=1">用户列表</a></li>
+					<li><a href="<%=basePath%>admin_userList?page=1&rows=10">用户列表</a></li>
 					<%-- <li><a href="<%=basePath%>admin/user/user_add.jsp">添加用户</a></li> --%>
 				</ul>
 			</li>
 			<li class="submenu"><a href="#"><i class="icon icon-signal"></i>
 					<span>商品管理</span> </a>
 				<ul>
-					<li><a href="<%=basePath%>admin/goodsList?pageNum=1">商品列表</a></li>
+					<li><a href="<%=basePath%>goods_goodsList?page=1&rows=10">商品列表</a></li>
 					<%-- <li><a href="<c:url value="/back/agent/addForm"/>">添加商品</a></li> --%>
 				</ul>
 			</li>
 			<li class="submenu"><a href="#"><i class="icon icon-th"></i>
 					<span>订单管理</span> </a>
 				<ul>
-					<li><a href="<%=basePath%>admin/ordersList?pageNum=1">订单列表</a></li>
+					<li><a href="<%=basePath%>orders_ordersList?page=1&rows=10">订单列表</a></li>
 					<%-- <li><a href="<c:url value="/back/house/addForm"/>">添加订单</a></li> --%>
 				</ul>
 			</li>
 			<li class="submenu"><a href="#"><i class="icon icon-inbox"></i>
 					<span>钱包管理</span> </a>
 				<ul>
-					<li><a href="<%=basePath%>admin/purseList?pageNum=1">钱包列表</a></li>
+					<li><a href="<%=basePath%>purse_purseList?page=1&rows=10">钱包列表</a></li>
 					<%-- <li><a href="<%=basePath%>admin/purseList?pageNum=1">审核管理</a></li> --%>
 				</ul>
 			</li>

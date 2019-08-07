@@ -50,9 +50,10 @@
             <result name="goodInfo">/WEB-INF/pages/goods/detailGoods.jsp</result>
             <!--订单详情信息-->
             <result name="buy">/WEB-INF/pages/user/pay.jsp</result>
+            <result name="goodsList">/WEB-INF/pages/admin/goods/goods_list.jsp</result>
         </action>
         <action name="user_*" class="userController" method="{1}">
-            <result name="success">goods_homeGoods.action</result>
+            <result name="success" type="redirect">goods_homeGoods.action</result>
             <!--登录成功-->
             <result name="login" type="redirect">goods_homeGoods.action</result>
             <!--我的闲置-->
@@ -65,19 +66,36 @@
             <result name="updateUserInfo" type="redirect">user_basic.action</result>
         </action>
         <action name="purse_*" class="purseController" method="{1}">
+            <!--用户余额-->
             <result name="money">/WEB-INF/pages/user/purse.jsp</result>
+            <!--充值-->
             <result name="updatePurse" type="redirect">purse_getMoney.action</result>
+            <!--钱包列表-->
+            <result name="purseList">/WEB-INF/pages/admin/purse/purse_list.jsp</result>
         </action>
         <action name="orders_*" class="ordersController" method="{1}">
             <!--订单中心-->
             <result name="myOrders">/WEB-INF/pages/user/orders.jsp</result>
+            <!--添加订单-->
             <result name="addOrder">orders_myOrders.action</result>
+            <!--更新商品信息-->
             <result name="updateGoodsInfo">orders_myOrders.action</result>
+            <!--商品列表-->
+            <result name="ordersList">/WEB-INF/pages/admin/orders/orders_list.jsp</result>
         </action>
         <action name="focus_*" class="focusController" method="{1}">
-            <!--订单中心-->
+            <!--删除购物车-->
             <result name="clearCart">user_cart.action</result>
+            <!--添加购物车-->
             <result name="addCart">user_cart.action</result>
+        </action>
+        <action name="admin_*" class="adminController" method="{1}">
+            <!--成功-->
+            <result name="success">/WEB-INF/pages/admin/index.jsp</result>
+            <!--退出-->
+            <result name="logout">/WEB-INF/pages/admin/login.jsp</result>
+            <!--用户列表-->
+            <result name="userList">/WEB-INF/pages/admin/user/user_list.jsp</result>
         </action>
         <action name="page_*_*">
             <result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>

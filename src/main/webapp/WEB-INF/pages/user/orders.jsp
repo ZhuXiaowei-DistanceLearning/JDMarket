@@ -48,10 +48,10 @@
 <div id="cover" style="min-height: 639px;">
     <div id="user_area">
         <div id="home_header">
-            <a href="<%=basePath%>goods/homeGoods">
+            <a href="<%=basePath%>goods_homeGoods">
                 <h1 class="logo"></h1>
             </a>
-            <a href="<%=basePath%>goods/homeGoods">
+            <a href="<%=basePath%>goods_homeGoods">
                  <img src="<%=basePath%>img/home_header.png"  style="margin-left: 20px;" >
             </a>
             <a href="<%=basePath%>user/home">
