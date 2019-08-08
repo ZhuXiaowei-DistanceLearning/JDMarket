@@ -1,278 +1,241 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>个人中心</title>
-    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css" />
-    <link rel="stylesheet" href="<%=basePath%>css/emoji.css" />
-    <link rel="stylesheet" href="<%=basePath%>css/userhome.css" />
-    <link rel="stylesheet" href="<%=basePath%>css/user.css" />
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css" />
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap-paginator.min.js"></script>
-   <script type="text/javascript">
-   
-   function viewPersonal(id){
-	   $.ajax({
-			url:'<%=basePath%>admin/getUser',
-			type:'GET',
-			data:{id:id},
-			dataType:'json',
-			success:function(json){
-				if(json){
-					$('#myviewform').find("input[name='phone']").val(json.phone);
-					$('#myviewform').find("input[name='username']").val(json.username);
-					$('#myviewform').find("input[name='qq']").val(json.qq);
-					$('#myviewform').find("input[name='power']").val(json.power);
-					$('#myviewform').find("input[name='createAt']").val(json.createAt);
-					$('#viewModal').modal('toggle');
-				}
-			},
-			error:function(){
-				alert('请求超时或系统出错!');
-				$('#viewModal').modal('hide');
-			}
-   });
-  }
-   
-   function sendContext(){
-	 var context= $("#mycontext").text();
-	 $.ajax({
-		 url:'<%=basePath%>user/insertSelective',
-		 type:'POST',
-		 data:{context:context},
-		 dataType:'json',
-		 success:function(json){
-			 alert(json.msg);
-			 location.reload();
-		 },
-		error:function(){
-			 alert('请求超时或系统出错!');
-			}
-	 });
-	   
-   }
-   
-   $(function(){
-       var options={
-           bootstrapMajorVersion:1,    //版本
-           currentPage:1,    //当前页数
-           numberOfPages:5,    //最多显示Page页
-           totalPages:10,    //所有数据可以显示的页数
-           onPageClicked:function(e,originalEvent,type,page){
-               console.log("e");
-               console.log(e);
-               console.log("originalEvent");
-               console.log(originalEvent);
-               console.log("type");
-               console.log(type);
-               console.log("page");
-               console.log(page);
-           }
-       }
-       $("#page").bootstrapPaginator(options);
-   })
-   </script>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>个人中心 - 吉大商城</title>
+    <meta name="viewport" content="width=1200"/>
+    <link type="text/css" rel="stylesheet" href="./css/user/style.css"/>
+    <script type="text/javascript" src="./js/plugin/layer/layer.js"></script>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/global.js"></script>
+    <link rel="shortcut icon" type="./js/favicon.ico">
 </head>
 <body>
-<div class="pre-2" id="big_img">
-    <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/images/head_loading.gif" class="jcrop-preview jcrop_preview_s">
-</div>
-<div id="cover" style="min-height: 639px;">
-    <div id="user_area">
-        <div id="home_header">
-            <a href="<%=basePath%>goods/homeGoods">
-                <h1 class="logo"></h1>
-            </a>
-            <a href="<%=basePath%>goods/homeGoods">
-                 <img src="<%=basePath%>img/home_header.png"  style="margin-left: 20px;" >
-            </a>
-            <a href="<%=basePath%>user/home">
-                <div class="home"></div>
-            </a>
-        </div>
-        <!--
-
-            描述：左侧个人中心栏
-        -->
-        <%@include file="/WEB-INF/pages/common/user_nav.jsp" %>
-        <!--
-
-            描述：右侧内容区域
-        -->
-        <div id="user_content">
-            <div class="share">
-         <!--
-            <img src="<%=basePath%>img/Advertisement.png">
-          -->
-                <div class="publish">
-                	<form role="form" id="contextForm">
-                     <div class="pub_content">
-                        <div class="text_pub lead emoji-picker-container">
-                            <input type="text" name="context" data-emojiable="converted"  class="form-control" data-type="original-input" style="display: none;"/>
-                            <div class="emoji-wysiwyg-editor form-control" data-type="input" id="mycontext" contenteditable="true"></div>
-                            <i class="emoji-picker-icon emoji-picker face" data-type="picker" style="top: 153px;"></i>
-                            <div class="tag"></div>
-                        </div>
-                        <div class="img_pub">
-                            <ul></ul>
-                        </div>
-                    </div>
-                 	  </form>
-                    <div class="button">
-                        <span class="fa fa-image">
-                            ::before
-                            <input type="file" accept="image/gif,image/jpeg,image/jpg,image/png" multiple/>
-                        </span>
-                        <div class="checkbox">
-                            <button onclick="sendContext()">发 布</button>
-                        </div>
-                    </div> 
-                    
+<jsp:include page="../common/user_header.jsp"></jsp:include>
+<div class="huiyuan_content">
+    <jsp:include page="../common/user_nav.jsp"></jsp:include>
+    <div class="fr huiyuan_main" style="position: relative;">
+        <%--用户信息--%>
+        <div class="u_index_box mat5">
+            <div class="u_index_rtt">
+                <div class="user_tx"><a href="user.php?mod=setting&act=logo"><img
+                        src="http://www.phpshe.com/demo/phpshe/data/cache/thumb/2019-08/thumb__120x_120_noavatar.jpg"/></a>
                 </div>
-                <!--
+                <div class="fl mal20 mat10" style="margin-top: 25px">
+                    您好：<span class="cred">${user.username}</span><span class="mal20 dj_btn">注册用户</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="u_index_l">
+                <div class="u_info">
+                    <div style="margin-left:0px;">
+                        <p>手机号码：
+                            <span class="c999">${user.phone}</span>
 
-                    描述：闲置商品展示
-                -->
-                <div class="share_content">
-                 <c:if test="${notice==null}">
-                    <div class="no_share">
-                    <span>没有任何内容，去逛逛其它的吧！</span>
+                        </p>
+                        <p>
+                            上次登录时间：2019-08-08 14:20
+                        </p>
                     </div>
-                   </c:if>
-                   <c:if test="${notice!=null}">
-                    <div class="yes_share">
-                    <h1 style="text-align: center;">求购信息</h1><hr>
-                     <c:forEach items="${notice}" var="item" varStatus="status">
-                   	 <button type="button" class="btn btn-info" onclick="viewPersonal(${item.user.id})" style="background-color: #c6f5f4;border:0px;outline:none;">${item.user.username}</button>
-                     <span >说：&nbsp;&nbsp;&nbsp;&nbsp;${item.context}</span><br>
-                     <p style="text-align:right;color:#4fbef6;">发布时间：${item.createAt}</p>
-                     <hr><br>
-                     </c:forEach>
-                      <div id="page" style="center"></div>
-                    <!--  <h1> 1 2 3 4 5 下一页 上一页</h1> -->
-                    </div>
-                    </c:if>  
                 </div>
             </div>
-            <!--
-
-                描述：最右侧，可能认识的人
-            -->
-            <div class="recommend">
-                <div class="title">
-                    <span class="text">可能认识的人</span>
-                    <span class="change">换一组</span>
-                    <span class="underline"></span>
+            <%--<div class="u_index_m">
+                <c:set var="waitPay" value="1"></c:set>
+                <c:set var="waitAccept" value="1"></c:set>
+                <c:forEach items="${orderList}" var="item">
+                    &lt;%&ndash;0:代付款1:待发货2:待收货3:已完成&ndash;%&gt;
+                    <c:if test="${item.orderState==0}">
+                        <c:set var="${waitPay}" value="${waitPay}"></c:set>
+                    </c:if>
+                </c:forEach>
+                        ${waitPay}
+                <div>待付款：<span class="c999"><a href="user.php?mod=order&state=wpay">1</a> 个</span></div>
+                <div>待发货：<span class="c999"><a href="user.php?mod=order&state=wsend">0</a> 个</span></div>
+            </div>--%>
+            <div class="u_index_r">
+                <div class="u_ye_l">
+                    <div>账户余额：<a href="user.php?mod=moneylog" class="corg">${purse.balance} 元</a></div>
+                    <div>积分余额：<a href="user.php?mod=pointlog" class="c999">10 个</a></div>
                 </div>
-                <ul>
-                <c:forEach items="${users}" var="item" varStatus="status">
-                	<li>
-                        <a href="#" class="head_img">
-                            <img src="<%=basePath%>img/photo${status.index + 1}.jpg">
-                        </a>
-                        <span>${item.username}</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                  </c:forEach>
-                    <%-- <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo1.jpg">
-                        </a>
-                        <span>Brudce</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo2.jpg">
-                        </a>
-                        <span>Graham</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo3.jpg">
-                        </a>
-                        <span>hly</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo4.jpg">
-                        </a>
-                        <span>Danger-XFH</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo5.jpg">
-                        </a>
-                        <span>Keithw</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li> --%>
-                </ul>
+                <div class="u_ye_r">
+                    <a href="user.php?mod=pay">充值</a>
+                    <a href="user.php?mod=cashout&act=add" class="btntx">提现</a>
+                </div>
+                <div class="clear"></div>
             </div>
+            <div class="clear"></div>
         </div>
+        <%--最新订单--%>
+        <div class="u_jilu_tt" id="">
+            <a class="fl" id="aNew">最新订单</a>
+            <a class="fl" id="aMy">&nbsp;&nbsp;|&nbsp;&nbsp;我的闲置</a>
+            <div class="clear"></div>
+        </div>
+        <%--订单表头--%>
+        <div id="new">
+            <c:forEach items="${orderList}" var="item">
+                <div class="hy_ordertt">
+                    <span class="fl">${item.orderDate}</span>
+                    <span class="fl" style="margin-left:30px">订单号：${item.orderNum}</span>
+                    <div class="clear"></div>
+                </div>
+                <%--订单详情信息--%>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_orderlist">
+                    <tr>
+                        <td style="text-align:left;">
+                            <div class="dingdan_list" style="padding-top:0;border-top:0">
+                                <a href="http://www.phpshe.com/demo/phpshe/product/2" class="fl mar5 dingdan_img"
+                                   target="_blank"><img
+                                        src="http://www.phpshe.com/demo/phpshe/data/cache/thumb/2019-08/thumb_100x100_20180812173116l.jpg"/></a>
+                                <div class="fl dingdan_name">
+                                    <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                       class="dd_name">${item.goods.name}</a>
+                                    <p class="c888 mat5">${item.goods.describle}</p>
+                                </div>
+                                <div class="fl dingdan_jg">${item.goods.price} <span class="mat5 c888 font12">×1</span>
+                                </div>
+                                <div class="fr dingdan_tk">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                        <td width="120">
+                            <p class="corg font14 strong">${item.goods.price}</p>
+                            <p class="c999">（含运费：0.0）</p>
+                            <p class="c999">余额支付</p>
+                        </td>
+                        <td width="100">
+                            <c:if test="${item.orderState==0}">
+                                <span class="corg">等待付款</span>
+                            </c:if>
+                            <c:if test="${item.orderState==1}">
+                                <span class="corg">等待发货</span>
+                            </c:if>
+                            <c:if test="${item.orderState==2}">
+                                <span class="corg">已完成</span>
+                            </c:if>
+                            <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                        </td>
+                        <td width="100">
+                            <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
+                               target="_blank">立即付款</a>
+                            <p class="mat5"><a class="c999"
+                                               href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </c:forEach>
+        </div>
+        <%--订单表头--%>
+        <div id="my" style="display: none">
+            <c:forEach items="${mySell}" var="item">
+                <div class="hy_ordertt">
+                    <span class="fl">${item.orderDate}</span>
+                    <span class="fl" style="margin-left:30px">订单号：${item.orderNum}</span>
+                    <div class="clear"></div>
+                </div>
+                <%--订单详情信息--%>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_orderlist">
+                    <tr>
+                        <td style="text-align:left;">
+                            <div class="dingdan_list" style="padding-top:0;border-top:0">
+                                <a href="http://www.phpshe.com/demo/phpshe/product/2" class="fl mar5 dingdan_img"
+                                   target="_blank"><img
+                                        src="http://www.phpshe.com/demo/phpshe/data/cache/thumb/2019-08/thumb_100x100_20180812173116l.jpg"/></a>
+                                <div class="fl dingdan_name">
+                                    <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                       class="dd_name">${item.goods.name}</a>
+                                    <p class="c888 mat5">${item.goods.describle}</p>
+                                </div>
+                                <div class="fl dingdan_jg">${item.goods.price} <span class="mat5 c888 font12">×1</span>
+                                </div>
+                                <div class="fr dingdan_tk">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                        <td width="120">
+                            <p class="corg font14 strong">${item.goods.price}</p>
+                            <p class="c999">（含运费：0.0）</p>
+                            <p class="c999">余额支付</p>
+                        </td>
+                        <td width="100">
+                            <c:if test="${item.orderState==0}">
+                                <span class="corg">待支付</span>
+                            </c:if>
+                            <c:if test="${item.orderState==1}">
+                                <span class="corg">去发货</span>
+                            </c:if>
+                            <c:if test="${item.orderState==2}">
+                                <span class="corg">已完成</span>
+                            </c:if>
+                            <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                        </td>
+                        <td width="100">
+                            <c:if test="${item.orderState==0}">
+                               <p class="tag_org">买家还未付款</p>
+                            </c:if>
+                            <c:if test="${item.orderState==1}">
+                                <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
+                                   target="_blank">发货</a>
+                                <p class="mat5"><a class="c999"
+                                                   href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                                </p>
+                            </c:if>
+                            <c:if test="${item.orderState==2}">
+                                <p class="tag_org" target="_blank">已完成</p>
+                            </c:if>
+
+                        </td>
+                    </tr>
+                </table>
+            </c:forEach>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <jsp:include page="../common/celan.jsp"></jsp:include>
+        <jsp:include page="../common/user_footer.jsp"></jsp:include>
+        <script type="text/javascript">
+            $("#aNew").mousemove(function (t) {
+                $("#my").hide();
+                $("#new").show();
+            });
+            $("#aMy").mousemove(function (t) {
+                $("#my").show();
+                $("#new").hide();
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                //二维码显示
+                $("#qrcode_btn").hover(function () {
+                    $("#qrcode_show").show();
+                }, function () {
+                    $("#qrcode_show").hide();
+                })
+                //电话显示
+                $("#tel_btn").hover(function () {
+                    $("#tel_show").show();
+                }, function () {
+                    $("#tel_show").hide();
+                })
+            });
+            function right_scrolltop() {
+                $("body,html").animate({"scrollTop": 0});
+            }
+            pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
+        </script>
     </div>
-</div>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title middle" id="myModalLabel">查看用户信息</h4>
-            </div>
-            <div class="modal-body" style="height: 220px;">
-	         <form id="myviewform">
-	          <div class="form-group">
-	            <label for="recipient-name" class="control-label col-sm-2" >名称:</label>
-	            <div class="col-sm-10">
-	            <input type="text" class="form-control" id="message-text" name="username" readonly/>
-	          </div>
-	          </div>
-	          <div class="form-group">
-	            <label for="message-text" class="control-label col-sm-2">手机号:</label>
-	            <div class="col-sm-10">
-	            <input type="text" class="form-control" id="message-text" name="phone" readonly/>
-	          </div> 
-	          </div>
-	           <div class="form-group">
-	            <label for="message-text" class="control-label col-sm-2">qq号:</label>
-	            <div class="col-sm-10">
-	            <input type="text" class="form-control" id="message-text" name="qq" readonly/>
-	          </div> 
-	          </div>
-	          <div class="form-group">
-	            <label for="message-text" class="control-label col-sm-2">信用积分:</label>
-	            <div class="col-sm-10">
-	            <input type="text" class="form-control" id="message-text" name="power" readonly/>
-	          </div>
-	           </div>
-	          <div class="form-group">
-	            <label for="message-text" class="control-label col-sm-2">开户时间:</label>
-	             <div class="col-sm-10">
-	            <input type="text" class="form-control" id="message-text" name="createAt" readonly/>
-	          </div>
-	           </div>
-	        </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
 </div>
 </body>
 </html>

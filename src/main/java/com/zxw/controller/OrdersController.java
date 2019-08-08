@@ -33,6 +33,10 @@ public class OrdersController extends BaseController<Orders> {
     @Autowired
     private CatelogService catelogService;
 
+    /**
+     * 我的订单
+     * @return
+     */
     public String myOrders() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         List<Orders> ordersList1 = new ArrayList<>();
@@ -48,6 +52,10 @@ public class OrdersController extends BaseController<Orders> {
         return "myOrders";
     }
 
+    /**
+     * 添加订单
+     * @return
+     */
     public String addOrder() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
@@ -68,11 +76,19 @@ public class OrdersController extends BaseController<Orders> {
         return "addOrder";
     }
 
+    /**
+     * 发货
+     * @return
+     */
     public String deliver() {
         ordersService.updateDeliverInfo(getModel().getGoodsId());
         return "updateGoodsInfo";
     }
 
+    /**
+     * 商品列表
+     * @return
+     */
     public String ordersList() {
         PageResult list = ordersService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
         ServletActionContext.getRequest().getSession().setAttribute("ordersGrid", list);

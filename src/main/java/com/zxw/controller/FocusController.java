@@ -21,8 +21,14 @@ public class FocusController extends BaseController<Focus> {
      */
     public String addCart() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
-        focusService.addFocusByUserIdAndId(getModel().getGoodsId(), user.getId());
-        return "addCart";
+        if (user == null) {
+            writePageBean2Json("error");
+            return NONE;
+        } else {
+            focusService.addFocusByUserIdAndId(getModel().getGoodsId(), user.getId());
+            writePageBean2Json("success");
+            return "addCart";
+        }
     }
 
     /**

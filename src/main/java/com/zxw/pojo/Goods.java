@@ -21,6 +21,27 @@ public class Goods {
     private String endTime;
     private String describle;
     private Integer status;
+    private User user;
+    private Catelog catelog;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id",insertable=false, updatable=false)
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name="catelog_id",insertable=false, updatable=false)
+    public Catelog getCatelog() {
+        return catelog;
+    }
+
+    public void setCatelog(Catelog catelog) {
+        this.catelog = catelog;
+    }
 
     @Id
     @Column(name = "id")

@@ -48,12 +48,14 @@
             <result name="editGoods">/WEB-INF/pages/goods/editGoods.jsp</result>
             <!--商品信息详情页面-->
             <result name="goodInfo">/WEB-INF/pages/goods/detailGoods.jsp</result>
-            <!--订单详情信息-->
+            <!--购买-->
             <result name="buy">/WEB-INF/pages/user/pay.jsp</result>
             <result name="goodsList">/WEB-INF/pages/admin/goods/goods_list.jsp</result>
         </action>
         <action name="user_*" class="userController" method="{1}">
             <result name="success" type="redirect">goods_homeGoods.action</result>
+            <!--注册成功-->
+            <result name="register" type="redirect">page_common_user_login.action</result>
             <!--登录成功-->
             <result name="login" type="redirect">goods_homeGoods.action</result>
             <!--我的闲置-->
@@ -64,6 +66,8 @@
             <result name="basic">/WEB-INF/pages/user/basic.jsp</result>
             <!--修改个人信息-->
             <result name="updateUserInfo" type="redirect">user_basic.action</result>
+            <!--个人中心-->
+            <result name="home">/WEB-INF/pages/user/home.jsp</result>
         </action>
         <action name="purse_*" class="purseController" method="{1}">
             <!--用户余额-->
@@ -93,7 +97,7 @@
             <!--成功-->
             <result name="success">/WEB-INF/pages/admin/index.jsp</result>
             <!--退出-->
-            <result name="logout">/WEB-INF/pages/admin/login.jsp</result>
+            <result name="logout">page_common_user_login.action</result>
             <!--用户列表-->
             <result name="userList">/WEB-INF/pages/admin/user/user_list.jsp</result>
         </action>

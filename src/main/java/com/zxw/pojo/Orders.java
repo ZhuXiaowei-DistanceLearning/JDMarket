@@ -22,7 +22,7 @@ public class Orders {
 
     private Goods goods;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//cascade级联状态，fetch是懒加载还是立即
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)//cascade级联状态，fetch是懒加载还是立即
    /* @JoinTable(
             name = "order_good",//中间表名称，如果没有这个表，程序启动后，自动在数据库创建
             //ForeignKey指定外键，none是没有；ConstraintMode.NO_CONSTRAINT是不创建

@@ -49,7 +49,7 @@ public class GoodsController extends BaseController<Goods> {
         // 获取最新发布的商品列表
         Map<String, Object> map = new HashMap<>();
         map.put("status", 1);
-        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, "startTime", "", "",map);
+        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, "startTime", "", "", map);
         for (int i = 0; i < goodsList.size(); i++) {
             GoodsExtend goodsExtend = new GoodsExtend();
             Goods goods = goodsList.get(i);
@@ -195,15 +195,26 @@ public class GoodsController extends BaseController<Goods> {
         List<Image> imageList = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
         Catelog catelog = catelogService.queryByPrimaryKey(goods.getCatelogId());
         User seller = userService.queryUserInfo(goods.getUserId());
+        // 新品推荐
+        List<Goods> newGoods = goodsService.queryByGoodsByCatelogOrderByDate(2, catelog.getId());
+        List<GoodsExtend> newGoodsRecommend = new ArrayList<>();
+        for (Goods newGood : newGoods) {
+            List<Image> list = imageService.queryByImagesByGoodsPrimaryKey(newGood.getId());
+            GoodsExtend goodsExtend = new GoodsExtend();
+            goodsExtend.setImages(list);
+            goodsExtend.setGoods(newGood);
+            newGoodsRecommend.add(goodsExtend);
+        }
+        // 商品详情信息
         GoodsExtend goodsExtend = new GoodsExtend();
         goodsExtend.setGoods(goods);
         goodsExtend.setComments(commentsList);
         goodsExtend.setImages(imageList);
         ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
+        ServletActionContext.getRequest().setAttribute("newGoodsRecommend", newGoodsRecommend);
         ServletActionContext.getRequest().setAttribute("seller", seller);
         ServletActionContext.getRequest().setAttribute("search", search);
         ServletActionContext.getRequest().setAttribute("catelog", catelog);
-
         return "goodInfo";
     }
 

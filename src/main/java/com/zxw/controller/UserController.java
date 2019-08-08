@@ -28,7 +28,13 @@ public class UserController extends BaseController<User> {
     private PurseService purseService;
     @Autowired
     private FocusService focusService;
+    @Autowired
+    private OrdersService ordersService;
 
+    /**
+     * 注册验证
+     * @return
+     */
     public String accountCheck() {
         boolean flag;
         String username = getModel().getUsername();
@@ -45,19 +51,31 @@ public class UserController extends BaseController<User> {
         }
     }
 
+    /**
+     * 注册
+     * @return
+     */
     public String register() {
         User user = getModel();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        user.setCreateAt(sdf.format(new Date()));
-        user.setPower(100);
-        user.setGoodsNum(0);
-        user.setStatus((byte) 1);
-        user.setPassword(MD5.md5(user.getPassword()));
-        userService.register(user);
-        purseService.initPurse(user.getId());
-        return "success";
+        if (user.getUsername() == null) {
+            return NONE;
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            user.setCreateAt(sdf.format(new Date()));
+            user.setPower(100);
+            user.setGoodsNum(0);
+            user.setStatus((byte) 1);
+            user.setPassword(MD5.md5(user.getPassword()));
+            userService.register(user);
+            purseService.initPurse(user.getId());
+            return "register";
+        }
     }
 
+    /**
+     * 登录
+     * @return
+     */
     public String login() {
         User user = getModel();
         User u = userService.login(user);
@@ -68,7 +86,8 @@ public class UserController extends BaseController<User> {
     }
 
     /**
-     * 查找所有发布的商品
+     * 查询我发布的商品信息
+     * @return
      */
     public String queryBySellProduct() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
@@ -138,5 +157,27 @@ public class UserController extends BaseController<User> {
         return "updateUserInfo";
     }
 
+    /**
+     * 个人中心
+     */
+    public String home() {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        Purse purse = purseService.queryByUserId(user.getId());
+        List<Orders> list = ordersService.getOrdersByUserId(user.getId());
+        List<Orders> ordersList = ordersService.getOrdersByUserIdAndGoods(user.getId());
+        ServletActionContext.getRequest().setAttribute("user", user);
+        ServletActionContext.getRequest().setAttribute("purse", purse);
+        ServletActionContext.getRequest().setAttribute("orderList", list);
+        ServletActionContext.getRequest().setAttribute("mySell", ordersList);
+        return "home";
+    }
+
+    /**
+     * 退出
+     */
+    public String logout(){
+        ServletActionContext.getRequest().getSession().invalidate();
+        return "logout";
+    }
 
 }

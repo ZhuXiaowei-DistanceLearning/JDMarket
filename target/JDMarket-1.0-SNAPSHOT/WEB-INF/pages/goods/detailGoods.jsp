@@ -1,268 +1,559 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<!DOCTYPE html>
-<html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8"/>
-    <title>吉首二手工坊</title>
-    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" href="<%=basePath%>css/index.css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/materialize.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/index.bundle.js"></script>
-    <link rel="stylesheet" href="<%=basePath%>css/materialize-icon.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/detail.css"/>
-    <script>
-        function showLogin() {
-            if ($("#signup-show").css("display") == 'block') {
-                $("#signup-show").css("display", "none");
-            }
-            if ($("#login-show").css("display") == 'none') {
-                $("#login-show").css("display", "block");
-            } else {
-                $("#login-show").css("display", "none");
-            }
-        }
-        function showSignup() {
-            if ($("#login-show").css("display") == 'block') {
-                $("#login-show").css("display", "none");
-            }
-            if ($("#signup-show").css("display") == 'none') {
-                $("#signup-show").css("display", "block");
-            } else {
-                $("#signup-show").css("display", "none");
-            }
-        }
-        function ChangeName() {
-            if ($("#changeName").css("display") == 'none') {
-                $("#changeName").css("display", "block");
-            } else {
-                $("#changeName").css("display", "none");
-            }
-        }
-    </script>
-
-    <script type="text/javascript">
-
-        function addFocus(id) {
-            location.href = '<%=basePath%>focus_addCart?goodsId=' + id
-            alert("已关注成功，查看关注列表~")
-
-        }
-
-        /* 前往支付 */
-        function toPay(id) {
-            window.location.href = '<%=basePath%>goods_buy?id=' + id
-        }
-
-    </script>
-
-
-<body ng-view="ng-view">
-<!--
-
-    描述：顶部
--->
-<%@include file="/WEB-INF/pages/common/header.jsp" %>
-<%@include file="/WEB-INF/pages/common/user_login.jsp" %>
-<!--更改用户名-->
-<div ng-controller="changeNameController" class="ng-scope">
-    <div id="changeName" class="change-name stark-components">
-        <div class="publish-box z-depth-4">
-            <div class="row">
-                <div class="col s12 title">
-                    <h1>修改用户名</h1>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>吉首大学二手商城</title>
+    <meta name="viewport" content="width=1200"/>
+    <link type="text/css" rel="stylesheet" href="./css/index/style.css"/>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/global.js"></script>
+    <script type="text/javascript" src="./js/arttpl.js"></script>
+    <script type="text/javascript" src="./js/plugin/layer/layer.js"></script>
+    <link rel="shortcut icon" type="./js/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./js/plugin/jqzoom/style.css"/>
+    <script type="text/javascript" src="./js/plugin/jqzoom/jquery.jqzoom.js"></script>
+    <link type="text/css" rel="stylesheet" href="./js/plugin/duotu/duotu.css"/>
+    <script type="text/javascript" src="./js/plugin/duotu/duotu.js"></script>
+    <script type="text/javascript" src="./js/plugin/ckplayer/ckplayer.js"></script>
+    <script type="text/javascript" src="./js/jquery.scrollLoading.js"></script>
+</head>
+<body>
+<jsp:include page="../common/index_header.jsp"></jsp:include>
+<jsp:include page="../common/goods_nav.jsp"></jsp:include>
+<div class="content" style="padding-top:0">
+    <div class="now mat10"><a href='<%=basePath%>/goods_homeGoods'>首页</a> >
+        <a href='<%=basePath%>/catelog_goods?id=${goodsExtend.goods.catelog.id}'>
+            ${goodsExtend.goods.catelog.name}>
+        </a>
+        ${goodsExtend.goods.name}
+    </div>
+    <div class="pro_box">
+        <div class="pro_left">
+            <div id="duotu_html">
+                <div class="proimg jqzoom MagnifierMain">
+                    <img src="<%=basePath%>/upload/${goodsExtend.images[0].imgUrl}"
+                         jqimg="<%=basePath%>/upload/${goodsExtend.images[0].imgUrl}"
+                         width="381" height="381"/>
                 </div>
-                <form action="../../user/changeName" method="post" role="form">
-                    <div class="input-field col s12">
-                        <input type="text" name="username" required="required"
-                               class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched"/>
-                        <label>修改用户名</label>
-                    </div>
-                    <div ng-show="checkTelIsShow" class="col s12">
-                        <button class="waves-effect waves-light btn publish-btn red lighten-1">
-                            <i class="iconfont left"></i>
-                            <em>确认</em>
-                        </button>
-                    </div>
-                </form>
+                <div class="clear"></div>
+                <span class="spe_leftBtn" style="display:none">&lt;</span>
+                <span class="spe_rightBtn" style="display:none">&gt;</span>
+                <div class="spec-items">
+                    <ul>
+                        <c:forEach items="${goodsExtend.images}" var="item">
+                            <li><img
+                                    src="<%=basePath%>/upload/${item.imgUrl}"
+                                    bigimg="<%=basePath%>/upload/${item.imgUrl}"/>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
             </div>
+            <div class="clear"></div>
+            <a href="javascript:collect_add('3');" class="sctj fl">收藏商品</a>
+            <div class="mat10 fxlj fr">
+                <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#"
+                                                                                                  class="bds_qzone"
+                                                                                                  data-cmd="qzone"
+                                                                                                  title="分享到QQ空间"></a><a
+                        href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq"
+                                                                                           data-cmd="tqq"
+                                                                                           title="分享到腾讯微博"></a><a
+                        href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin"
+                                                                                            data-cmd="weixin"
+                                                                                            title="分享到微信"></a></div>
+                <script>window._bd_share_config = {
+                    "common": {
+                        "bdSnsKey": {},
+                        "bdUrl": "<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}?u=",
+                        "bdMini": "2",
+                        "bdPic": "",
+                        "bdStyle": "0",
+                        "bdSize": "16"
+                    }, "share": {}
+                };
+                with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+            </div>
+            <div class="clear"></div>
         </div>
-    </div>
-</div>
-<!--显示商品详情-->
-<div ng-controller="detailBoxController" class="detail-box stark-components z-depth-1 row ng-scope">
-    <div class="col s12 path">
-        <a href="<%=basePath%>goods/catelog/${catelog.id}">${catelog.name}</a>
-        <em>></em>
-        <a>${goodsExtend.goods.name}</a>
-    </div>
-    <div class="col s6">
-        <div class="slider" style="height: 440px;">
-            <ul class="slides" style="height: 400px;">
-                <img src="<%=basePath%>upload/${goodsExtend.images[0].imgUrl}"/>
-            </ul>
-            <ul class="indicators">
-                <li class="indicator-item"></li>
-                <li class="indicator-item"></li>
-                <li class="indicator-item"></li>
-                <li class="indicator-item"></li>
-            </ul>
+        <div class="fl proinfo">
+            <h3>${goodsExtend.goods.name}</h3>
+            <div class="proinfo_box">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="50">原价</td>
+                        <td>
+						<span class="jg_price">
+							<span class="font18">¥</span>
+							<span style="text-decoration:line-through;">${goodsExtend.goods.realPrice}</span>
+						</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50">折扣</td>
+                        <td>
+						<span class="jg_price">
+							<span class="font18">¥</span>
+							<span id="product_money">${goodsExtend.goods.price}</span>
+						</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="pro_ewm"><img
+                        src="http://www.phpshe.com/demo/phpshe/data/cache/thumb/2019-08/fc22ad0b303c52fd3fd94a64f1958b76.png"/>
+                </div>
+            </div>
+            <div class="xl_box">
+                <span class="xl_li">运费：包邮</span>
+                <span class="xl_li" style="border-right:0;">奖励：<span class="cgreen">0</span> 积分</span>
+                <div class="clear"></div>
+            </div>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="mat10">
+                <!--<tr>
+        <td>评分</td>
+        <td>
+            <div class="fl mat2"><img src='http://www.phpshe.com/demo/phpshe/include/plugin/raty/images/star-on.png' title='1' style='width:16px;margin-right:1px' /><img src='http://www.phpshe.com/demo/phpshe/include/plugin/raty/images/star-on.png' title='2' style='width:16px;margin-right:1px' /><img src='http://www.phpshe.com/demo/phpshe/include/plugin/raty/images/star-on.png' title='3' style='width:16px;margin-right:1px' /><img src='http://www.phpshe.com/demo/phpshe/include/plugin/raty/images/star-on.png' title='4' style='width:16px;margin-right:1px' /><img src='http://www.phpshe.com/demo/phpshe/include/plugin/raty/images/star-half.png' title='5' style='width:16px;margin-right:1px' /></div>
+            <span class="fl mal5 corg">4.3 分</span>
+            <span class="fl mal10 c888">3人评价</span>
+            <div class="clear"></div>
+        </td>
+    </tr>-->
+                <c:if test="${goodsExtend.goods.status==1}">
+                    <tr>
+                        <td>
+                            <div class="mab5">发布于</div>
+                        </td>
+                        <td class="js_rule">
+                            <span rule_id="1" ruledata_id="1"
+                                  class="js_ruledata prodata_span">${goodsExtend.goods.startTime}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="mab5">最近更新时间</div>
+                        </td>
+                        <td class="js_rule">
+                            <span rule_id="1" ruledata_id="1"
+                                  class="js_ruledata prodata_span">${goodsExtend.goods.polishTime}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>数量</td>
+                        <td class="shuliang">
+                            <input type="hidden" name="product_guid" value=""/>
+                                <%--<span class="img1" onclick="pe_numchange('product_num', '-', 1);"><i></i></span>--%>
+                            <span class="img1"><i></i></span>
+                            <div class="shuliang_box"><input type="text" name="product_num" value="1"/></div>
+                                <%--<span class="img2" onclick="pe_numchange('product_num', '+', 999999);"><i></i></span>--%>
+                            <span class="img2"><i></i></span>
+                                <%--<span class="fl c999 mal10 mat3 font12">库存<span id="product_num">295</span>件</span>--%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <a href="javascript:buy_btn('buy', ${goodsExtend.goods.id});" class="fl ljgm">立即购买</a>
+                            <a href="javascript:buy_btn('add', ${goodsExtend.goods.id});" class="fl jiagwc"><i></i>加入购物车</a>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                </c:if>
+                <c:if test="${goodsExtend.goods.status==0}">
+                    <tr>
+                        <td>
+                            <div class="mab5">商品下架时间</div>
+                        </td>
+                        <td class="js_rule">
+                            <span rule_id="1" ruledata_id="1"
+                                  class="js_ruledata prodata_span">${goodsExtend.goods.endTime}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <c:if test=""></c:if>
+                            <a class="fl ljgm" disabled>该商品已下架</a>
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
+                </c:if>
+            </table>
+            <div class="clear"></div>
         </div>
-    </div>
-    <div class="col s6">
-        <h1 class="item-name">${goodsExtend.goods.name}</h1>
-        <h2 class="item-price">${goodsExtend.goods.price}</h2>
-        <h2 class="publisher-info-title">原价：<span
-                style="text-decoration:line-through;">${goodsExtend.goods.realPrice}</span></h2>
-        <div class="item-public-info">
-            <p class="bargain">可讲价</p>
-            <p>
-                <i class="iconfont"></i>
-                <em class="item-location">吉首大学</em>
-            </p>
-        </div>
-        <div class="publisher-info-title">
-            <em>卖家信息</em>
-            <hr>
-        </div>
-        <c:if test="${empty cur_user}">
-            <div class="item-contact">
-                <p class="not-login">
-                    <a onclick="showLogin()">登录</a>
-                    <em>或</em>
-                    <a onclick="showSignup()">注册</a>
-                    <em>后查看联系信息</em>
+        <div class="proview_tj">
+            <div class="proview_tjtt">
+                <i></i>
+                <span>新品推荐</span>
+            </div>
+            <c:forEach items="${newGoodsRecommend}" var="item">
+                <div class="mat10">
+                    <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}"
+                       target="_blank"><img
+                            src="<%=basePath%>/upload/${item.images[0].imgUrl}" width="180" height="180"
+                            class="js_imgload"/></a>
+                </div>
+                <p class="proview_tjname mat5"><a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}"
+                                                  target="_blank">${item.goods.name}</a>
                 </p>
-            </div>
-        </c:if>
-        <c:if test="${!empty cur_user}">
-            <div class="item-contact">
-                <div>
-                    <div class="base-blue z-depth-1 attr">
-                        <i class="iconfont"></i>
-                    </div>
-                    <div class="value">${seller.username}</div>
-                </div>
-                <div>
-                    <div class="base-blue z-depth-1 attr">
-                        <i class="iconfont"></i>
-                    </div>
-                    <div class="value">${seller.phone}</div>
-                </div>
-                <div>
-                    <div class="base-blue z-depth-1 attr">
-                        <i class="iconfont"></i>
-                    </div>
-                    <c:if test="${seller.qq!=null}">
-                        <div class="value">${seller.qq}</div>
-                    </c:if>
-                    <c:if test="${seller.qq==null}">
-                        <div class="value">该同学没留下QQ</div>
-                    </c:if>
-
-                </div>
-                <div>
-                    <input type="button" value="加入关注" class="blue lighten-1 waves-effect waves-light btn" id="btn_cart"
-                           onclick="addFocus(${goodsExtend.goods.id})"></input>
-                    <c:if test="${cur_user.id==goodsExtend.goods.userId}">
-                        <input type="button" value="在线支付" data-toggle="tooltip" title="不可以购买自己的东西哦~" disabled="disabled"
-                               class="blue lighten-1 waves-effect waves-light btn" id="btn_buy"></input>
-                    </c:if>
-                    <c:if test="${cur_user.id!=goodsExtend.goods.userId}">
-                        <input type="button" value="在线支付" class="blue lighten-1 waves-effect waves-light btn"
-                               id="btn_buy" onclick="toPay(${goodsExtend.goods.id})"></input>
-                    </c:if>
-                </div>
-            </div>
-        </c:if>
-        <h1 class="item-pub-time">发布于 ${goodsExtend.goods.startTime}</h1>
-    </div>
-</div>
-<div class="detail-box stark-components z-depth-1 row">
-    <h1 class="title">商品描述</h1>
-    <hr class="hr1"/>
-    <hr class="hr2"/>
-    <p class="section">描述：${goodsExtend.goods.describle}</p>
-    <p class="section"></p>
-    <p class="section">
-        联系我的时候，请说明是在“吉首二手工坊”上看见的哦~
-    </p>
-</div>
-<div class="row detail-area">
-    <div class="clo s12">
-        <div ng-controller="commentController" class="comment stark-components z-depth-1 ng-scope">
-            <h1 class="title">评论</h1>
-            <hr class="hr1"/>
-            <hr class="hr2"/>
-            <c:forEach var="item" items="${CommentExtend.comments}">
-                <div class="comment-collection">
-                    <div class="comment-item ng-scope">
-                        <div class="comment-main-content">
-                            <em class="name ng-binding">${item.user.username}:</em>
-                            <em class="ng-hide">回复</em>
-                            <em class="name ng-binding ng-hide">@:</em>
-                            <em class="ng-binding">${item.content}</em>
-                        </div>
-                        <div class="comment-function">
-                            <em class="time ng-biinding">${item.createAt}</em>
-
-                            <!--  <a class="reply-or-delete">删除</a>
-                             <a class="reply-or-delete">回复</a> -->
-                        </div>
-                    </div>
-                </div>
+                <p class="money3 fl">¥${item.goods.realPrice}</p>
+                <div class="c999 fr font12">更新时间:${item.goods.polishTime}</div>
+                <div class="clear"></div>
             </c:forEach>
-            <form id="addCommentForm" class="form-horizontal">
-                <div class="comment-add row">
-                    <div class="input-field col s12">
-                        <i class="iconfont prefix"></i>
-                        <input id="goodsId" name="goods.id" value="${goodsExtend.goods.id}" type="hidden"/>
-                        <input id="commentbox" type="text" name="content"
-                               class="validate ng-pristine ng-untouched ng-valid ng-empty"/>
-                        <label for="commentbox">这里写下评论</label>
-                        <%-- <c:if test="${!empty cur_user}">
-                         <button type="button" class="waves-effect wave-light btn comment-submit" onclick="addComments()">确认</button>
-                         </c:if>--%>
-                        <%--   <c:if test="${!empty cur_user} && ${cur_user.id!=goodsExtend.comments.userId}">
-                         <button type="submit" class="waves-effect wave-light btn comment-submit">确认</button>
-                         </c:if>
-                          <c:if test="${!empty cur_user} && ${cur_user.id==goodsExtend.comments.userId}">
-                         <button data-toggle="tooltip"  title="您已经评论过了哦！" disabled="disabled"  class="waves-effect wave-light btn comment-submit">确认</button>
-                         </c:if> --%>
-                        <%--   <c:if test="${empty cur_user}">
-                          <button href="javacript:void(0);" data-toggle="tooltip"  title="您需要先登录哦！" disabled="disabled" class="waves-effect wave-light btn comment-submit">确认</button>
-                          </c:if>--%>
-                    </div>
-            </form>
         </div>
+        <div class="clear"></div>
+    </div>
+    <div style="margin-top:20px;"></div>
+    <div class="fr xiangqing">
+        <div class="caidan1" id="js_menu">
+            <ul class="fl">
+                <li class="sel"><a href="javascript:;">商品详情</a><i></i></li>
+                <li><a href="javascript:;">用户评价 <span class="corg">(3)</span></a><i></i></li>
+            </ul>
+            <!--<div class="fr c666 mat10 mar10">商品货号：</div>-->
+            <div class="clear"></div>
+        </div>
+        <!--详情 Start-->
+        <div class="promain js_menuhtml">
+            ${goodsExtend.goods.describle}</div>
+        <!--详情 end-->
+        <!--评论 Start-->
+        <div class="promain js_menuhtml" style="display:none">
+            <div class="plrate">
+                <div class="plrate_l fl"><strong>66%</strong>
+                    <p class="c888 mat3">好评率</p></div>
+                <div class="plrate_m fl">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="60">好评</td>
+                            <td>
+                                <div class="gd_box">
+                                    <div class="gd_1" style="width:132px;"></div>
+                                </div>
+                            </td>
+                            <td width="50">66%</td>
+                        </tr>
+                        <tr>
+                            <td>中评</td>
+                            <td>
+                                <div class="gd_box">
+                                    <div style="width:66px;"></div>
+                                </div>
+                            </td>
+                            <td>33%</td>
+                        </tr>
+                        <tr>
+                            <td>差评</td>
+                            <td>
+                                <div class="gd_box">
+                                    <div style="width:0px;"></div>
+                                </div>
+                            </td>
+                            <td>0%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="plrate_r">
+                    购买过该商品的用户可以进行评价
+                    <div class="mat8"><a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj"
+                                         target="_blank">发表评价<span class="font12 normal mal5">(+50积分)</span></a></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="plmenu" id="js_commentmenu">
+                <a href="javascript:;" val="0" class="sel"><label><input name="comment_rate" type="radio"
+                                                                         class="inputfix mar5">全部(3)</label></a>
+                <a href="javascript:;" val="hao"><label><input name="comment_rate" type="radio" class="inputfix mar5">好评(2)</label></a>
+                <a href="javascript:;" val="zhong"><label><input name="comment_rate" type="radio" class="inputfix mar5">中评(1)</label></a>
+                <a href="javascript:;" val="cha"><label><input name="comment_rate" type="radio" class="inputfix mar5">差评(0)</label></a>
+            </div>
+            <div id="js_commenthtml">
+                <script type="text/html" id="js_commenttpl">
+                    {{each list as v k}}
+                    <div class="pj_box">
+                        <div class="pj_tx"><img src="{{v.user_logo}}">
+                            <p>{{v.user_name}}</p></div>
+                        <div class="pj_r">
+                            <ul class="plmain_ul">
+                                <li>{{v.comment_star}}</li>
+                            </ul>
+                            <div class="pingjia font14">{{v.comment_text}}</div>
+                            <div class="pj_img">
+                                {{each v.comment_logo as vv kk}}
+                                <a href="javascript:;"><img src="{{vv.logo}}"/></a>
+                                {{/each}}
+                            </div>
+                            <div class="pj_bigimg"></div>
+                            <div class="c888">{{v.comment_atime}}</div>
+                            {{if v.comment_reply == 1}}
+                            <div class="mjhf">卖家回复：{{v.comment_reply_text}}</div>
+                            <div class="c888">{{v.comment_reply_time}}</div>
+                            {{/if}}
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    {{/each}}
+                    <div class="fenye mat10">{{page}}
+                        <div class="clear"></div>
+                    </div>
+                </script>
+            </div>
+        </div>
+        <!--评论 End-->
     </div>
 </div>
-</body>
 <script type="text/javascript">
-    /* 评论 */
-    function addComments() {
-        $.ajax({
-            url: '<%=basePath%>goods/addComments',
-            type: 'POST',
-            data: $('#addCommentForm').serialize(),// 序列化表单值
-            dataType: 'json',
-            /* 	success:function(json){
-             alert(1)
-             alert(json.msg)
-             },
-             error:function(){
-             alert('请求超时或系统出错!');
-             } */
+    var menu_top = $("#js_menu").offset().top;
+    template.config('escape', false);
+    $(function () {
+        MagnifierF("duotu_html");
+        $(".jqzoom").jqueryzoom();
+        $(":input[name='product_num']").keyup(function () {
+            if (!$(this).val().match(/^[1-9]+[0-9]*$/)) $(this).val(1);
+        })
+        pe_jstime("#huodong_time", '1565229867', 'html');
+        //标签切换
+        $("#js_menu").find("li").click(function () {
+            var num = $(this).index();
+            $("#js_menu li").removeClass("sel").eq(num).addClass("sel");
+            $(".js_menuhtml").hide().eq(num).show();
+            if (num == 1) {
+                comment_page(1);
+            }
+            else if (num == 2) {
+                ask_page(1);
+            }
+            else {
+                $("body,html").scrollTop(menu_top);
+            }
+        })
+        //评价切换
+        $("#js_commentmenu").find("a").click(function () {
+            $("#js_commentmenu").find("a").removeClass("sel");
+            $(this).addClass("sel");
+            comment_page(1);
+        })
+        //晒图预览
+        $(".pj_img img").live("click", function () {
+            var pj_bigimg = $(this).parents(".pj_img").next(".pj_bigimg");
+            $(this).parents(".pj_img").find("img").removeClass("sel");
+            if (pj_bigimg.find("img").attr("src") == $(this).attr("src")) {
+                pj_bigimg.empty();
+            }
+            else {
+                $(this).addClass("sel");
+                pj_bigimg.html('<img src="' + $(this).attr("src") + '" />');
+            }
+        })
+        //规格选择
+        prodata_check();
+        $(".js_ruledata").click(function () {
+            if ($(this).hasClass("prodata_lock")) return;
+            if ($(this).hasClass("prodata_sel")) {
+                $(this).removeClass("prodata_sel");
+            }
+            else {
+                $(this).parent(".js_rule").find(".js_ruledata").removeClass("prodata_sel");
+                $(this).addClass("prodata_sel");
+            }
+            prodata_check();
+        })
+    })
+    var videoObject = {
+        container: '#product_video',//“#”代表容器的ID，“.”或“”代表容器的class
+        variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
+        flashplayer: false,//如果强制使用flashplayer则设置成true
+        poster: "http://www.phpshe.com/demo/phpshe/data/attachment/2018-08/20180812173352k.jpg",
+        video: "http://www.phpshe.com/demo/phpshe/"//视频地址
+    };
+    var player = new ckplayer(videoObject);
+    //收藏商品
+    function collect_add(id) {
+        pe_getinfo("http://www.phpshe.com/demo/phpshe/index.php?mod=product&act=collect&id=" + id, function (json) {
+            $("#js_collectnum").html('（' + json.num + '）');
         });
-        alert("您已评论成功~")
-        window.location.reload();
+    }
+    //评价翻页
+    function comment_page(page) {
+        var star = $("#js_commentmenu").find(".sel").attr("val");
+        pe_getinfo("http://www.phpshe.com/demo/phpshe/index.php?mod=comment&id=3&star=" + star + "&page=" + page, function (json) {
+            $("#js_commenthtml").html(template('js_commenttpl', json));
+            $("body,html").scrollTop(menu_top);
+        });
+    }
+    //评价跳转
+    function comment_jump() {
+        $("#js_menu").find("li").eq(1).click();
+    }
+    //立即购买/加入购物车按钮
+    function buy_btn(act, id) {
+        if (act == 'add') {
+            $.ajax({
+                url: "<%=basePath%>focus_addCart",
+                data: {'goodsId': id},
+                type:"post",
+                success: function () {
+                    alert(data);
+                    if (data == "success") {
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 1,
+                            id: 'order_add',
+                            content: '<div class="gw"><p>商品已加入购物车！</p><a class="gw2" href="<%=basePath%>">去结算</a><a class="gw1" href="javascript:layer.closeAll();">继续购物</a><div class="clear"></div></div>'
+                        });
+                    } else if (data == "error") {
+                        window.location.href = "page_common_user_login";
+                    }
+                },
+                error: function (data) {
+                    if (data.responseText == "success") {
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 1,
+                            id: 'order_add',
+                            content: '<div class="gw"><p>商品已加入购物车！</p><a class="gw2" href="<%=basePath%>">去结算</a><a class="gw1" href="javascript:layer.closeAll();">继续购物</a><div class="clear"></div></div>'
+                        });
+                    } else if (data.responseText == "error") {
+                        window.location.href = "page_common_user_login";
+                    }
+                }
+            })
+        } else if (act == 'buy') {
+            $.post("<%=basePath%>focus_addCart", id, function (data) {
+                $(".result").html(data);
+            });
+        }
+    }
+    //规格检测
+    function prodata_check() {
+        var prodata_list = [{
+            "product_guid": "8",
+            "product_ruleid": "1",
+            "product_money": "128.0",
+            "product_mmoney": "0.0",
+            "product_num": "97"
+        }, {
+            "product_guid": "9",
+            "product_ruleid": "2",
+            "product_money": "128.0",
+            "product_mmoney": "0.0",
+            "product_num": "99"
+        }, {
+            "product_guid": "10",
+            "product_ruleid": "3",
+            "product_money": "128.0",
+            "product_mmoney": "0.0",
+            "product_num": "99"
+        }];
+        $(".js_ruledata").each(function () {
+            var sel_arr = new Array();
+            var rule_id = $(this).attr("rule_id");
+            var ruledata_id = $(this).attr("ruledata_id");
+            sel_arr.push(ruledata_id);
+            $(".prodata_sel[rule_id!=" + rule_id + "]").each(function () {
+                sel_arr.push($(this).attr("ruledata_id"));
+            })
+            for (var i in prodata_list) {
+                var match_num = 0;
+                var product_ruleid = prodata_list[i]['product_ruleid'].split(',');
+                for (id in sel_arr) {
+                    if (jQuery.inArray(sel_arr[id], product_ruleid) >= 0) match_num++;
+                }
+                if (match_num == sel_arr.length) {
+                    var match_result = true;
+                    break;
+                }
+                else {
+                    var match_result = false;
+                }
+            }
+            if (match_result) {
+                $(this).removeClass('prodata_lock');
+            }
+            else {
+                $(this).addClass('prodata_lock');
+            }
+        })
+        //更新选中规格组合
+        var prodata_sel = new Array();
+        $(".prodata_sel").each(function () {
+            prodata_sel.push($(this).attr("ruledata_id"));
+        })
+        var product_ruleid = prodata_sel.join(',');
+        $(":input[name='product_ruleid']").val('');
+        //循环规格选中的有效列表
+        for (var i in prodata_list) {
+            //如果选中规格组合完成
+            if (prodata_list[i]['product_ruleid'] == product_ruleid) {
+                $(":input[name='product_guid']").val(prodata_list[i]['product_guid']);
+                $("#product_money").html(prodata_list[i]['product_money']);
+                $("#product_mmoney").html(prodata_list[i]['product_mmoney']);
+                $("#product_num").html(prodata_list[i]['product_num']);
+            }
+        }
     }
 </script>
+<div class="clear"></div>
+<div class="width980">
+</div>
+<jsp:include page="../common/celan.jsp"></jsp:include>
+<jsp:include page="../common/index_footer.jsp"></jsp:include>
+<script type="text/javascript">
+    $(function () {
+        $("img.js_imgload").scrollLoading();
+        $(".fenlei_li").hover(
+            function () {
+                $(".fenlei_li").find(".fenlei_h3 a").removeClass("sel");
+                $(".fenlei_li").removeClass("fenlei_li_sel");
+                $(this).find(".fenlei_h3 a").addClass("sel");
+                $(this).addClass("fenlei_li_sel");
+                $(".fenlei_li").find(".js_right").hide();
+                var _top = $(this).index() * 35;
+                $(this).find(".js_right").css("top", "-" + _top + "px").show();
+            },
+            function () {
+                $(".fenlei_li").find(".fenlei_h3 a").removeClass("sel");
+                $(".fenlei_li").removeClass("fenlei_li_sel");
+                $(".fenlei_li").find(".js_right").hide();
+            }
+        )
+        var hoverTimer;
+        $("#menu_nav").hover(function () {
+            clearTimeout(hoverTimer);
+            $("#menu_html").add(".fenlei_li_more").show();
+        }, function () {
+            clearTimeout(hoverTimer);
+            hoverTimer = setTimeout(function () {
+                $("#menu_html").hide();
+                $(".fenlei_li_more").hide();
+            }, 100);
+        })
+        //二维码显示
+        $("#qrcode_btn").hover(function () {
+            $("#qrcode_show").show();
+        }, function () {
+            $("#qrcode_show").hide();
+        })
+        //电话显示
+        $("#tel_btn").hover(function () {
+            $("#tel_show").show();
+        }, function () {
+            $("#tel_show").hide();
+        })
+    });
+    function right_scrolltop() {
+        $("body,html").animate({"scrollTop": 0});
+    }
+    pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
+</script>
+</body>
 </html>
