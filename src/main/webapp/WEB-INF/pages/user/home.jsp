@@ -6,7 +6,6 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -183,7 +182,7 @@
                         </td>
                         <td width="100">
                             <c:if test="${item.orderState==0}">
-                               <p class="tag_org">买家还未付款</p>
+                                <p class="tag_org">买家还未付款</p>
                             </c:if>
                             <c:if test="${item.orderState==1}">
                                 <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
@@ -202,40 +201,42 @@
             </c:forEach>
             <div class="clear"></div>
         </div>
-        <div class="clear"></div>
-        <jsp:include page="../common/celan.jsp"></jsp:include>
-        <jsp:include page="../common/user_footer.jsp"></jsp:include>
-        <script type="text/javascript">
-            $("#aNew").mousemove(function (t) {
-                $("#my").hide();
-                $("#new").show();
-            });
-            $("#aMy").mousemove(function (t) {
-                $("#my").show();
-                $("#new").hide();
-            });
-        </script>
-        <script type="text/javascript">
-            $(function () {
-                //二维码显示
-                $("#qrcode_btn").hover(function () {
-                    $("#qrcode_show").show();
-                }, function () {
-                    $("#qrcode_show").hide();
-                })
-                //电话显示
-                $("#tel_btn").hover(function () {
-                    $("#tel_show").show();
-                }, function () {
-                    $("#tel_show").hide();
-                })
-            });
-            function right_scrolltop() {
-                $("body,html").animate({"scrollTop": 0});
-            }
-            pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
-        </script>
     </div>
+</div>
+<div class="clear"></div>
+<jsp:include page="../common/celan.jsp"></jsp:include>
+<jsp:include page="../common/user_footer.jsp"></jsp:include>
+<script type="text/javascript">
+    $("#aNew").mousemove(function (t) {
+        $("#my").hide();
+        $("#new").show();
+    });
+    $("#aMy").mousemove(function (t) {
+        $("#my").show();
+        $("#new").hide();
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        //二维码显示
+        $("#qrcode_btn").hover(function () {
+            $("#qrcode_show").show();
+        }, function () {
+            $("#qrcode_show").hide();
+        })
+        //电话显示
+        $("#tel_btn").hover(function () {
+            $("#tel_show").show();
+        }, function () {
+            $("#tel_show").hide();
+        })
+    });
+    function right_scrolltop() {
+        $("body,html").animate({"scrollTop": 0});
+    }
+    pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
+</script>
+</div>
 </div>
 </body>
 </html>

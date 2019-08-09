@@ -33,6 +33,7 @@ public class UserController extends BaseController<User> {
 
     /**
      * 注册验证
+     *
      * @return
      */
     public String accountCheck() {
@@ -53,6 +54,7 @@ public class UserController extends BaseController<User> {
 
     /**
      * 注册
+     *
      * @return
      */
     public String register() {
@@ -74,6 +76,7 @@ public class UserController extends BaseController<User> {
 
     /**
      * 登录
+     *
      * @return
      */
     public String login() {
@@ -87,25 +90,27 @@ public class UserController extends BaseController<User> {
 
     /**
      * 查询我发布的商品信息
+     *
      * @return
      */
     public String queryBySellProduct() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
-        // 查找该用户发布的所有商品
-        List<Goods> goodsList = goodsService.queryGoodsByUserId(user.getId());
-        List<GoodsExtend> list = new ArrayList<>();
-        // 查找该用户的商品的图片
-        for (Goods goods : goodsList) {
-            GoodsExtend goodsExtend = new GoodsExtend();
-            List<Image> imageList = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
-            goodsExtend.setImages(imageList);
-            goodsExtend.setGoods(goods);
-            list.add(goodsExtend);
+        List<Orders> ordersList2 = new ArrayList<>();
+        // 查询我卖的宝贝订单
+        ordersList2 = ordersService.getOrdersByUserIdAndGoods(user.getId());
+        for (int i = 0; i < ordersList2.size(); i++) {
+            List<Image> list = imageService.queryByImagesByGoodsPrimaryKey(ordersList2.get(i).getGoods().getId());
+            ordersList2.get(i).setImgUrl(list.get(0).getImgUrl());
         }
-        // 获取用户购买的商品
-        Purse purse = purseService.queryByUserId(user.getId());
-        ServletActionContext.getRequest().setAttribute("goodsAndImage", list);
-        ServletActionContext.getRequest().setAttribute("myPurse", purse);
+        long waitPay = ordersList2.stream().filter(e -> e.getOrderState() == 0).count();
+        long waitSend = ordersList2.stream().filter(e -> e.getOrderState() == 1).count();
+        long waitAccpt = ordersList2.stream().filter(e -> e.getOrderState() == 2).count();
+        long finish = ordersList2.stream().filter(e -> e.getOrderState() == 3).count();
+        ServletActionContext.getRequest().setAttribute("waitPay", waitPay);
+        ServletActionContext.getRequest().setAttribute("waitSend", waitSend);
+        ServletActionContext.getRequest().setAttribute("waitAccpt", waitAccpt);
+        ServletActionContext.getRequest().setAttribute("finish", finish);
+        ServletActionContext.getRequest().setAttribute("ordersOfSell", ordersList2);
         return "sellProductByUser";
     }
 
@@ -175,7 +180,7 @@ public class UserController extends BaseController<User> {
     /**
      * 退出
      */
-    public String logout(){
+    public String logout() {
         ServletActionContext.getRequest().getSession().invalidate();
         return "logout";
     }

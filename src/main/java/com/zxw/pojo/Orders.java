@@ -19,6 +19,16 @@ public class Orders {
     private Integer orderState;
     private String orderInformation;
     private String orderDate;
+    private String imgUrl;
+
+    @Transient
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     private Goods goods;
 

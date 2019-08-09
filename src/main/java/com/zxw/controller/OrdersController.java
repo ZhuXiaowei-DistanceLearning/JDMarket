@@ -1,23 +1,15 @@
 package com.zxw.controller;
 
 import com.zxw.controller.base.BaseController;
-import com.zxw.pojo.Goods;
-import com.zxw.pojo.Orders;
-import com.zxw.pojo.Purse;
-import com.zxw.pojo.User;
-import com.zxw.service.CatelogService;
-import com.zxw.service.GoodsService;
-import com.zxw.service.OrdersService;
-import com.zxw.service.PurseService;
+import com.zxw.pojo.*;
+import com.zxw.service.*;
 import com.zxw.vo.PageResult;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -32,28 +24,41 @@ public class OrdersController extends BaseController<Orders> {
     private PurseService purseService;
     @Autowired
     private CatelogService catelogService;
+    @Autowired
+    private ImageService imageService;
+    @Autowired
+    private UserAddrService userAddrService;
 
     /**
      * 我的订单
+     *
      * @return
      */
     public String myOrders() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         List<Orders> ordersList1 = new ArrayList<>();
-        List<Orders> ordersList2 = new ArrayList<>();
         // 查询已买到的宝贝
         ordersList1 = ordersService.getOrdersByUserId(user.getId());
-        // 查询我卖的宝贝订单
-        ordersList2 = ordersService.getOrdersByUserIdAndGoods(user.getId());
-        Purse purse = purseService.queryByUserId(user.getId());
-        ServletActionContext.getRequest().setAttribute("myPurse", purse);
+        for (int i = 0; i < ordersList1.size(); i++) {
+            List<Image> list = imageService.queryByImagesByGoodsPrimaryKey(ordersList1.get(i).getGoods().getId());
+            ordersList1.get(i).setImgUrl(list.get(0).getImgUrl());
+        }
+        /*0:代付款1:待发货2:待收货3:已完成*/
+        long waitPay = ordersList1.stream().filter(e -> e.getOrderState() == 0).count();
+        long waitSend = ordersList1.stream().filter(e -> e.getOrderState() == 1).count();
+        long waitAccpt = ordersList1.stream().filter(e -> e.getOrderState() == 2).count();
+        long finish = ordersList1.stream().filter(e -> e.getOrderState() == 3).count();
+        ServletActionContext.getRequest().setAttribute("waitPay", waitPay);
+        ServletActionContext.getRequest().setAttribute("waitSend", waitSend);
+        ServletActionContext.getRequest().setAttribute("waitAccpt", waitAccpt);
+        ServletActionContext.getRequest().setAttribute("finish", finish);
         ServletActionContext.getRequest().setAttribute("orders", ordersList1);
-        ServletActionContext.getRequest().setAttribute("ordersOfSell", ordersList2);
         return "myOrders";
     }
 
     /**
      * 添加订单
+     *
      * @return
      */
     public String addOrder() {
@@ -78,6 +83,7 @@ public class OrdersController extends BaseController<Orders> {
 
     /**
      * 发货
+     *
      * @return
      */
     public String deliver() {
@@ -87,11 +93,38 @@ public class OrdersController extends BaseController<Orders> {
 
     /**
      * 商品列表
+     *
      * @return
      */
     public String ordersList() {
         PageResult list = ordersService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
         ServletActionContext.getRequest().getSession().setAttribute("ordersGrid", list);
         return "ordersList";
+    }
+
+    /**
+     * 订单信息
+     * 地址信息
+     * 用户信息
+     * 钱包信息
+     * 商品信息
+     * 生成订单
+     */
+    public String orderInfo() {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", user.getId());
+        List<Useraddr> useraddrList = userAddrService.findAll(0, 10, null, null, null, map);
+        Purse purse = purseService.queryByUserId(user.getId());
+        Goods goods = goodsService.queryGoodsByPrimaryKey(getModel().getGoodsId());
+        List<Image> imageList = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
+        GoodsExtend goodsExtend = new GoodsExtend();
+        goodsExtend.setImages(imageList);
+        goodsExtend.setGoods(goods);
+        ServletActionContext.getRequest().setAttribute("user", user);
+        ServletActionContext.getRequest().setAttribute("purse", purse);
+        ServletActionContext.getRequest().setAttribute("useraddrList", useraddrList);
+        ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
+        return "orderInfo";
     }
 }

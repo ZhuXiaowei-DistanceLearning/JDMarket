@@ -1,177 +1,137 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-<!DOCTYPE html>
-<html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>我的闲置</title>
-    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
-    <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/emoji.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/userhome.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/user.css"/>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>个人中心 - 吉大商城</title>
+    <meta name="viewport" content="width=1200"/>
+    <link type="text/css" rel="stylesheet" href="./css/user/style.css"/>
+    <script type="text/javascript" src="./js/plugin/layer/layer.js"></script>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/global.js"></script>
+    <link rel="shortcut icon" type="./js/favicon.ico">
 </head>
 <body>
-<div class="pre-2" id="big_img">
-    <img src="http://findfun.oss-cn-shanghai.aliyuncs.com/images/head_loading.gif"
-         class="jcrop-preview jcrop_preview_s">
-</div>
-<div id="cover" style="min-height: 639px;">
-    <div id="user_area">
-        <div id="home_header">
-            <a href="<%=basePath%>goods/homeGoods">
-                <h1 class="logo"></h1>
-            </a>
-            <a href="<%=basePath%>goods/homeGoods">
-                <img src="<%=basePath%>img/home_header.png" style="margin-left: 20px;">
-            </a>
-            <a href="<%=basePath%>user/home">
-                <div class="home"></div>
-            </a>
+<jsp:include page="../common/user_header.jsp"></jsp:include>
+<div class="huiyuan_content">
+    <jsp:include page="../common/user_nav.jsp"></jsp:include>
+    <div class="fr huiyuan_main">
+        <div class="hy_tt">
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}" class="sel">全部订单<span>(${fn:length(orders)})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待付款<span>(${waitPay})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待发货<span>(${waitSend})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待收货<span>(${waitAccept})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">交易完成<span>(${finish})</span><i></i></a>
+            |
+            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj">待评价<span>(0)</span><i></i></a>
         </div>
-        <!--
-
-            描述：左侧个人中心栏
-        -->
-        <%@include file="/WEB-INF/pages/common/user_nav.jsp" %>
-        <!--
-
-            描述：右侧内容区域
-        -->
-        <div id="user_content">
-            <div class="share">
-                <!--
-
-                    描述：闲置商品展示
-                -->
-                <h1 style="text-align: center">我的闲置</h1>
-                <hr/>
-                <div class="share_content">
-                    <c:if test="${empty goodsAndImage}">
-                        <div class="no_share">
-                            <span>没有任何内容，去逛逛其它的吧！</span>
-                        </div>
-                    </c:if>
-                    <c:if test="${!empty goodsAndImage}">
-                        <c:forEach var="items" items="${goodsAndImage}">
-                            <div class="story">
-                                <a href="<%=basePath%>goods/goodsId/${items.goods.id}" class="head_img">
-                                    <img src="../upload/${items.images[0].imgUrl}">
-                                </a>
-                                <span class="name">${items.goods.name}</span>
-                                <span class="text"
-                                      style="overflow: hidden; outline: none;">${items.goods.describle}</span>
-                                <div class="box">
-                                    <div class="box_content">
-                                        <div class="left_shadow"></div>
-                                        <div class="left" index="1" style="display: none;"><</div>
-                                        <div class="right_shadow"></div>
-                                        <div class="left" index="3" style="display: none;">></div>
-                                        <img src="../upload/${items.images[0].imgUrl}" index="2">
-                                        <span class="com" style="display: none;left: 396.733px;"></span>
-                                    </div>
-                                    <div class="interact">
-                                        <span class="fa fa-edit fa-lg"><a
-                                                href="<%=basePath%>goods_editGoods?id=${items.goods.id}">编辑</a></span>
-                                        <c:if test="${items.goods.status ==1}">
-                                        <span class="fa fa-share fa-lg"><a
-                                                href="<%=basePath%>goods_updateGoodsTime?id=${items.goods.id}&status=${items.goods.status}">擦亮</a></span>
-                                        </c:if>
-                                            <%--  <span class="fa fa-commenting"><a>${items.comments.commetNum}</a></span> --%>
-                                        <c:if test="${items.goods.status ==1}">
-                                            <span class="time">${items.goods.startTime}</span>
-                                            <span class="fa fa-trash fa-lg"><a
-                                                    href="<%=basePath%>goods_myGoodsInfo?id=${items.goods.id}&status=${items.goods.status}">下架</a></span>
-                                        </c:if>
-                                        <c:if test="${items.goods.status ==0}">
-                                            <span class="fa fa-trash fa-lg"><a
-                                                    href="<%=basePath%>goods_myGoodsInfo?id=${items.goods.id}&status=${items.goods.status}">上架</a></span>
-                                        </c:if>
-                                    </div>
-                                    <br>
-                                    <div class="like_detail">
-                                        <div class="like_content">
-                                            <span>状态：${items.goods.status == 1 ? '正在销售':'已下架'}</span>
-                                        </div>
-                                        <div class="like_content">
-                                            <c:if test="${items.goods.status == 1}">
-                                                <span>最近更新时间：${items.goods.polishTime == null ? items.goods.startTime : items.goods.polishTime}</span>
-                                            </c:if>
-                                        </div>
-                                        <div class="like_content">
-                                            <c:if test="${items.goods.status == 0}">
-                                                <span>下架时间：${items.goods.endTime}</span>
-                                            </c:if>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="mat15">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_ordertt1">
+                <tr>
+                    <td>商品信息</td>
+                    <td width="100">退款/退货</td>
+                    <td width="121">实付款(元)</td>
+                    <td width="101">状态</td>
+                    <td width="101">操作</td>
+                </tr>
+            </table>
+        </div>
+        <c:forEach items="${ordersOfSell}" var="item">
+            <div class="hy_ordertt">
+                <span class="fl">${item.orderDate}</span>
+                <span class="fl" style="margin-left:30px">订单号：${item.orderNum}</span>
+                <div class="clear"></div>
+            </div>
+            <%--订单详情信息--%>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_orderlist">
+                <tr>
+                    <td style="text-align:left;">
+                        <div class="dingdan_list" style="padding-top:0;border-top:0">
+                            <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" class="fl mar5 dingdan_img"
+                               target="_blank"><img
+                                    src="<%=basePath%>/upload/${item.imgUrl}"/></a>
+                            <div class="fl dingdan_name">
+                                <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                   class="dd_name">${item.goods.name}</a>
+                                <p class="c888 mat5">${item.goods.describle}</p>
                             </div>
-                        </c:forEach>
-                    </c:if>
-                </div>
-            </div>
-            <!--
+                            <div class="fl dingdan_jg">${item.goods.price} <span class="mat5 c888 font12">×1</span>
+                            </div>
+                            <div class="fr dingdan_tk">
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                    <td width="120">
+                        <p class="corg font14 strong">${item.goods.price}</p>
+                        <p class="c999">（含运费：0.0）</p>
+                        <p class="c999">余额支付</p>
+                    </td>
+                    <td width="100">
+                        <c:if test="${item.orderState==0}">
+                            <span class="corg">待支付</span>
+                        </c:if>
+                        <c:if test="${item.orderState==1}">
+                            <span class="corg">去发货</span>
+                        </c:if>
+                        <c:if test="${item.orderState==2}">
+                            <span class="corg">已完成</span>
+                        </c:if>
+                        <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                    </td>
+                    <td width="100">
+                        <c:if test="${item.orderState==0}">
+                            <p class="tag_org">买家还未付款</p>
+                        </c:if>
+                        <c:if test="${item.orderState==1}">
+                            <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
+                               target="_blank">发货</a>
+                            <p class="mat5"><a class="c999"
+                                               href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                            </p>
+                        </c:if>
+                        <c:if test="${item.orderState==2}">
+                            <p class="tag_org" target="_blank">已完成</p>
+                        </c:if>
 
-                描述：最右侧，可能认识的人
-            -->
-            <div class="recommend">
-                <div class="title">
-                    <span class="text">可能认识的人</span>
-                    <span class="change">换一组</span>
-                    <span class="underline"></span>
-                </div>
-                <ul>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo1.jpg">
-                        </a>
-                        <span>Brudce</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo2.jpg">
-                        </a>
-                        <span>Graham</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo3.jpg">
-                        </a>
-                        <span>hly</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo4.jpg">
-                        </a>
-                        <span>Danger-XFH</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                    <li>
-                        <a href="" class="head_img">
-                            <img src="<%=basePath%>img/photo5.jpg">
-                        </a>
-                        <span>Keithw</span>
-                        <div class="fa fa-plus-square"></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                    </td>
+                </tr>
+            </table>
+        </c:forEach>
+        <div class="clear"></div>
     </div>
+    <div class="clear"></div>
 </div>
-
+<div class="clear"></div>
+<jsp:include page="../common/celan.jsp"></jsp:include>
+<jsp:include page="../common/user_footer.jsp"></jsp:include>
+<script type="text/javascript">
+    $(function () {
+        //二维码显示
+        $("#qrcode_btn").hover(function () {
+            $("#qrcode_show").show();
+        }, function () {
+            $("#qrcode_show").hide();
+        })
+        //电话显示
+        $("#tel_btn").hover(function () {
+            $("#tel_show").show();
+        }, function () {
+            $("#tel_show").hide();
+        })
+    });
+    function right_scrolltop() {
+        $("body,html").animate({"scrollTop": 0});
+    }
+    pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
+</script>
 </body>
 </html>

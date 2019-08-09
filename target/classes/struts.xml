@@ -59,7 +59,7 @@
             <!--登录成功-->
             <result name="login" type="redirect">goods_homeGoods.action</result>
             <!--我的闲置-->
-            <result name="sellProductByUser" type="dispatcher">page_user_goods.action</result>
+            <result name="sellProductByUser">/WEB-INF/pages/user/goods.jsp</result>
             <!--关注列表-->
             <result name="focus">/WEB-INF/pages/user/focus.jsp</result>
             <!--个人设置-->
@@ -68,6 +68,8 @@
             <result name="updateUserInfo" type="redirect">user_basic.action</result>
             <!--个人中心-->
             <result name="home">/WEB-INF/pages/user/home.jsp</result>
+            <!--退出-->
+            <result name="logout">page_common_user_login.action</result>
         </action>
         <action name="purse_*" class="purseController" method="{1}">
             <!--用户余额-->
@@ -86,6 +88,8 @@
             <result name="updateGoodsInfo">orders_myOrders.action</result>
             <!--商品列表-->
             <result name="ordersList">/WEB-INF/pages/admin/orders/orders_list.jsp</result>
+            <!--订单页面-->
+            <result name="orderInfo">/WEB-INF/pages/goods/orderInfo.jsp</result>
         </action>
         <action name="focus_*" class="focusController" method="{1}">
             <!--删除购物车-->
@@ -100,6 +104,11 @@
             <result name="logout">page_common_user_login.action</result>
             <!--用户列表-->
             <result name="userList">/WEB-INF/pages/admin/user/user_list.jsp</result>
+        </action>
+        <action name="userAddr_*" class="userAddrController" method="{1}">
+            <!--所有地址-->
+            <result name="findAll">/WEB-INF/pages/user/userAddr.jsp</result>
+            <result name="addAddr" type="redirect">userAddr_findAll.action</result>
         </action>
         <action name="page_*_*">
             <result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>

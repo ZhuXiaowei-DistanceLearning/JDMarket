@@ -10,7 +10,7 @@
     <a href="<%=basePath%>/user_home"><h3 class="hy_tb6"><s></s>个人中心</h3></a>
     <h3 class="hy_tb2"><s></s>交易管理</h3>
     <ul>
-        <li><a href="<%=basePath%>/user_myOrders" >我的订单</a></li>
+        <li><a href="<%=basePath%>/orders_myOrders" >我的订单</a></li>
         <li><a href="<%=basePath%>/user_queryBySellProduct" >我的闲置</a></li>
         <li><a href="<%=basePath%>/user_myComment" >我的评价</a></li>
         <%--<li><a href="user.php?mod=collect" >我的收藏</a></li>--%>
@@ -22,15 +22,15 @@
         <%--<li><a href="user.php?mod=quan" >我的优惠券</a></li>--%>
         <%--<li><a href="user.php?mod=moneylog" >资金明细</a></li>--%>
         <%--<li><a href="user.php?mod=pointlog" >积分明细</a></li>--%>
-        <li><a href="<%=basePath%>/purse_money" >充值/提现</a></li>
+        <li><a href="<%=basePath%>/purse_getMoney" >充值/提现</a></li>
     </ul>
     <div class="xuxian"></div>
     <h3 class="hy_tb3"><s></s>用户设置</h3>
     <ul>
-        <li><a href="user.php?mod=setting&act=base" >个人信息</a></li>
+        <li><a href="<%=basePath%>/user_basic" >个人信息</a></li>
         <%--<li><a href="user.php?mod=setting&act=pw" >修改密码</a></li>--%>
         <%--<li><a href="user.php?mod=userbank" >收款账户</a></li>--%>
-        <li><a href="user.php?mod=useraddr" >收货地址</a></li>
+        <li><a href="<%=basePath%>/userAddr_findAll?page=1&rows=10" >收货地址</a></li>
     </ul>
     <%--<div class="xuxian"></div>--%>
     <%--<h3 class="hy_tb5"><s></s>分销中心</h3>--%>

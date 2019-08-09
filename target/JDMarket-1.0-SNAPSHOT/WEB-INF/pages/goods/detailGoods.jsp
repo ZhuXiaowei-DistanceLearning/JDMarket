@@ -1,11 +1,12 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ page language="java" import="com.zxw.pojo.User" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    User user = (User) request.getSession().getAttribute("cur_user");
 %>
-
+<c:set var="user" value="<%=user%>"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -160,7 +161,12 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td>
-                            <a href="javascript:buy_btn('buy', ${goodsExtend.goods.id});" class="fl ljgm">立即购买</a>
+                            <c:if test="${user!=null}">
+                                <a href="<%=basePath%>/orders_orderInfo?goodsId=${goodsExtend.goods.id}" class="fl ljgm">立即购买</a>
+                            </c:if>
+                            <c:if test="${user==null}">
+                                <a href="<%=basePath%>/page_common_user_login" class="fl ljgm">立即购买</a>
+                            </c:if>
                             <a href="javascript:buy_btn('add', ${goodsExtend.goods.id});" class="fl jiagwc"><i></i>加入购物车</a>
                             <div class="clear"></div>
                         </td>
@@ -398,7 +404,7 @@
             $.ajax({
                 url: "<%=basePath%>focus_addCart",
                 data: {'goodsId': id},
-                type:"post",
+                type: "post",
                 success: function () {
                     alert(data);
                     if (data == "success") {
@@ -428,9 +434,7 @@
                 }
             })
         } else if (act == 'buy') {
-            $.post("<%=basePath%>focus_addCart", id, function (data) {
-                $(".result").html(data);
-            });
+
         }
     }
     //规格检测

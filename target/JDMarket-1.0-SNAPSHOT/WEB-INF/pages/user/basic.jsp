@@ -1,202 +1,110 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>个人信息 - PHPSHE B2C商城系统演示站 - Powered by phpshe</title>
-    <meta name="viewport" content="width=1200" />
-    <meta name="keywords" content="免费商城系统,网上商城系统,多用户商城系统,分销商城系统,微信商城系统,商城源码,手机移动商城系统,b2b2c商城系统,网店系统,购物系统,php商城系统,phpshe,简好网络" />
-    <meta name="description" content="PHPSHE网上商城系统具备电商零售业务所需的所有基本功能，以其安全稳定、简单易用、高效专业等优势赢得了用户的广泛好评，为用户提供了一个低成本、高效率的网上商城建设方案。" />
-    <meta name="viewport" content="width=1200" />
-    <link rel="shortcut icon" type="image/ico" href="http://www.phpshe.com/demo/phpshe/favicon.ico">
-    <link type="text/css" rel="stylesheet" href="http://www.phpshe.com/demo/phpshe/template/default/user/css/style.css" />
-    <script type="text/javascript" src="http://www.phpshe.com/demo/phpshe/include/js/jquery.js"></script>
-    <script type="text/javascript" src="http://www.phpshe.com/demo/phpshe/include/js/global.js"></script>
-    <script type="text/javascript" src="http://www.phpshe.com/demo/phpshe/include/plugin/layer/layer.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>个人中心 - 吉大商城</title>
+    <meta name="viewport" content="width=1200"/>
+    <link type="text/css" rel="stylesheet" href="./css/user/style.css"/>
+    <script type="text/javascript" src="./js/plugin/layer/layer.js"></script>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/global.js"></script>
+    <script type="text/javascript" src="./js/formcheck.js"></script>
+    <link rel="shortcut icon" type="./js/favicon.ico">
 </head>
 <body>
-<div class="quick_menu">
-    <div class="width980">
-        <span class="fl">欢迎来到PHPSHE B2C商城系统演示站！</span>
-        <div class="fr top_r">
-            您好：<a href="http://www.phpshe.com/demo/phpshe/user.php" style="color:#DF002F;padding:0;border:0">zxcasdqwe</a>
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=do&act=logout" title="退出" style="padding-left:0;color:#999">[退出]</a>
-
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order" title="我的订单" class="scj">我的订单</a>
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=sign" title="签到有礼">签到有礼</a>
-            <a href="http://www.phpshe.com/demo/phpshe/article/news" title="资讯中心" style="border-right:0;">资讯中心</a>
-        </div>
-        <div class="clear"></div>
-    </div>
-</div>
-<div style="background:#E45050; padding-bottom:20px; position:relative">
-    <div class="width980">
-        <div class="fl logo">
-            <a href="http://www.phpshe.com/demo/phpshe/user.php">会员中心</a>
-        </div>
-        <div class="user_nav">
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/" title="首页">首页</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/brand/list" title="品牌专区" >品牌专区</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/quan/list" title="领券中心" >领券中心</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/huodong/zhekou" title="限时折扣" >限时折扣</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/huodong/pintuan" title="限时拼团" >限时拼团</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/" title="简好网络" >简好网络</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/phpshe" title="购买授权" >购买授权</a></h3></li>
-        </div>
-        <div class="sear fr">
-            <form method="get" action="http://www.phpshe.com/demo/phpshe/index.php">
-                <input type="hidden" name="mod" value="product" />
-                <input type="hidden" name="act" value="list" />
-                <div class="inputbg fl"><input type="text" name="keyword" value="" class="fl searinput c666" /></div>
-                <input type="submit" class="fl sear_btn" onclick="this.form.submit();return false;" value="搜 索" />
-            </form>
-            <div class="clear"></div>
-        </div>
-        <div class="clear"></div>
-    </div>
-</div>
+<jsp:include page="../common/user_header.jsp"></jsp:include>
 <div class="huiyuan_content">
-    <div class="huiyuan_left">
-        <a href="user.php"><h3 class="hy_tb6"><s></s>个人中心</h3></a>
-        <h3 class="hy_tb2"><s></s>交易管理</h3>
-        <ul>
-            <li><a href="user.php?mod=order" >我的订单</a></li>
-            <li><a href="user.php?mod=comment" >我的评价</a></li>
-            <li><a href="user.php?mod=collect" >我的收藏</a></li>
-            <li><a href="user.php?mod=refund" >退款/退货</a></li>
-        </ul>
-        <div class="xuxian"></div>
-        <h3 class="hy_tb4"><s></s>财务中心</h3>
-        <ul>
-            <li><a href="user.php?mod=quan" >我的优惠券</a></li>
-            <li><a href="user.php?mod=moneylog" >资金明细</a></li>
-            <li><a href="user.php?mod=pointlog" >积分明细</a></li>
-            <li><a href="user.php?mod=pay" >充值/提现</a></li>
-        </ul>
-        <div class="xuxian"></div>
-        <h3 class="hy_tb3"><s></s>用户设置</h3>
-        <ul>
-            <li><a href="user.php?mod=setting&act=base" class="sel">个人信息</a></li>
-            <li><a href="user.php?mod=setting&act=pw" >修改密码</a></li>
-            <li><a href="user.php?mod=userbank" >收款账户</a></li>
-            <li><a href="user.php?mod=useraddr" >收货地址</a></li>
-        </ul>
-        <div class="xuxian"></div>
-        <h3 class="hy_tb5"><s></s>分销中心</h3>
-        <ul>
-            <li><a href="user.php?mod=tg" >邀请好友</a></li>
-            <li style="padding-bottom:20px"><a href="user.php?mod=tg&act=list" >我的收益</a></li>
-        </ul>
-    </div>	<div class="fr huiyuan_main">
-    <div class="hy_tt"><a href="javascript:;" class="sel">个人信息<i></i></a></div>
-    <div class="hy_table">
-        <form method="post" id="form">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td style="text-align:right;" width="150">用&nbsp;&nbsp;户 名：</td>
-                    <td>zxcasdqwe</td>
-                </tr>
-                <tr>
-                    <td style="text-align:right;">会员等级：</td>
-                    <td><span class="dj_btn">注册用户</span></td>
-                </tr>
-                <tr>
-                    <td style="text-align:right;">真实姓名：</td>
-                    <td><input type="text" name="user_tname" value="" class="inputall input200" /></td>
-                </tr>
-                <tr>
-                    <td style="text-align:right;">手机号码：</td>
-                    <td><input type="text" name="user_phone" value="12345678901" class="inputall input200" /></td>
-                </tr>
-                <tr>
-                    <td style="text-align:right;">电子邮箱：</td>
-                    <td><input type="text" name="user_email" value="" class="inputall input200" /></td>
-                </tr>
-                <tr>
-                    <td style="text-align:right;">注册日期：</td>
-                    <td>2019-08-08 10:36</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="hidden" name="pe_token" value="02982eac90343ed2d9a3ff9f0636aafc" />
-                        <input type="hidden" name="pesubmit" />
-                        <input type="button" value="提 交"  class="tjbtn" />
-                    </td>
-                </tr>
-            </table>
-        </form>
+    <jsp:include page="../common/user_nav.jsp"></jsp:include>
+    <div class="fr huiyuan_main">
+        <div class="hy_tt"><a href="javascript:;" class="sel">个人信息<i></i></a></div>
+        <div class="hy_table">
+            <form method="post" id="form" action="<%=basePath%>/user_updateUserInfo">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td style="text-align:right;" width="150">用&nbsp;&nbsp;户 名：</td>
+                        <td><input type="text" id="username" name="username" class="inputall input200"
+                                   value="${user.username}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">身份：</td>
+                        <td><span class="dj_btn">注册用户</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;" width="150">手&nbsp;&nbsp;机：</td>
+                        <td>${user.phone}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;" width="150">密&nbsp;&nbsp;码：</td>
+                        <td><input type="password" id="password" name="password" class="inputall input200"
+                                   value="${user.password}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;" width="150">qq：</td>
+                        <td><input type="text" id="qq" name="qq" value="${user.qq}" class="inputall input200"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;" width="150">创建时间：</td>
+                        <td>${user.createAt}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">信用分：</td>
+                        <td>${user.power}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="hidden" name="pe_token" value="02982eac90343ed2d9a3ff9f0636aafc"/>
+                            <input type="hidden" name="pesubmit"/>
+                            <input type="button" value="提 交" class="tjbtn" id="updateInfo"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
-</div>
     <div class="clear"></div>
 </div>
 <script type="text/javascript">
-    $(function(){
-        $(":button").click(function(){
-            pe_submit("user.php?mod=setting&act=base");
-        })
-    })
+    $(function () {
+        $("#username").blur(function () {
+            if ($("#username").val() == "" || $("#username").val() == "null") {
+                $("#username").after("&nbsp;&nbsp;&nbsp;<p style='display: inline-block;color: red'>不能为空</p>")
+            }
+        });
+        $("#password").blur(function () {
+            if ($("#password").val() == "" || $("#password").val() == "null") {
+                $("#password").after("&nbsp;&nbsp;&nbsp;<p style='display: inline-block;color: red'>不能为空</p>")
+            }
+        });
+        $("#qq").blur(function () {
+            if ($("#qq").val() == "" || $("#qq").val() == "null") {
+                $("#qq").after("&nbsp;&nbsp;&nbsp;<p style='display: inline-block;color: red'>不能为空</p>")
+            }
+        });
+
+        $("#updateInfo").click(function () {
+            if ($("#qq").val() != "" && $("#qq").val() != "" && $("#qq").val() != "") {
+                $("#form").submit();
+            } else {
+                alert("不能为空");
+            }
+        });
+    });
 </script>
 <div class="clear"></div>
-<div class="celan">
-    <a href="http://www.phpshe.com/demo/phpshe/cart" style="margin-top:90px;">
-        <div class="cl_sl">2</div>
-        <div class="ico_gwc"><i></i></div>
-        <div class="font14 mat8">购<br />物<br />车</div>
-    </a>
-    <a href="http://www.phpshe.com/demo/phpshe/android.apk" target="_blank">
-        <div class="cl_app">APP</div>
-        <div class="ico_app"><i></i></div>
-    </a>
-    <a href="javascript:;" style="position:relative" id="qrcode_btn">
-        <div class="cl_weixin"><i></i></div>
-        <div class="cl_ewm" id="qrcode_show"><img src="http://www.phpshe.com/demo/phpshe/data/attachment/2017-05/20170503193748z.jpg"></div>
-    </a>
-    <a href="http://wpa.qq.com/msgrd?v=3&uin=76265959&site=qq&menu=yes" target="_blank">
-        <div class="cl_qq"><i></i></div>
-    </a>
-    <a href="javascript:;" style="position:relative" id="tel_btn">
-        <div class="font14">电话</div>
-        <div class="cl_tel" id="tel_show">15839823500</div>
-    </a>
-    <a href="javascript:right_scrolltop();" class="topback"><i></i></a>
-</div>
-<div class="foot">
-    <div class="subnav">
-        Copyright <span class="num">©</span> 2008-2018 简好网络 All Rights Reserved 豫ICP备17013559号-1 &nbsp;
-        Powered by <a href="http://www.phpshe.com" target="_blank" title="PHPSHE商城系统">phpshe1.7</a>
-    </div>
-</div>
-<div style="background:url('http://www.phpshe.com/template/default/index/images/small_phone.png') no-repeat; width:291px;height:483px; position:fixed; right:60px; bottom:10px;z-index:999999" id="phone_html">
-    <div style="position:relative">
-        <span style="background:url('http://www.phpshe.com/template/default/index/images/phone_close.png') no-repeat; width:14px; height:14px; position:absolute; right:18px; top:10px" onclick='$("#phone_html").remove()'></span>
-    </div>
-    <iframe name="mobile_iframe" style="width: 265px; height: 400px; border: medium none; margin:33px 0 0 13px" src="http://m.phpshe.com/demo/phpshe/"></iframe>
-</div>
+<jsp:include page="../common/celan.jsp"></jsp:include>
+<jsp:include page="../common/user_footer.jsp"></jsp:include>
 <script type="text/javascript">
-    $(function(){
-        //二维码显示
-        $("#qrcode_btn").hover(function(){
-            $("#qrcode_show").show();
-        }, function(){
-            $("#qrcode_show").hide();
-        })
-        //电话显示
-        $("#tel_btn").hover(function(){
-            $("#tel_show").show();
-        }, function(){
-            $("#tel_show").hide();
-        })
-    });
     function right_scrolltop() {
-        $("body,html").animate({"scrollTop":0});
+        $("body,html").animate({"scrollTop": 0});
     }
     pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
 </script>
