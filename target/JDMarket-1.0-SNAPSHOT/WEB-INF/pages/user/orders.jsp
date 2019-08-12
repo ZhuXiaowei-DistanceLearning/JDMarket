@@ -27,7 +27,7 @@
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}" class="sel">全部订单<span>(${fn:length(orders)})</span><i></i></a> |
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待发货<span>(${waitPay})</span><i></i></a> |
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待收货<span>(${waitSend})</span><i></i></a> |
-            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待收货<span>(${waitAccept})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">已收货<span>(${waitAccept})</span><i></i></a> |
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">交易完成<span>(${finish})</span><i></i></a>
             |
             <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj">待评价<span>(0)</span><i></i></a>
@@ -87,11 +87,23 @@
                         <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
                     </td>
                     <td width="100">
-                        <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
-                           target="_blank">立即付款</a>
-                        <p class="mat5"><a class="c999"
-                                           href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
-                        </p>
+                        <c:choose>
+                            <c:when test="${item.orderState==0}">
+                                <a class="tag_org" href="<%=basePath%>/orders_goPay?id=${item.id}&goodsId=${item.goods.id}">立即付款</a>
+                                <p class="mat5"><a class="c999"
+                                                   href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                                </p>
+                            </c:when>
+                            <c:when test="${item.orderState==1}">
+                                <span class="tag_org">等待发货</span>
+                            </c:when>
+                            <c:when test="${item.orderState==2}">
+                                <a class="tag_org" href="<%=basePath%>/orders_deliver?orderNum=${item.orderNum}">确认收货</a>
+                            </c:when>
+                            <c:when test="${item.orderState==3}">
+                                <span class="tag_org">订单已完成</span>
+                            </c:when>
+                        </c:choose>
                     </td>
                 </tr>
             </table>

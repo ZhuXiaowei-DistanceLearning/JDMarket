@@ -20,6 +20,88 @@ public class Orders {
     private String orderInformation;
     private String orderDate;
     private String imgUrl;
+    private Integer userAddrId;
+    private String orderPtime; // 付款时间
+    private String orderStime; // 发货时间
+    private String orderFtime; // 完成时间
+    private String orderPayment;
+    private String orderPaymentName;
+    private String orderClosetext;
+
+    private Useraddr useraddr;
+    @Basic
+    @Column(name = "user_addr_id")
+    public Integer getUserAddrId() {
+        return userAddrId;
+    }
+
+    public void setUserAddrId(Integer userAddrId) {
+        this.userAddrId = userAddrId;
+    }
+    @Basic
+    @Column(name = "order_ptime")
+    public String getOrderPtime() {
+        return orderPtime;
+    }
+
+    public void setOrderPtime(String orderPtime) {
+        this.orderPtime = orderPtime;
+    }
+    @Basic
+    @Column(name = "order_stime")
+    public String getOrderStime() {
+        return orderStime;
+    }
+
+    public void setOrderStime(String orderStime) {
+        this.orderStime = orderStime;
+    }
+    @Basic
+    @Column(name = "order_ftime")
+    public String getOrderFtime() {
+        return orderFtime;
+    }
+
+    public void setOrderFtime(String orderFtime) {
+        this.orderFtime = orderFtime;
+    }
+    @Basic
+    @Column(name = "order_payment")
+    public String getOrderPayment() {
+        return orderPayment;
+    }
+
+    public void setOrderPayment(String orderPayment) {
+        this.orderPayment = orderPayment;
+    }
+    @Basic
+    @Column(name = "order_payment_name")
+    public String getOrderPaymentName() {
+        return orderPaymentName;
+    }
+
+    public void setOrderPaymentName(String orderPaymentName) {
+        this.orderPaymentName = orderPaymentName;
+    }
+    @Basic
+    @Column(name = "order_closetext")
+    public String getOrderClosetext() {
+        return orderClosetext;
+    }
+
+    public void setOrderClosetext(String orderClosetext) {
+        this.orderClosetext = orderClosetext;
+    }
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)//cascade级联状态，fetch是懒加载还是立即
+    @JoinColumn(name = "user_addr_id", insertable = false, updatable = false)
+    public Useraddr getUseraddr() {
+        return useraddr;
+    }
+
+    public void setUseraddr(Useraddr useraddr) {
+        this.useraddr = useraddr;
+    }
 
     @Transient
     public String getImgUrl() {

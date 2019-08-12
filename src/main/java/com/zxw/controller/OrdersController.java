@@ -3,6 +3,8 @@ package com.zxw.controller;
 import com.zxw.controller.base.BaseController;
 import com.zxw.pojo.*;
 import com.zxw.service.*;
+import com.zxw.util.IdWorker;
+import com.zxw.util.MD5;
 import com.zxw.vo.PageResult;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,15 @@ public class OrdersController extends BaseController<Orders> {
     private ImageService imageService;
     @Autowired
     private UserAddrService userAddrService;
+    private String payPassword;
+
+    public String getPayPassword() {
+        return payPassword;
+    }
+
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
+    }
 
     /**
      * 我的订单
@@ -66,8 +77,10 @@ public class OrdersController extends BaseController<Orders> {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         Orders orders = getModel();
         orders.setUserId(user.getId());
-        orders.setOrderState(1);
+        orders.setOrderState(0);
         orders.setOrderDate(sdf.format(new Date()));
+        IdWorker idWorker = new IdWorker();
+        orders.setOrderNum(idWorker.nextId());
         Goods goods = new Goods();
         // 更新商品状态，已被购买，下架
         Goods buyGoods = goodsService.buyGoods(orders.getGoodsId());
@@ -75,11 +88,11 @@ public class OrdersController extends BaseController<Orders> {
         catelogService.updateCatelogByGoods(buyGoods.getCatelogId());
         // 创建订单信息
         ordersService.addOrders(orders);
-        Double balance = orders.getOrderPrice();
-        // 更新用户余额
-        purseService.updatePurseOfDel(user.getId(), balance);
-        return "addOrder";
+        ServletActionContext.getRequest().setAttribute("orders", orders);
+        ServletActionContext.getRequest().setAttribute("purse", purseService.queryByUserId(user.getId()));
+        return "payInfo";
     }
+
 
     /**
      * 发货
@@ -87,7 +100,7 @@ public class OrdersController extends BaseController<Orders> {
      * @return
      */
     public String deliver() {
-        ordersService.updateDeliverInfo(getModel().getGoodsId());
+        ordersService.updateDeliverInfo(getModel().getOrderNum());
         return "updateGoodsInfo";
     }
 
@@ -102,6 +115,49 @@ public class OrdersController extends BaseController<Orders> {
         return "ordersList";
     }
 
+    /**
+     * 支付
+     */
+    public String pay() {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Orders orders = ordersService.findById(getModel().getId());
+        Goods goods = goodsService.queryGoodsByPrimaryKey(getModel().getGoodsId());
+        orders.setOrderPrice(getModel().getOrderPrice());
+        // 更新用户余额
+        purseService.updatePurseOfDel(user.getId(),getModel().getOrderPrice());
+        // 更新商品状态信息
+        goodsService.updateGoodsInfo(goods.getId(),goods.getStatus());
+        // 更新订单状态
+        ordersService.updateDeliverInfo(orders.getOrderNum());
+        orders.setOrderPtime(sdf.format(new Date()));
+        return "pay";
+    }
+
+    /**
+     * 支付密码验证
+     */
+    public String checkPay() {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        if (!MD5.md5(payPassword).equals(user.getPassword())) {
+            writePageBean2Json("error");
+        } else {
+            writePageBean2Json("success");
+        }
+        return NONE;
+    }
+
+    /**
+     * 去付款
+     */
+    public String goPay(){
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        Purse purse = purseService.queryByUserId(user.getId());
+        Orders orders = ordersService.findById(getModel().getId());
+        ServletActionContext.getRequest().setAttribute("orders", orders);
+        ServletActionContext.getRequest().setAttribute("purse", purse);
+        return "payInfo";
+    }
     /**
      * 订单信息
      * 地址信息

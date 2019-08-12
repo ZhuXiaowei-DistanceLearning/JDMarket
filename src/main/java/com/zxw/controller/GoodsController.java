@@ -77,6 +77,23 @@ public class GoodsController extends BaseController<Goods> {
     }
 
     /**
+     * 查看我的发布
+     */
+    public String mySell(){
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        List<Goods> list = goodsService.queryGoodsByUserId(user.getId());
+        List<GoodsExtend> goodsExtendList = new ArrayList<>();
+        for (Goods goods : list) {
+            GoodsExtend goodsExtend = new GoodsExtend();
+            List<Image> images = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
+            goodsExtend.setGoods(goods);
+            goodsExtend.setImages(images);
+            goodsExtendList.add(goodsExtend);
+        }
+        ServletActionContext.getRequest().setAttribute("goodsList",goodsExtendList);
+        return "mySell";
+    }
+    /**
      * 发布商品信息
      */
     public String publishGoods() {
@@ -86,6 +103,7 @@ public class GoodsController extends BaseController<Goods> {
         if (goods.getPolishTime() != null && goods.getPolishTime() != "") {
             goods.setUserId(cur_user.getId());
             goods.setStatus(1);
+            goods.setId(0);
             goodsService.addGoods(goods, 10);
             int goodsId = goods.getId();
             // 插入图片数据
@@ -100,7 +118,7 @@ public class GoodsController extends BaseController<Goods> {
             goodsService.addGoods(goods, 10);
             int goodsId = goods.getId();
             // 插入图片数据
-            Image image = new Image();
+             Image image = new Image();
             image.setGoodsId(goodsId);
             image.setImgUrl(imgUrl);
             imageService.insert(image);
@@ -138,6 +156,7 @@ public class GoodsController extends BaseController<Goods> {
             map.put("imgUrl", myfileFileName);
             writePageBean2Json(map);
         } catch (IOException e) {
+            e.printStackTrace();
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("error", "图片不合法");
             writePageBean2Json(map);
@@ -159,7 +178,6 @@ public class GoodsController extends BaseController<Goods> {
         goodsExtend.setGoods(goods);
         goodsExtend.setImages(list);
         Purse purse = purseService.queryByUserId(user.getId());
-        ServletActionContext.getRequest().setAttribute("myPurse", purse);
         ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
         return "editGoods";
     }

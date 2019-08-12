@@ -54,13 +54,16 @@ public class OrdersService {
         ordersMapper.saveOrUpdate(orders);
     }
 
-    public void updateDeliverInfo(int goodsId) {
+    public void updateDeliverInfo(Long goodsId) {
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Orders.class);
-        detachedCriteria.add(Restrictions.eq("orderNum", Long.valueOf(goodsId)));
+        detachedCriteria.add(Restrictions.eq("orderNum", goodsId));
         Orders orders = ordersMapper.findByCriteria(detachedCriteria).get(0);
         Integer state = orders.getOrderState();
         // 1.未发货 2.发货 3.已完成
-        if (state == 1) {
+        if (state == 0) {
+            orders.setOrderState(1);
+            ordersMapper.update(orders);
+        } else if (state == 1) {
             orders.setOrderState(2);
             ordersMapper.update(orders);
         } else if (state == 2) {
@@ -73,5 +76,13 @@ public class OrdersService {
         List<Orders> all = ordersMapper.findAll(page, rows, o, o1, o2);
         long count = ordersMapper.count();
         return new PageResult(count, all);
+    }
+
+    public void updateOrders(Orders orders) {
+        ordersMapper.update(orders);
+    }
+
+    public Orders findById(int id) {
+        return ordersMapper.findById(id);
     }
 }

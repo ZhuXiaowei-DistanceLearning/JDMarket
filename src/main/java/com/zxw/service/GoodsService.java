@@ -71,6 +71,7 @@ public class GoodsService {
     public void addGoods(Goods goods, int i) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         goods.setStartTime(sdf.format(new Date()));
+        goods.setPolishTime(sdf.format(new Date()));
         goodsMapper.saveOrUpdate(goods);
     }
 

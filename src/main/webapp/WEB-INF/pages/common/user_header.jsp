@@ -15,14 +15,15 @@
 <body>
 <div class="quick_menu">
     <div class="width980">
-        <span class="fl">欢迎来到PHPSHE B2C商城系统演示站！</span>
+        <span class="fl">欢迎使用吉大商城</span>
         <div class="fr top_r">
-            您好：<a href="http://www.phpshe.com/demo/phpshe/user.php" style="color:#DF002F;padding:0;border:0">zxcasdqwe</a>
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=do&act=logout" title="退出" style="padding-left:0;color:#999">[退出]</a>
-
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order" title="我的订单" class="scj">我的订单</a>
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=sign" title="签到有礼">签到有礼</a>
-            <a href="http://www.phpshe.com/demo/phpshe/article/news" title="资讯中心" style="border-right:0;">资讯中心</a>
+            <c:set var="user" value="${sessionScope.cur_user}"></c:set>
+            <c:if test="${user!=null}">
+                您好：<a href="<%=basePath%>/user_home" style="color:#DF002F;padding:0;border:0">${user.username}</a>
+                <a href="<%=basePath%>/user_logout" title="退出" style="padding-left:0;color:#999">[退出]</a>
+            </c:if>
+            <a href="<%=basePath%>/orders_myOrders" title="我的订单" class="scj">我的订单</a>
+            <a href="<%=basePath%>/user_home" title="个人中心" style="border-right:0;">个人中心</a>
         </div>
         <div class="clear"></div>
     </div>

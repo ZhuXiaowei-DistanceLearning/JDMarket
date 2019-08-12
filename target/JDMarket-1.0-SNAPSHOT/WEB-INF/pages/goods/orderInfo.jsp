@@ -36,7 +36,7 @@
 <jsp:include page="../common/index_header.jsp"></jsp:include>
 <jsp:include page="../common/goods_nav.jsp"></jsp:include>
 <div class="content">
-    <form method="post" id="form">
+    <form method="post" id="form" action="<%=basePath%>/orders_addOrder">
         <div class="dd_box">
             <div class="liucheng">收货地址</div>
             <c:if test="${useraddrList!=null}">
@@ -64,7 +64,7 @@
                 <ul>
                     <li class="js_radio">
                         <label for="order_payment_balance">
-                            <input type="radio" name="order_payment" value="balance" id="order_payment_balance"
+                            <input type="radio" name="orderPayment" value="balance" id="order_payment_balance"
                                    style="display:none"/>
                             <img src="http://www.phpshe.com/demo/phpshe/include/plugin/payment/balance/logo.png"
                                  class="fl"/>
@@ -75,7 +75,7 @@
                     </li>
                     <li class="js_radio">
                         <label for="order_payment_alipay">
-                            <input type="radio" name="order_payment" value="alipay" id="order_payment_alipay"
+                            <input type="radio" name="orderPayment" value="alipay" id="order_payment_alipay"
                                    style="display:none"/>
                             <img src="http://www.phpshe.com/demo/phpshe/include/plugin/payment/alipay/logo.png"
                                  class="fl"/>
@@ -86,11 +86,6 @@
                 </ul>
                 <div class="clear"></div>
             </div>
-            <!--<div class="xuxian mat20"></div>
-            <div class="liucheng">订单备注</div>
-            <div class="mat20" style="margin-left:45px;">
-                <input type="text" name="order_text" class="inputall input350" placeholder="填写您的其他要求" />
-            </div>-->
             <div class="xuxian mat20"></div>
             <div class="liucheng">商品清单</div>
             <div style="margin:20px 45px 0 45px;">
@@ -126,29 +121,30 @@
                 <div class="fukuan">
                     <div class="fl" style="padding:5px 10px; width:600px;">
                         <div class="mat10">
-                            订单留言：<input type="text" name="order_text" placeholder="请填写您的其他要求" class="ds_input"
+                            订单留言：<input type="text" name="orderInformation" placeholder="请填写您的其他要求" class="ds_input"
                                         style="width:320px"/>
                         </div>
-                        <div class="mat20">
-                            <span class="fl">店铺优惠：</span>
-                            <div class="fl">
-                                <select name="order_quan_id" class="yhq_select">
-                                    <option value="0" quan_money="0.0">不使用优惠券</option>
+                        <%--<div class="mat20">--%>
+                        <%--<span class="fl">店铺优惠：</span>--%>
+                        <%--<div class="fl">--%>
+                        <%--<select name="order_quan_id" class="yhq_select">--%>
+                        <%--<option value="0" quan_money="0.0">不使用优惠券</option>--%>
 
-                                </select>
-                            </div>
-                            <!--<a href="javascript:quan_duihuan_open();" class="mal10 cblue" style="text-decoration:underline">我要兑换</a>-->
-                            <div class="clear"></div>
-                        </div>
+                        <%--</select>--%>
+                        <%--</div>--%>
+                        <%--<!--<a href="javascript:quan_duihuan_open();" class="mal10 cblue" style="text-decoration:underline">我要兑换</a>-->--%>
+                        <%--<div class="clear"></div>--%>
+                        <%--</div>--%>
                         <!--<div class="mat15">账户积分：<span class="c888">10积分，可抵：0.1元，本次使用：<input type="text" name="order_point_use" class="ds_input"> 积分</span></div>-->
-                        <div class="mat15">本次使用：<input type="text" name="order_point_use" class="ds_input"> 积分</span>
-                            <span class="c999 mal10">（积分余额：10个，可抵：0.1元）</span></div>
+                        <%--<div class="mat15">本次使用：<input type="text" name="order_point_use" class="ds_input"> 积分</span>--%>
+                            <%--<span class="c999 mal10">（积分余额：10个，可抵：0.1元）</span></div>--%>
                     </div>
                     <div class="fk_tb">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td>商品金额：</td>
-                                <td width="80" class="num font14 cfen">¥ <span id="order_product_money">${goodsExtend.goods.price}</span></td>
+                                <td width="80" class="num font14 cfen">¥ <span
+                                        id="order_product_money">${goodsExtend.goods.price}</span></td>
                             </tr>
                             <tr>
                                 <td>运费：</td>
@@ -164,64 +160,34 @@
                             </tr>
                             <tr>
                                 <td>应付金额：</td>
-                                <td class="num font18 cfen strong">¥ <span id="order_money">${goodsExtend.goods.price}</span></td>
+                                <td class="num font18 cfen strong">¥ <span
+                                        id="order_money">${goodsExtend.goods.price}</span></td>
                             </tr>
                         </table>
                     </div>
                     <div class="clear"></div>
                 </div>
                 <div class="ddtj_btn_box" style="background:none;">
-                    <input type="hidden" name="address_id"/>
-                    <input type="hidden" name="pesubmit"/>
+                    <input type="hidden" name="userAddrId" id="userAddrId"/>
+                    <input type="hidden" name="goodsId" value="${goodsExtend.goods.id}"/>
+                    <input type="hidden" name="orderPrice" value="${goodsExtend.goods.price}"/>
+                    <input type="hidden" name="orderPayment" value="balance"/>
+                    <input type="hidden" name="orderPaymentName" value="余额"/>
                     <input type="button" class="ddtj_btn ddtj_btn1" id="order_btn" value="提交订单"/>
                     <a href="http://www.phpshe.com/demo/phpshe/cart" class="fhgw fr">< 返回购物车</a>
                 </div>
             </div>
         </div>
     </form>
-    <script type="text/html" id="quan_duihuan_html">
-        <form method="post" id="quan_form" style="text-align:center;margin-top:50px">
-            <input type="text" name="quan_key" value="" placeholder="请输入10位优惠券码" class="inputall input200"/>
-            <input type="hidden" name="pesubmit"/>
-            <p class="mat30"><input type="button" value="兑 换" class="tjbtn" onclick="quan_duihuan()"/></p>
-        </form>
-    </script>
+    <%--<script type="text/html" id="quan_duihuan_html">--%>
+    <%--<form method="post" id="quan_form" style="text-align:center;margin-top:50px">--%>
+    <%--<input type="text" name="quan_key" value="" placeholder="请输入10位优惠券码" class="inputall input200"/>--%>
+    <%--<input type="hidden" name="pesubmit"/>--%>
+    <%--<p class="mat30"><input type="button" value="兑 换" class="tjbtn" onclick="quan_duihuan()"/></p>--%>
+    <%--</form>--%>
+    <%--</script>--%>
 </div>
 <script type="text/javascript">
-    $(function () {
-        cart_check();
-        useraddr_list(0);
-        //支付方式
-        pe_select_radio('order_payment', $(":input[name='order_payment']:eq(0)").val());
-        //选择优惠券
-        $(":input[name='order_quan_id']").live("change", function () {
-            $("#order_quan_money").html($(this).find("option:selected").attr("quan_money"));
-            order_money();
-        })
-        if ($(":input[name='order_quan_id'] option").length > 1) {
-            $(":input[name='order_quan_id'] option:eq(1)").attr("selected", "selected");
-            $(":input[name='order_quan_id']").change();
-        }
-        //使用积分
-        $(":input[name='order_point_use']").keyup(function () {
-            var point = pe_num($(this).val(), 'floor');
-            var point_money = '0.0';
-            if (point > 10) {
-                point = 10;
-            }
-            $(this).val(point);
-            if (100 > 0) {
-                point_money = pe_num(point / 100, 'floor', 1, true);
-            }
-            $("#order_point_money").html(point_money);
-            order_money();
-        })
-        $("#order_btn").click(function () {
-            pe_submit("http://www.phpshe.com/demo/phpshe/index.php?mod=order&act=add&id=30", function (json) {
-                if (json.result) pe_open(json.url, 1000);
-            })
-        })
-    })
     //购物车初始化
     function cart_check() {
         if ($(".js_cart").length == 0) {
@@ -233,20 +199,11 @@
             $(".content").show();
         }
     }
-    //获取收货地址
-    function useraddr_list(id) {
-        pe_getinfo("http://www.phpshe.com/demo/phpshe/index.php?mod=useraddr&id=" + id, function (json) {
-            if (json.result) {
-                $(":input[name='address_id']").val(json.info.address_id);
-                pe_jshtml('useraddr_html', json);
-                $("#useraddr_html .js_radio[val='" + json.info.address_id + "']").addClass("sel");
-            }
-        });
-    }
     //选择收货地址
-    function useraddr_select(id){
+    function useraddr_select(id) {
         $("#useraddr_html div").removeClass("sel");
-        $("#"+id).addClass("sel")
+        $("#userAddrId").val(id);
+        $("#" + id).addClass("sel")
     }
     //订单金额
     function order_money() {
@@ -314,7 +271,12 @@
 </script>
 <script type="text/javascript">
     $("#useraddr_html div:first").addClass("sel");
-
+    $("#userAddrId").val($("#useraddr_html div:first").prop("id"));
+    $(function () {
+        $("#order_btn").click(function () {
+            $("#form").submit();
+        })
+    })
 </script>
 </body>
 </html>

@@ -25,10 +25,14 @@
     <jsp:include page="../common/user_nav.jsp"></jsp:include>
     <div class="fr huiyuan_main">
         <div class="hy_tt">
-            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}" class="sel">全部订单<span>(${fn:length(orders)})</span><i></i></a> |
-            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待付款<span>(${waitPay})</span><i></i></a> |
-            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待发货<span>(${waitSend})</span><i></i></a> |
-            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待收货<span>(${waitAccept})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}"
+               class="sel">全部订单<span>(${fn:length(orders)})</span><i></i></a> |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待付款<span>(${waitPay})</span><i></i></a>
+            |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待发货<span>(${waitSend})</span><i></i></a>
+            |
+            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待收货<span>(${waitAccept})</span><i></i></a>
+            |
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">交易完成<span>(${finish})</span><i></i></a>
             |
             <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj">待评价<span>(0)</span><i></i></a>
@@ -92,16 +96,15 @@
                             <p class="tag_org">买家还未付款</p>
                         </c:if>
                         <c:if test="${item.orderState==1}">
-                            <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
-                               target="_blank">发货</a>
-                            <p class="mat5"><a class="c999"
-                                               href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                            <a class="tag_org" href="<%=basePath%>/orders_deliver?orderNum=${item.orderNum}">发货</a>
                             </p>
                         </c:if>
                         <c:if test="${item.orderState==2}">
-                            <p class="tag_org" target="_blank">已完成</p>
+                            <p class="tag_org">已发货</p>
                         </c:if>
-
+                        <c:if test="${item.orderState==3}">
+                            <p class="tag_org">已完成</p>
+                        </c:if>
                     </td>
                 </tr>
             </table>

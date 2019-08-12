@@ -11,7 +11,8 @@
     <h3 class="hy_tb2"><s></s>交易管理</h3>
     <ul>
         <li><a href="<%=basePath%>/orders_myOrders" >我的订单</a></li>
-        <li><a href="<%=basePath%>/user_queryBySellProduct" >我的闲置</a></li>
+        <li><a href="<%=basePath%>/user_queryBySellProduct" >我的卖出</a></li>
+        <li><a href="<%=basePath%>/goods_mySell" >我的闲置</a></li>
         <li><a href="<%=basePath%>/user_myComment" >我的评价</a></li>
         <%--<li><a href="user.php?mod=collect" >我的收藏</a></li>--%>
         <%--<li><a href="user.php?mod=refund" >退款/退货</a></li>--%>

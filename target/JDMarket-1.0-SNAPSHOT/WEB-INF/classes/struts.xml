@@ -41,15 +41,17 @@
         <action name="goods_*" class="goodsController" method="{1}">
             <result name="homeGoods">/WEB-INF/pages/goods/homeGoods.jsp</result>
             <!--发布物品-->
-            <result name="publishGoods">user_queryBySellProduct.action</result>
+            <result name="publishGoods" type="redirect">goods_mySell.action</result>
             <!--更改商品信息-->
-            <result name="goodsDown">user_queryBySellProduct.action</result>
+            <result name="goodsDown">goods_mySell.action</result>
             <!--修改商品页面-->
-            <result name="editGoods">/WEB-INF/pages/goods/editGoods.jsp</result>
+            <result name="editGoods">/WEB-INF/pages/goods/addGood.jsp</result>
             <!--商品信息详情页面-->
             <result name="goodInfo">/WEB-INF/pages/goods/detailGoods.jsp</result>
             <!--购买-->
             <result name="buy">/WEB-INF/pages/user/pay.jsp</result>
+            <!--我的发布-->
+            <result name="mySell">/WEB-INF/pages/user/mySell.jsp</result>
             <result name="goodsList">/WEB-INF/pages/admin/goods/goods_list.jsp</result>
         </action>
         <action name="user_*" class="userController" method="{1}">
@@ -90,6 +92,10 @@
             <result name="ordersList">/WEB-INF/pages/admin/orders/orders_list.jsp</result>
             <!--订单页面-->
             <result name="orderInfo">/WEB-INF/pages/goods/orderInfo.jsp</result>
+            <!--订单提交成功-->
+            <result name="payInfo">/WEB-INF/pages/goods/pay.jsp</result>
+            <!--支付成功-->
+            <result name="pay">orders_myOrders.action</result>
         </action>
         <action name="focus_*" class="focusController" method="{1}">
             <!--删除购物车-->
@@ -111,54 +117,7 @@
             <result name="addAddr" type="redirect">userAddr_findAll.action</result>
         </action>
         <action name="page_*_*">
-            <result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+            <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
         </action>
-        <!--&lt;!&ndash;        <action name="specialtyAction_*" class="specialtyAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/specialty.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="classesAction_*" class="classesAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/classes.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="page">/WEB-INF/pages/base/studentInfo.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="studentAction_*" class="studentAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/studentInfo.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="teacherlist">/WEB-INF/pages/teacher/course.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="studentInfo">/WEB-INF/pages/base/studentInfo.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="teacherAction_*" class="teacherAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/teacher.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="courseAction_*" class="courseAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/course.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="page">/WEB-INF/pages/teacher/score.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="weekAction_*" class="weekAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/teacher.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="sectionAction_*" class="sectionAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/base/teacher.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="loginAction" class="loginAction" method="login">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">index.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-
-        <!--&lt;!&ndash;        <action name="functionAction_*" class="functionAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/admin/function.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-
-        <!--&lt;!&ndash;        <action name="roleAction_*" class="roleAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/admin/role.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="natureAction_*" class="natureAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/admin/role.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="scoreAction_*" class="scoreAction" method="{1}">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="list">/WEB-INF/pages/student/course.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="score">/WEB-INF/pages/teacher/score.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="findCourse">/WEB-INF/pages/student/schedule.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
-        <!--&lt;!&ndash;        <action name="page_*_*">&ndash;&gt;-->
-        <!--&lt;!&ndash;            <result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>&ndash;&gt;-->
-        <!--&lt;!&ndash;        </action>&ndash;&gt;-->
     </package>
 </struts>

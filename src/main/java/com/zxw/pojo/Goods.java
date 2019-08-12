@@ -25,7 +25,7 @@ public class Goods {
     private Catelog catelog;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id",insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     public User getUser() {
         return user;
     }
@@ -33,8 +33,9 @@ public class Goods {
     public void setUser(User user) {
         this.user = user;
     }
+
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name="catelog_id",insertable=false, updatable=false)
+    @JoinColumn(name = "catelog_id", insertable = false, updatable = false)
     public Catelog getCatelog() {
         return catelog;
     }
