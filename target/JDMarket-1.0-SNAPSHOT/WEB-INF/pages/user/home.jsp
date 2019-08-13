@@ -1,11 +1,13 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ page language="java" import="com.zxw.pojo.User" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    User user = (User) request.getSession().getAttribute("cur_user");
 %>
+<c:set var="user" value="<%=user%>"></c:set>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -92,11 +94,11 @@
                     <tr>
                         <td style="text-align:left;">
                             <div class="dingdan_list" style="padding-top:0;border-top:0">
-                                <a href="http://www.phpshe.com/demo/phpshe/product/2" class="fl mar5 dingdan_img"
+                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" class="fl mar5 dingdan_img"
                                    target="_blank"><img
-                                        src="http://www.phpshe.com/demo/phpshe/data/cache/thumb/2019-08/thumb_100x100_20180812173116l.jpg"/></a>
+                                        src="<%=basePath%>/upload/${item.imgUrl}"/></a>
                                 <div class="fl dingdan_name">
-                                    <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                    <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" target="_blank"
                                        class="dd_name">${item.goods.name}</a>
                                     <p class="c888 mat5">${item.goods.describle}</p>
                                 </div>
@@ -122,14 +124,26 @@
                             <c:if test="${item.orderState==2}">
                                 <span class="corg">已完成</span>
                             </c:if>
-                            <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                            <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
                         </td>
                         <td width="100">
-                            <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
-                               target="_blank">立即付款</a>
-                            <p class="mat5"><a class="c999"
-                                               href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
-                            </p>
+                            <c:choose>
+                                <c:when test="${item.orderState==0}">
+                                    <a class="tag_org" href="<%=basePath%>/orders_goPay?id=${item.id}&goodsId=${item.goods.id}">立即付款</a>
+                                    <p class="mat5"><a class="c999"
+                                                       href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                                    </p>
+                                </c:when>
+                                <c:when test="${item.orderState==1}">
+                                    <span class="tag_org">等待发货</span>
+                                </c:when>
+                                <c:when test="${item.orderState==2}">
+                                    <a class="tag_org" href="<%=basePath%>/orders_deliver?orderNum=${item.orderNum}">确认收货</a>
+                                </c:when>
+                                <c:when test="${item.orderState==3}">
+                                    <span class="tag_org">订单已完成</span>
+                                </c:when>
+                            </c:choose>
                         </td>
                     </tr>
                 </table>
@@ -148,11 +162,11 @@
                     <tr>
                         <td style="text-align:left;">
                             <div class="dingdan_list" style="padding-top:0;border-top:0">
-                                <a href="http://www.phpshe.com/demo/phpshe/product/2" class="fl mar5 dingdan_img"
+                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" class="fl mar5 dingdan_img"
                                    target="_blank"><img
-                                        src="http://www.phpshe.com/demo/phpshe/data/cache/thumb/2019-08/thumb_100x100_20180812173116l.jpg"/></a>
+                                        src="<%=basePath%>/upload/${item.imgUrl}"/></a>
                                 <div class="fl dingdan_name">
-                                    <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                    <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" target="_blank"
                                        class="dd_name">${item.goods.name}</a>
                                     <p class="c888 mat5">${item.goods.describle}</p>
                                 </div>
@@ -176,25 +190,27 @@
                                 <span class="corg">去发货</span>
                             </c:if>
                             <c:if test="${item.orderState==2}">
+                                <span class="corg">待签收</span>
+                            </c:if>
+                            <c:if test="${item.orderState==3}">
                                 <span class="corg">已完成</span>
                             </c:if>
-                            <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                            <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
                         </td>
                         <td width="100">
                             <c:if test="${item.orderState==0}">
                                 <p class="tag_org">买家还未付款</p>
                             </c:if>
                             <c:if test="${item.orderState==1}">
-                                <a class="tag_org" href="<%=basePath%>/goods_buy?goodsId=${item.goods.id}"
-                                   target="_blank">发货</a>
-                                <p class="mat5"><a class="c999"
-                                                   href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                                <a class="tag_org" href="<%=basePath%>/orders_deliver?orderNum=${item.orderNum}">发货</a>
                                 </p>
                             </c:if>
                             <c:if test="${item.orderState==2}">
-                                <p class="tag_org" target="_blank">已完成</p>
+                                <p class="tag_org">已发货</p>
                             </c:if>
-
+                            <c:if test="${item.orderState==3}">
+                                <p class="tag_org">已完成</p>
+                            </c:if>
                         </td>
                     </tr>
                 </table>

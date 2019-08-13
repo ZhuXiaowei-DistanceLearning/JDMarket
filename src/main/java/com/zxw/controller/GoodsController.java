@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -39,6 +40,7 @@ public class GoodsController extends BaseController<Goods> {
     private String myfileContentType;
     private String imgUrl;
     private String search;
+    private String soryBy;
 
     public String homeGoods() {
         // 商品种类数量
@@ -79,7 +81,7 @@ public class GoodsController extends BaseController<Goods> {
     /**
      * 查看我的发布
      */
-    public String mySell(){
+    public String mySell() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         List<Goods> list = goodsService.queryGoodsByUserId(user.getId());
         List<GoodsExtend> goodsExtendList = new ArrayList<>();
@@ -90,9 +92,10 @@ public class GoodsController extends BaseController<Goods> {
             goodsExtend.setImages(images);
             goodsExtendList.add(goodsExtend);
         }
-        ServletActionContext.getRequest().setAttribute("goodsList",goodsExtendList);
+        ServletActionContext.getRequest().setAttribute("goodsList", goodsExtendList);
         return "mySell";
     }
+
     /**
      * 发布商品信息
      */
@@ -118,7 +121,7 @@ public class GoodsController extends BaseController<Goods> {
             goodsService.addGoods(goods, 10);
             int goodsId = goods.getId();
             // 插入图片数据
-             Image image = new Image();
+            Image image = new Image();
             image.setGoodsId(goodsId);
             image.setImgUrl(imgUrl);
             imageService.insert(image);
@@ -208,8 +211,8 @@ public class GoodsController extends BaseController<Goods> {
     public String queryGoodsById() {
         Goods goods = goodsService.queryGoodsById(getModel().getId());
         // 查找评论数
-        // TODO 此处留有评论数问题，主要在于表之间的连接查询需要处理
-        List<Comments> commentsList = commentsService.findCommentById(goods.getUserId(), goods.getId());
+        List<Comments> commentsList = commentsService.queryCommentByGoodsId(goods.getId());
+        commentsList = commentsList.stream().filter(e -> e.getCid() == null).distinct().collect(Collectors.toList());
         List<Image> imageList = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
         Catelog catelog = catelogService.queryByPrimaryKey(goods.getCatelogId());
         User seller = userService.queryUserInfo(goods.getUserId());
@@ -231,10 +234,12 @@ public class GoodsController extends BaseController<Goods> {
         ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
         ServletActionContext.getRequest().setAttribute("newGoodsRecommend", newGoodsRecommend);
         ServletActionContext.getRequest().setAttribute("seller", seller);
+        ServletActionContext.getRequest().setAttribute("commentsList", commentsList);
         ServletActionContext.getRequest().setAttribute("search", search);
         ServletActionContext.getRequest().setAttribute("catelog", catelog);
         return "goodInfo";
     }
+
 
     /**
      * 支付
@@ -266,6 +271,63 @@ public class GoodsController extends BaseController<Goods> {
         return "goodsList";
     }
 
+    /**
+     * 商品具体分类下商品列表
+     *
+     * @return
+     */
+    public String queryGoodsByCatelogId() {
+        // 商品种类数量
+        int rows = 20;
+        // 每个种类显示商品数量
+        List<Goods> goodsList = null;
+        List<GoodsExtend> goodsAndImage = new ArrayList<>();
+        // 获取最新发布的商品列表
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", 1);
+        map.put("catelogId", getModel().getCatelogId());
+        if (soryBy == null) {
+            soryBy = "startTime";
+        }
+        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, soryBy, "", "", map);
+        for (int i = 0; i < goodsList.size(); i++) {
+            GoodsExtend goodsExtend = new GoodsExtend();
+            Goods goods = goodsList.get(i);
+            List<Image> images = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
+            goodsExtend.setGoods(goods);
+            goodsExtend.setImages(images);
+            goodsAndImage.add(goodsExtend);
+        }
+        ServletActionContext.getRequest().setAttribute("catelogGoods", goodsAndImage);
+        return "goodsCatelog";
+    }
+
+    /**
+     * 搜索
+     *
+     * @return
+     */
+    public String queryBySearch() {
+        // 商品种类数量
+        int rows = 20;
+        // 每个种类显示商品数量
+        List<Goods> goodsList = null;
+        List<GoodsExtend> goodsAndImage = new ArrayList<>();
+        // 获取最新发布的商品列表
+        Map<String, Object> map = new HashMap<>();
+        map.put("status", 1);
+        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, "startTime", "", search, map);
+        for (int i = 0; i < goodsList.size(); i++) {
+            GoodsExtend goodsExtend = new GoodsExtend();
+            Goods goods = goodsList.get(i);
+            List<Image> images = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
+            goodsExtend.setGoods(goods);
+            goodsExtend.setImages(images);
+            goodsAndImage.add(goodsExtend);
+        }
+        ServletActionContext.getRequest().setAttribute("catelogGoods", goodsAndImage);
+        return "goodsCatelog";
+    }
 
     public File getMyfile() {
         return myfile;
@@ -305,5 +367,13 @@ public class GoodsController extends BaseController<Goods> {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public String getSoryBy() {
+        return soryBy;
+    }
+
+    public void setSoryBy(String soryBy) {
+        this.soryBy = soryBy;
     }
 }

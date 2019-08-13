@@ -6,7 +6,6 @@
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -63,7 +62,7 @@
                                target="_blank"><img
                                     src="<%=basePath%>/upload/${item.imgUrl}"/></a>
                             <div class="fl dingdan_name">
-                                <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" target="_blank"
                                    class="dd_name">${item.goods.name}</a>
                                 <p class="c888 mat5">${item.goods.describle}</p>
                             </div>
@@ -87,9 +86,12 @@
                             <span class="corg">去发货</span>
                         </c:if>
                         <c:if test="${item.orderState==2}">
+                            <span class="corg">待签收</span>
+                        </c:if>
+                        <c:if test="${item.orderState==3}">
                             <span class="corg">已完成</span>
                         </c:if>
-                        <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                        <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
                     </td>
                     <td width="100">
                         <c:if test="${item.orderState==0}">

@@ -129,8 +129,8 @@ public class OrdersController extends BaseController<Orders> {
         // 更新商品状态信息
         goodsService.updateGoodsInfo(goods.getId(),goods.getStatus());
         // 更新订单状态
-        ordersService.updateDeliverInfo(orders.getOrderNum());
         orders.setOrderPtime(sdf.format(new Date()));
+        ordersService.updateDeliverInfo(orders.getOrderNum());
         return "pay";
     }
 
@@ -158,6 +158,7 @@ public class OrdersController extends BaseController<Orders> {
         ServletActionContext.getRequest().setAttribute("purse", purse);
         return "payInfo";
     }
+
     /**
      * 订单信息
      * 地址信息
@@ -183,4 +184,5 @@ public class OrdersController extends BaseController<Orders> {
         ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
         return "orderInfo";
     }
+
 }

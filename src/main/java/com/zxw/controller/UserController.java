@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -30,6 +28,18 @@ public class UserController extends BaseController<User> {
     private FocusService focusService;
     @Autowired
     private OrdersService ordersService;
+    @Autowired
+    private UserAddrService userAddrService;
+
+    private Integer goodsId;
+
+    public Integer getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
+    }
 
     /**
      * 注册验证
@@ -89,6 +99,30 @@ public class UserController extends BaseController<User> {
     }
 
     /**
+     * 订单详情
+     */
+    public String orderInfo() {
+        User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", user.getId());
+        List<Useraddr> useraddrList = userAddrService.findAll(0, 10, null, null, null, map);
+        Purse purse = purseService.queryByUserId(user.getId());
+        Goods goods = goodsService.queryGoodsByPrimaryKey(goodsId);
+        List<Image> imageList = imageService.queryByImagesByGoodsPrimaryKey(goods.getId());
+        Orders orders = ordersService.queryOrdersByUserAndGoods(user.getId(), goodsId);
+        System.out.println(orders.toString());
+        GoodsExtend goodsExtend = new GoodsExtend();
+        goodsExtend.setImages(imageList);
+        goodsExtend.setGoods(goods);
+        ServletActionContext.getRequest().setAttribute("user", user);
+        ServletActionContext.getRequest().setAttribute("purse", purse);
+        ServletActionContext.getRequest().setAttribute("orders", orders);
+        ServletActionContext.getRequest().setAttribute("useraddrList", useraddrList);
+        ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
+        return "orderInfo";
+    }
+
+    /**
      * 查询我发布的商品信息
      *
      * @return
@@ -133,9 +167,7 @@ public class UserController extends BaseController<User> {
             goodsExtend.setImages(imageList);
             goodsExtendList.add(goodsExtend);
         }
-        Purse purse = purseService.queryByUserId(user.getId());
         ServletActionContext.getRequest().setAttribute("goodsAndImage", goodsExtendList);
-        ServletActionContext.getRequest().setAttribute("myPurse", purse);
         return "focus";
     }
 
@@ -169,11 +201,25 @@ public class UserController extends BaseController<User> {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         Purse purse = purseService.queryByUserId(user.getId());
         List<Orders> list = ordersService.getOrdersByUserId(user.getId());
-        List<Orders> ordersList = ordersService.getOrdersByUserIdAndGoods(user.getId());
+        List<Orders> ordersList1 = ordersService.getOrdersByUserIdAndGoods(user.getId());
+        // 查询已买到的宝贝
+        ordersList1 = ordersService.getOrdersByUserId(user.getId());
+        for (int i = 0; i < ordersList1.size(); i++) {
+            List<Image> images = imageService.queryByImagesByGoodsPrimaryKey(ordersList1.get(i).getGoods().getId());
+            ordersList1.get(i).setImgUrl(images.get(0).getImgUrl());
+        }
+        // 我的卖出
+        List<Orders> ordersList2 = new ArrayList<>();
+        // 查询我卖的宝贝订单
+        ordersList2 = ordersService.getOrdersByUserIdAndGoods(user.getId());
+        for (int i = 0; i < ordersList2.size(); i++) {
+            List<Image> images = imageService.queryByImagesByGoodsPrimaryKey(ordersList2.get(i).getGoods().getId());
+            ordersList2.get(i).setImgUrl(images.get(0).getImgUrl());
+        }
         ServletActionContext.getRequest().setAttribute("user", user);
         ServletActionContext.getRequest().setAttribute("purse", purse);
-        ServletActionContext.getRequest().setAttribute("orderList", list);
-        ServletActionContext.getRequest().setAttribute("mySell", ordersList);
+        ServletActionContext.getRequest().setAttribute("orderList", ordersList1);
+        ServletActionContext.getRequest().setAttribute("mySell", ordersList2);
         return "home";
     }
 

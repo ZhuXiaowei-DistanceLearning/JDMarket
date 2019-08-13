@@ -78,6 +78,14 @@ public class OrdersService {
         return new PageResult(count, all);
     }
 
+    public Orders queryOrdersByUserAndGoods(int userId, int goodsId) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Orders.class);
+        detachedCriteria.add(Restrictions.eq("userId", userId));
+        detachedCriteria.add(Restrictions.eq("goodsId", goodsId));
+        List<Orders> list = ordersMapper.findByCriteria(detachedCriteria);
+        return list.size() >= 1 ? list.get(0) : null;
+    }
+
     public void updateOrders(Orders orders) {
         ordersMapper.update(orders);
     }

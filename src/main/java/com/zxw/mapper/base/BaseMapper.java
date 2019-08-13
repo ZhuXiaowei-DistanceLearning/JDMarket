@@ -3,6 +3,7 @@ package com.zxw.mapper.base;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
@@ -76,7 +77,7 @@ public class BaseMapper<T> extends HibernateDaoSupport implements Mapper<T> {
             }
         }
         if (search != "" && search != null) {
-            detachedCriteria.add(Restrictions.like("name", search));
+            detachedCriteria.add(Restrictions.like("name", search, MatchMode.ANYWHERE));
         }
         // 页数调整
         int offset = (page - 1) * rows;

@@ -40,30 +40,26 @@
     <div class="width980">
         <div class="header">
             <div class="fl logo">
-                <a href="http://www.phpshe.com/demo/phpshe/" title=""><img
-                        src="http://www.phpshe.com/demo/phpshe/data/attachment/2017-05/20170509110941s.jpg" alt=""/></a>
+                <a href="<%=basePath%>/goods_homeGoods" title=""><img
+                        src="<%=basePath%>/upload/logo.png" alt=""/></a>
             </div>
             <div class="head_gwc">
-                <a href="http://www.phpshe.com/demo/phpshe/cart">
-                    <div class="head_gwc_tb">购物车 <span class="num cred js_cartnum">0</span> 件　 ></div>
-                </a>
             </div>
             <!--<p class="top_tel fr">15839823500</p>-->
-            <div class="sear fr">
-                <form method="get" action="http://www.phpshe.com/demo/phpshe/index.php">
-                    <input type="hidden" name="mod" value="product"/>
-                    <input type="hidden" name="act" value="list"/>
-                    <div class="inputbg fl"><input type="text" name="keyword" value="" class="fl searinput c666"/></div>
-                    <input type="submit" class="fl sear_btn" onclick="this.form.submit();return false;" value="搜 索"/>
+            <div class="sear fr" style="margin: 57px 120px 0 0;">
+                <form method="get" action="<%=basePath%>/goods_homeGood">
+                    <div class="inputbg fl">
+                        <input type="text" name="search" value="" class="fl searinput c666"/></div>
+                    <input type="submit" class="fl sear_btn" value="搜 索"/>
                 </form>
                 <div class="clear"></div>
                 <div class="mat5 head_hot">
-                    <a href="http://www.phpshe.com/demo/phpshe/index.php?mod=product&act=list&keyword=PHPSHE"
+                  <%--  <a href="http://www.phpshe.com/demo/phpshe/index.php?mod=product&act=list&keyword=PHPSHE"
                        title="PHPSHE" target="_blank" class="mar5 c666">PHPSHE</a>
                     <a href="http://www.phpshe.com/demo/phpshe/index.php?mod=product&act=list&keyword=B2C商城系统"
                        title="B2C商城系统" target="_blank" class="mar5 c666">B2C商城系统</a>
                     <a href="http://www.phpshe.com/demo/phpshe/index.php?mod=product&act=list&keyword=简好网络" title="简好网络"
-                       target="_blank" class="mar5 c666">简好网络</a>
+                       target="_blank" class="mar5 c666">简好网络</a>--%>
                 </div>
             </div>
         </div>

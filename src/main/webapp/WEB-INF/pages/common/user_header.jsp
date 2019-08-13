@@ -34,13 +34,13 @@
             <a href="http://www.phpshe.com/demo/phpshe/user.php">会员中心</a>
         </div>
         <div class="user_nav">
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/" title="首页">首页</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/demo/phpshe/brand/list" title="品牌专区" >品牌专区</a></h3></li>
+            <li><h3><a href="<%=basePath%>/goods_homeGoods" title="首页">首页</a></h3></li>
+           <%-- <li><h3><a href="http://www.phpshe.com/demo/phpshe/brand/list" title="品牌专区" >品牌专区</a></h3></li>
             <li><h3><a href="http://www.phpshe.com/demo/phpshe/quan/list" title="领券中心" >领券中心</a></h3></li>
             <li><h3><a href="http://www.phpshe.com/demo/phpshe/huodong/zhekou" title="限时折扣" >限时折扣</a></h3></li>
             <li><h3><a href="http://www.phpshe.com/demo/phpshe/huodong/pintuan" title="限时拼团" >限时拼团</a></h3></li>
             <li><h3><a href="http://www.phpshe.com/" title="简好网络" >简好网络</a></h3></li>
-            <li><h3><a href="http://www.phpshe.com/phpshe" title="购买授权" >购买授权</a></h3></li>
+            <li><h3><a href="http://www.phpshe.com/phpshe" title="购买授权" >购买授权</a></h3></li>--%>
         </div>
         <div class="sear fr">
             <form method="get" action="http://www.phpshe.com/demo/phpshe/index.php">

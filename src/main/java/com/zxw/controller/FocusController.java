@@ -25,9 +25,14 @@ public class FocusController extends BaseController<Focus> {
             writePageBean2Json("error");
             return NONE;
         } else {
-            focusService.addFocusByUserIdAndId(getModel().getGoodsId(), user.getId());
-            writePageBean2Json("success");
-            return "addCart";
+            Focus focus = focusService.queryFocusByUserAndFocus(user.getId(), getModel().getGoodsId());
+            if (focus != null) {
+                writePageBean2Json("repeat");
+            } else {
+                focusService.addFocusByUserIdAndId(getModel().getGoodsId(), user.getId());
+                writePageBean2Json("success");
+            }
+            return NONE;
         }
     }
 

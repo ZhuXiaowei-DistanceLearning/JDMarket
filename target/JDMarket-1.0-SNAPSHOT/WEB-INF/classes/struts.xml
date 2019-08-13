@@ -29,6 +29,9 @@
             </interceptor-stack>
         </interceptors>
         <default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+        <global-results>
+            <result name="loginPage">/WEB-INF/pages/common/user_login.jsp</result>
+        </global-results>
         <!-- <global-results>
              <result name="inedx">WEB-INF/index.jsp
              <result>
@@ -52,6 +55,8 @@
             <result name="buy">/WEB-INF/pages/user/pay.jsp</result>
             <!--我的发布-->
             <result name="mySell">/WEB-INF/pages/user/mySell.jsp</result>
+            <!--商品分类查询-->
+            <result name="goodsCatelog">/WEB-INF/pages/goods/goodsList.jsp</result>
             <result name="goodsList">/WEB-INF/pages/admin/goods/goods_list.jsp</result>
         </action>
         <action name="user_*" class="userController" method="{1}">
@@ -63,13 +68,15 @@
             <!--我的闲置-->
             <result name="sellProductByUser">/WEB-INF/pages/user/goods.jsp</result>
             <!--关注列表-->
-            <result name="focus">/WEB-INF/pages/user/focus.jsp</result>
+            <result name="focus">/WEB-INF/pages/user/myStar.jsp</result>
             <!--个人设置-->
             <result name="basic">/WEB-INF/pages/user/basic.jsp</result>
             <!--修改个人信息-->
             <result name="updateUserInfo" type="redirect">user_basic.action</result>
             <!--个人中心-->
             <result name="home">/WEB-INF/pages/user/home.jsp</result>
+            <!--订单详情-->
+            <result name="orderInfo">/WEB-INF/pages/user/orderInfo.jsp</result>
             <!--退出-->
             <result name="logout">page_common_user_login.action</result>
         </action>
@@ -99,9 +106,11 @@
         </action>
         <action name="focus_*" class="focusController" method="{1}">
             <!--删除购物车-->
-            <result name="clearCart">user_cart.action</result>
+            <result name="clearCart">/WEB-INF/pages/user/myStar.jsp</result>
             <!--添加购物车-->
             <result name="addCart">user_cart.action</result>
+            <!--查找购物车-->
+            <result name="cart">/WEB-INF/pages/user/myStar.jsp</result>
         </action>
         <action name="admin_*" class="adminController" method="{1}">
             <!--成功-->
@@ -115,6 +124,10 @@
             <!--所有地址-->
             <result name="findAll">/WEB-INF/pages/user/userAddr.jsp</result>
             <result name="addAddr" type="redirect">userAddr_findAll.action</result>
+        </action>
+        <action name="comment_*" class="commentsController" method="{1}">
+            <!--所有地址-->
+            <result name="addComment" type="redirect">goods_queryGoodsById.action</result>
         </action>
         <action name="page_*_*">
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>

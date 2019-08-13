@@ -58,7 +58,7 @@
                                target="_blank"><img
                                     src="<%=basePath%>/upload/${item.imgUrl}"/></a>
                             <div class="fl dingdan_name">
-                                <a href="http://www.phpshe.com/demo/phpshe/product/2" target="_blank"
+                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" target="_blank"
                                    class="dd_name">${item.goods.name}</a>
                                 <p class="c888 mat5">${item.goods.describle}</p>
                             </div>
@@ -84,7 +84,7 @@
                         <c:if test="${item.orderState==2}">
                             <span class="corg">已完成</span>
                         </c:if>
-                        <p><a href="user.php?mod=order&act=view&id=190808103751791" target="_blank">订单详情</a></p>
+                        <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
                     </td>
                     <td width="100">
                         <c:choose>

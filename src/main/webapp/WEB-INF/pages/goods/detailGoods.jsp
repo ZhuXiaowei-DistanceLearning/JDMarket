@@ -60,29 +60,6 @@
             </div>
             <div class="clear"></div>
             <a href="javascript:collect_add('3');" class="sctj fl">收藏商品</a>
-            <div class="mat10 fxlj fr">
-                <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#"
-                                                                                                  class="bds_qzone"
-                                                                                                  data-cmd="qzone"
-                                                                                                  title="分享到QQ空间"></a><a
-                        href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq"
-                                                                                           data-cmd="tqq"
-                                                                                           title="分享到腾讯微博"></a><a
-                        href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin"
-                                                                                            data-cmd="weixin"
-                                                                                            title="分享到微信"></a></div>
-                <script>window._bd_share_config = {
-                    "common": {
-                        "bdSnsKey": {},
-                        "bdUrl": "<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}?u=",
-                        "bdMini": "2",
-                        "bdPic": "",
-                        "bdStyle": "0",
-                        "bdSize": "16"
-                    }, "share": {}
-                };
-                with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
-            </div>
             <div class="clear"></div>
         </div>
         <div class="fl proinfo">
@@ -162,12 +139,13 @@
                         <td>&nbsp;</td>
                         <td>
                             <c:if test="${user!=null}">
-                                <a href="<%=basePath%>/orders_orderInfo?goodsId=${goodsExtend.goods.id}" class="fl ljgm">立即购买</a>
+                                <a href="<%=basePath%>/orders_orderInfo?goodsId=${goodsExtend.goods.id}"
+                                   class="fl ljgm">立即购买</a>
                             </c:if>
                             <c:if test="${user==null}">
                                 <a href="<%=basePath%>/page_common_user_login" class="fl ljgm">立即购买</a>
                             </c:if>
-                            <a href="javascript:buy_btn('add', ${goodsExtend.goods.id});" class="fl jiagwc"><i></i>加入购物车</a>
+                            <a onclick="addMyStart(${goodsExtend.goods.id})" class="fl jiagwc"><i></i>加入收藏</a>
                             <div class="clear"></div>
                         </td>
                     </tr>
@@ -221,99 +199,74 @@
         <div class="caidan1" id="js_menu">
             <ul class="fl">
                 <li class="sel"><a href="javascript:;">商品详情</a><i></i></li>
-                <li><a href="javascript:;">用户评价 <span class="corg">(3)</span></a><i></i></li>
+                <li><a href="javascript:;">用户提问 <span class="corg">(${fn:length(commentsList)})</span></a><i></i></li>
             </ul>
-            <!--<div class="fr c666 mat10 mar10">商品货号：</div>-->
             <div class="clear"></div>
         </div>
         <!--详情 Start-->
         <div class="promain js_menuhtml">
-            ${goodsExtend.goods.describle}</div>
+            ${goodsExtend.goods.describle}
+        </div>
         <!--详情 end-->
         <!--评论 Start-->
         <div class="promain js_menuhtml" style="display:none">
             <div class="plrate">
-                <div class="plrate_l fl"><strong>66%</strong>
-                    <p class="c888 mat3">好评率</p></div>
-                <div class="plrate_m fl">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="60">好评</td>
-                            <td>
-                                <div class="gd_box">
-                                    <div class="gd_1" style="width:132px;"></div>
-                                </div>
-                            </td>
-                            <td width="50">66%</td>
-                        </tr>
-                        <tr>
-                            <td>中评</td>
-                            <td>
-                                <div class="gd_box">
-                                    <div style="width:66px;"></div>
-                                </div>
-                            </td>
-                            <td>33%</td>
-                        </tr>
-                        <tr>
-                            <td>差评</td>
-                            <td>
-                                <div class="gd_box">
-                                    <div style="width:0px;"></div>
-                                </div>
-                            </td>
-                            <td>0%</td>
-                        </tr>
-                    </table>
+                <div class="plrate_l fl">
+                    <h3>提问:</h3>
+                    <form action="<%=basePath%>/comment_addComment" method="post">
+                        <input type="text" style="margin-left: 90px" name="content"/>
+                        <input type="hidden" style="margin-left: 90px" name="goodsId" value="${goodsExtend.goods.id}"/>
+                        <input type="hidden" style="margin-left: 90px" name="cid" value=""/>
+                        <input type="submit" style="margin-left: 90px;margin-top: 10px" value="提交"/>
+                    </form>
                 </div>
-                <div class="plrate_r">
-                    购买过该商品的用户可以进行评价
-                    <div class="mat8"><a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj"
-                                         target="_blank">发表评价<span class="font12 normal mal5">(+50积分)</span></a></div>
-                </div>
-                <div class="clear"></div>
             </div>
+            <div class="clear"></div>
             <div class="plmenu" id="js_commentmenu">
-                <a href="javascript:;" val="0" class="sel"><label><input name="comment_rate" type="radio"
-                                                                         class="inputfix mar5">全部(3)</label></a>
-                <a href="javascript:;" val="hao"><label><input name="comment_rate" type="radio" class="inputfix mar5">好评(2)</label></a>
-                <a href="javascript:;" val="zhong"><label><input name="comment_rate" type="radio" class="inputfix mar5">中评(1)</label></a>
-                <a href="javascript:;" val="cha"><label><input name="comment_rate" type="radio" class="inputfix mar5">差评(0)</label></a>
+                <p href="javascript:;" val="0" class="sel"><label>用户提问列表</label></p>
+                <%-- <a href="javascript:;" val="0" class="sel"><label><input name="comment_rate" type="radio"
+                                                                          class="inputfix mar5">全部(3)</label></a>
+                 <a href="javascript:;" val="hao"><label><input name="comment_rate" type="radio" class="inputfix mar5">好评(2)</label></a>
+                 <a href="javascript:;" val="zhong"><label><input name="comment_rate" type="radio" class="inputfix mar5">中评(1)</label></a>
+                 <a href="javascript:;" val="cha"><label><input name="comment_rate" type="radio" class="inputfix mar5">差评(0)</label></a>--%>
             </div>
-            <div id="js_commenthtml">
-                <script type="text/html" id="js_commenttpl">
-                    {{each list as v k}}
+            <div id="js_commenthtml" class="promain">
+                <c:forEach items="${commentsList}" var="item" varStatus="i">
                     <div class="pj_box">
-                        <div class="pj_tx"><img src="{{v.user_logo}}">
-                            <p>{{v.user_name}}</p></div>
+                        <div class="pj_tx">
+                            <p>用户:${item.user.username}</p></div>
                         <div class="pj_r">
                             <ul class="plmain_ul">
-                                <li>{{v.comment_star}}</li>
+                                <li>提问：</li>
                             </ul>
-                            <div class="pingjia font14">{{v.comment_text}}</div>
-                            <div class="pj_img">
-                                {{each v.comment_logo as vv kk}}
-                                <a href="javascript:;"><img src="{{vv.logo}}"/></a>
-                                {{/each}}
+                            <div class="pingjia font14">${item.content}
+                                <a
+                                        style="display: inline-block;color: blue;margin-left: 50px"
+                                        id="reply${i.index+1}" onclick="reply(${i.index+1})">回复</a>
+                                <form action="<%=basePath%>/comment_addComment" style="display: none;margin-left: 20px;"
+                                      id="replyInput${i.index+1}">
+                                    <input type="text" name="content"/>
+                                    <input type="hidden" name="goodsId" value="${goodsExtend.goods.id}"/>
+                                    <input type="hidden" name="cid" value="${item.id}"/>
+                                    <button onclick="commentReply(${i.index+1})">提交</button>
+                                </form>
                             </div>
                             <div class="pj_bigimg"></div>
-                            <div class="c888">{{v.comment_atime}}</div>
-                            {{if v.comment_reply == 1}}
-                            <div class="mjhf">卖家回复：{{v.comment_reply_text}}</div>
-                            <div class="c888">{{v.comment_reply_time}}</div>
-                            {{/if}}
+                            <c:forEach items="${item.comments}" var="comment">
+                                <div class="mjhf">
+                                    用户${comment.user.username}回复：${comment.content}
+                                </div>
+                            </c:forEach>
                         </div>
                         <div class="clear"></div>
                     </div>
-                    {{/each}}
-                    <div class="fenye mat10">{{page}}
-                        <div class="clear"></div>
-                    </div>
-                </script>
+                </c:forEach>
             </div>
         </div>
-        <!--评论 End-->
     </div>
+</div>
+<!--评论 End-->
+</div>
 </div>
 <script type="text/javascript">
     var menu_top = $("#js_menu").offset().top;
@@ -558,6 +511,40 @@
         $("body,html").animate({"scrollTop": 0});
     }
     pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
+</script>
+
+<script type="text/javascript">
+    $("#reply").click(function () {
+        $("#replyInput").css("display", "block");
+    })
+    function reply(data) {
+        let len = $(".pj_box").length;
+        for (let i = 1; i <= len; i++) {
+            $("#replyInput" + i).hide();
+        }
+        $("#replyInput" + data).show();
+    }
+
+    function commentReply(data) {
+        $("#replyInput" + data).submit();
+    }
+
+    function addMyStart(data) {
+        $.ajax({
+            url: "<%=basePath%>/focus_addCart?goodsId="+data,
+            type: "get",
+            success: function (data) {
+                alert(data)
+            },
+            error: function (data) {
+                if(data.responseText=="repeat"){
+                    alert("已添加收藏，请勿重复添加")
+                }else if(data.responseText=="success"){
+                    alert("添加收藏成功")
+                }
+            }
+        })
+    }
 </script>
 </body>
 </html>

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,9 +48,19 @@ public class FocusService {
       * 添加我的关注
       */
     public void addFocusByUserIdAndId(Integer goods_id, Integer user_id) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Focus f = new Focus();
+        f.setCreateTime(sdf.format(new Date()));
         f.setGoodsId(goods_id);
         f.setUserId(user_id);
         focusMapper.save(f);
+    }
+
+    public Focus queryFocusByUserAndFocus(int id, int goods) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Focus.class);
+        detachedCriteria.add(Restrictions.eq("userId", id));
+        detachedCriteria.add(Restrictions.eq("goodsId", goods));
+        List<Focus> list = focusMapper.findByCriteria(detachedCriteria);
+        return list.size() >= 1 ? list.get(0) : null;
     }
 }

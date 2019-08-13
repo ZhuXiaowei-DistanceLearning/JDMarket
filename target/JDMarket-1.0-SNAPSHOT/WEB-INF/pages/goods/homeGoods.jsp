@@ -230,8 +230,8 @@
     <div class="yl_list">
         <div class="yl_tt"><span>友情链接</span></div>
         <div class="yl_name">
-            <a href="http://www.phpshe.com" target="_blank" title="简好网络官方网站">简好网络官方网站</a>
-            <a href="http://www.phpshe.com/phpshe" target="_blank" title="PHPSHE商城系统">PHPSHE商城系统</a>
+            <a href="https://www.jsu.edu.cn" target="_blank">吉首大学</a>
+            <a href="https://jwxt.jsu.edu.cn/jsxsd/" target="_blank">吉大教务管理系统</a>
         </div>
     </div>
 </div>
