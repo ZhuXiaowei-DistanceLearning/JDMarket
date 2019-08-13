@@ -7,7 +7,7 @@
 
 @School:吉首大学
 
-> 特别鸣谢github用户:[hlk-1135](https://github.com/hlk-1135)的squirrel2.0(https://github.com/hlk-1135/squirrel2.0)
+> 本项目部分内容引用自网上，仅用于学习，不可以用作其他用途。
 
 ------
 
