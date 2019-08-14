@@ -114,7 +114,7 @@
         </action>
         <action name="admin_*" class="adminController" method="{1}">
             <!--成功-->
-            <result name="success">/WEB-INF/pages/admin/index.jsp</result>
+            <result name="success" type="redirect">page_admin_index.action</result>
             <!--退出-->
             <result name="logout">page_common_user_login.action</result>
             <!--用户列表-->
@@ -128,6 +128,10 @@
         <action name="comment_*" class="commentsController" method="{1}">
             <!--所有地址-->
             <result name="addComment" type="redirect">goods_queryGoodsById.action</result>
+        </action>
+        <action name="visitor_*" class="visitorController" method="{1}">
+            <!--所有地址-->
+            <result name="success" type="redirect">goods_queryGoodsById.action</result>
         </action>
         <action name="page_*_*">
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>

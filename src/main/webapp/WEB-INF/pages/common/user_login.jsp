@@ -20,7 +20,7 @@
 <body>
 <div class="quick_menu">
     <div class="width980" style="width:1000px;">
-        <span class="fl">欢迎来到PHPSHE B2C商城系统演示站！</span>
+        <span class="fl">欢迎使用吉大商城！</span>
         <div class="fr top_r">
             <a href="<%=basePath%>/page_common_user_login" title="登录">登录</a>
             <a href="<%=basePath%>/page_common_user_register" title="注册">免费注册</a>
@@ -31,7 +31,7 @@
 <div class="width980" style="width:1000px;">
     <div class="login_logo">
         <a href="http://www.phpshe.com/demo/phpshe/" title=""><img
-                src="http://www.phpshe.com/demo/phpshe/data/attachment/2017-05/20170509110941s.jpg" alt=""/></a>
+                src="<%=basePath%>/upload/logo.png" alt=""/></a>
     </div>
 </div>
 <div class="login_bg">

@@ -30,6 +30,8 @@ public class UserController extends BaseController<User> {
     private OrdersService ordersService;
     @Autowired
     private UserAddrService userAddrService;
+    @Autowired
+    private VisitorService visitorService;
 
     private Integer goodsId;
 
@@ -92,6 +94,7 @@ public class UserController extends BaseController<User> {
     public String login() {
         User user = getModel();
         User u = userService.login(user);
+        visitorService.addTodayPeople(u.getId());
         if (u.getStatus() == 1) {
             ServletActionContext.getRequest().getSession().setAttribute("cur_user", u);
         }

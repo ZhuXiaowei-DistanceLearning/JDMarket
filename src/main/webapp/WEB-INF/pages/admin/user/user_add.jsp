@@ -15,6 +15,15 @@
 <script type="text/javascript" charset="utf-8"
 	src="<c:url value="/js/script_user.js"/>"></script>
 <link rel="stylesheet" href="<c:url value="/css/info_main.css"/>" />
+	<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="<%=basePath%>css/bootstrap-responsive.min.css"/>
+	<link rel="stylesheet" href="<%=basePath%>css/matrix-style.css"/>
+	<link rel="stylesheet" href="<%=basePath%>css/matrix-media.css"/>
+	<link rel="stylesheet" href="<%=basePath%>font-awesome/css/font-awesome.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+	<script src="<%=basePath%>js/matrix.js"/>
+	<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
 </head>
 <body>
 

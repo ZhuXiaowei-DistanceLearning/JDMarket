@@ -26,12 +26,20 @@ table td{
 
 </style>
 <title>商品列表</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="<%=basePath%>css/matrix-style.css"/>
+	<link rel="stylesheet" href="<%=basePath%>css/matrix-media.css"/>
+	<link rel="stylesheet" href="<%=basePath%>font-awesome/css/font-awesome.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+	<script src="<%=basePath%>js/matrix.js" type="text/javascript"/>
+	<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
 	<!-- 分页 -->
-<link href="<%=basePath%>css/mypage.css" rel="stylesheet">
-
-<link href="<%=basePath%>css/bootstrap.min.css" rel="stylesheet">
-
-<link href="<%=basePath%>css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+	<link href="<%=basePath%>css/mypage.css" rel="stylesheet">
+	<link href="<%=basePath%>css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
 </head>
 
@@ -145,22 +153,28 @@ table td{
 			</table>
 
 			<!--分页条-->
-			<div style="text-align: right">
+			<div style="text-align: center">
 				<div class="pagination">
 					<ul>
-						<li><a>总商品数:${goodsGrid.total }个</a></li>
-						<li><a>第${page }页</a></li>
-						<%--<c:if test="${goodsGrid.current ne 1 }">
-							<li><a 
-								href="<%=basePath%>admin/goodsList?pageNum=${goodsGrid.current-1 }">上一页</a>
-								</li>
-						</c:if>
-
-						<c:if test="${goodsGrid.current < (goodsGrid.total+9)/10-1 }">
+						<c:if test="${page>total&&page!=1}">
 							<li><a
-								href="<%=basePath%>admin/goodsList?pageNum=${goodsGrid.current+1 }">下一页</a>
+									href="<%=basePath%>orders_ordersList?page=${page-1==0?1:page-1}&rows=10">上一页</a>
 							</li>
-						</c:if>--%>
+						</c:if>
+						<c:set var="total" value="${goodsGrid.total/10}"></c:set>
+						<c:forEach varStatus="i" begin="1" end="${total<1?1:total}">
+							<li><a href="<%=basePath%>orders_ordersList?page=${i.count}&rows=10">第${i.count }页</a></li>
+						</c:forEach>
+						<c:if test="${page<total&&page!=1}">
+							<li><a
+									href="<%=basePath%>orders_ordersList?page=${page+1}&rows=10">下一页</a>
+							</li>
+						</c:if>
+					</ul>
+				</div>
+				<div class="pagination" style="float:right;">
+					<ul>
+						<li><a>总商品数:${goodsGrid.total }个</a></li>
 					</ul>
 				</div>
 			</div>
@@ -303,15 +317,6 @@ table td{
     </div><!-- /.modal -->
 </div>
 </body>
-
-<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-<!-- datetimepicker -->
-<script type="text/javascript" src="<%=basePath%>js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src='<%=basePath%>js/bootstrap-datetimepicker.zh-CN.js'></script>
-<!-- 全选 base.js -->
-<script type="text/javascript"src="<%=basePath%>js/custom/base.js"></script>
-
 <script type="text/javascript">
 		//初始化时间
 		$(".form_datetime").datetimepicker({  

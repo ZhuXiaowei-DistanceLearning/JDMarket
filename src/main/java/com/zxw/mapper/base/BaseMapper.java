@@ -6,6 +6,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
@@ -133,5 +134,12 @@ public class BaseMapper<T> extends HibernateDaoSupport implements Mapper<T> {
         Session session = this.getSessionFactory().openSession();
         Optional optional = session.createSQLQuery("select count(*) from " + tClass.getSimpleName()).uniqueResultOptional();
         return new Long(optional.get().toString());
+    }
+
+    public List countPeople(String countName, String low, String high) {
+        Session session = this.getSessionFactory().openSession();
+        NativeQuery query = session.createSQLQuery("select " + countName + ",count(" + countName + ") from " + tClass.getSimpleName().toLowerCase() + " where " + countName + " BETWEEN '" + low + "' and '" + high+"' GROUP BY "+countName);
+        List list = query.list();
+        return list;
     }
 }

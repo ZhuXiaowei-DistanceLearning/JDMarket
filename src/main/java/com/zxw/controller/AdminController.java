@@ -43,7 +43,7 @@ public class AdminController extends BaseController<Admin> {
 
     public String login() {
         Admin admin = adaminService.login(getModel());
-        ServletActionContext.getRequest().setAttribute("admin", admin);
+        ServletActionContext.getRequest().getSession().setAttribute("admin", admin);
         return "success";
     }
 }

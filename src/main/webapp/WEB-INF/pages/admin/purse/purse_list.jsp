@@ -25,11 +25,27 @@
     </style>
     <title>钱包列表</title>
     <!-- 分页 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<%=basePath%>css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="<%=basePath%>css/matrix-style.css"/>
+    <link rel="stylesheet" href="<%=basePath%>css/matrix-media.css"/>
+    <link rel="stylesheet" href="<%=basePath%>font-awesome/css/font-awesome.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+    <script src="<%=basePath%>js/matrix.js" type="text/javascript"/>
+    <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
+    <!-- 分页 -->
     <link href="<%=basePath%>css/mypage.css" rel="stylesheet">
-
-    <link href="<%=basePath%>css/bootstrap.min.css" rel="stylesheet">
-
     <link href="<%=basePath%>css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- datetimepicker -->
+    <script type="text/javascript" src="<%=basePath%>js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src='<%=basePath%>js/bootstrap-datetimepicker.zh-CN.js'></script>
+    <!-- 全选 base.js -->
+    <script type="text/javascript" src="<%=basePath%>js/custom/base.js"></script>
 
 </head>
 
@@ -208,16 +224,6 @@
     <!-- /.modal -->
 </div>
 </body>
-
-<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-<!-- datetimepicker -->
-<script type="text/javascript"
-        src="<%=basePath%>js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript"
-        src='<%=basePath%>js/bootstrap-datetimepicker.zh-CN.js'></script>
-<!-- 全选 base.js -->
-<script type="text/javascript" src="<%=basePath%>js/custom/base.js"></script>
 <script type="text/javascript">
 
     /* 修改 */
