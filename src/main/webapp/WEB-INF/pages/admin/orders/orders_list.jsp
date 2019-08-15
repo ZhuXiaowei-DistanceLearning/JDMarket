@@ -3,393 +3,136 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .modal-header {
-            text-align: center;
-        }
-
-        table td {
-            text-align: center;
-            border: 0px;
-        }
-    </style>
-    <title>订单列表</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/matrix-style.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/matrix-media.css"/>
-    <link rel="stylesheet" href="<%=basePath%>font-awesome/css/font-awesome.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-    <script src="<%=basePath%>js/matrix.js" type="text/javascript"/>
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-    <!-- 分页 -->
-    <link href="<%=basePath%>css/mypage.css" rel="stylesheet">
-    <link href="<%=basePath%>css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-
-    <!-- datetimepicker -->
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src='<%=basePath%>js/bootstrap-datetimepicker.zh-CN.js'></script>
-    <!-- 全选 base.js -->
-    <script type="text/javascript" src="<%=basePath%>js/custom/base.js"></script>
+    <title>仅用于学习-首页</title>
+    <link rel="icon" type="image/png" href="<%=basePath%>/js/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="<%=basePath%>/js/assets/i/app-icon72x72@2x.png">
+    <script src="<%=basePath%>/js/echarts.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.datatables.min.css"/>
+    <link rel="stylesheet" href="<%=basePath%>/js/assets/css/app.css">
+    <script src="<%=basePath%>/js/assets/js/jquery.min.js"></script>
 </head>
-
-<body>
+<body class="theme-white">
 <jsp:include page="../main_top.jsp"></jsp:include>
 <jsp:include page="../main_left.jsp"></jsp:include>
-<!--=============================================================================================================================================================================-->
-<!--main-container-part-->
-<div id="content" style="margin-right: 100px; margin-top: 40px;">
-    <!--breadcrumbs-->
-    <div id="content-header">
-        <div id="breadcrumb">
-            <a href="<%=basePath%>admin/indexs" title="主页" class="tip-bottom"><i
-                    class="icon-home"></i>主页</a> <a title="订单列表" class="tip-bottom">订单列表</a>
-        </div>
-    </div>
-    <!--End-breadcrumbs-->
+<div class="am-g tpl-g">
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">用户列表显示</div>
 
-    <!-- Page table -->
-    <div class="container" style="width: 1000px;">
-        <!-- &lt;!&ndash; Marketing Icons Section &ndash;&gt;-->
 
-        <div class="col-lg-12">
-            <h2 class="page-header"
-                style="margin-top: 10px; text-align: center; font-family: '微软雅黑', Verdana, sans-serif, '宋体', serif;">
-                订单列表显示</h2>
-        </div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <%--  <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                  <div class="am-form-group">
+                                      <div class="am-btn-toolbar">
+                                          <div class="am-btn-group am-btn-group-xs">
+                                              <button type="button" class="am-btn am-btn-default am-btn-success"
+                                                      onclick="addModal()"><span class="am-icon-plus"></span> 新增用户
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                  <div class="am-form-group tpl-table-list-select">
+                                      <select data-am-selected="{btnSize: 'sm'}">
+                                          <option value="option1">所有类别</option>
+                                          <option value="option2">干货集合</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                  <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                      <input type="text" class="am-form-field ">
+                                      <span class="am-input-group-btn">
+                                                  <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                                                          type="button"></button>
+                                              </span>
+                                  </div>
+                              </div>--%>
 
-        <!--搜索栏-->
-        <form class="form-horizontal" id="myserchform" name="myform"
-              action="<%=basePath%>admin/searchOrders" method="post">
-            <div class="form-group">
-                <div class="col-sm-8" style="text-align: center;">
-                    <span>订单编号：</span> <input type="number" placeholder="请输入纯数字~"
-                                              name="orderNum" value="${searchorders.orderNum}"/> <span>订单信息：</span>
-                    <input
-                            type="text" name="orderInformation" value="${searchorders.orderInformation}"/>
-                    <span>状态：</span>
-                    <select name="orderState" id="myselected">
-                        <option value="" selected="selected">请选择订单状态</option>
-                        <option value="1">代发货</option>
-                        <option value="2">待收货</option>
-                        <option value="3">已完成</option>
-                    </select>
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black "
+                                       id="example-r">
+                                    <thead>
+                                    <tr>
+                                        <th>订单编号</th>
+                                        <th>订单信息</th>
+                                        <th>订单价格</th>
+                                        <th>创建时间</th>
+                                        <th>订单状态</th>
+                                        <%--<th>操作</th>--%>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${ordersGrid.items}" var="item">
+                                        <tr class="gradeX">
+                                            <td>${item.orderNum}</td>
+                                            <td>${item.orderInformation}</td>
+                                            <td>￥${item.orderPrice}</td>
+                                            <td>${item.orderDate}</td>
+                                            <td><c:if test="${item.orderState == 1}">
+                                                <span style="color: blue">代发货</span>
+                                            </c:if> <c:if test="${item.orderState == 2}">
+                                                <span style="color: red">待收货</span>
+                                            </c:if> <c:if test="${item.orderState == 3}">
+                                                <span style="color: orange">已完成</span>
+                                            </c:if></td>
+                                                <%-- <td>
+                                                     <div class="tpl-table-black-operation">
+                                                         <a href="#" onclick="addModal()">
+                                                             <i class="am-icon-pencil"></i> 编辑
+                                                         </a>
+                                                         <a href="#" class="tpl-table-black-operation-del"
+                                                            onclick="deleteModal()">
+                                                             <i class="am-icon-trash"></i> 删除
+                                                         </a>
+                                                     </div>
+                                                 </td>--%>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        <li class="am-disabled"><a
+                                                href="<%=basePath%>orders_ordersList?page=${page-1}&rows=10">«</a></li>
+                                        <c:forEach varStatus="i" begin="1" end="${ordersGrid.totalPage>0?ordersGrid.totalPage:1}">
+                                            <li class="${page==i.count?'am-active':""}"><a
+                                                    href="<%=basePath%>orders_ordersList?page=${i.count}&rows=10">${i.count}</a>
+                                            </li>
+                                        </c:forEach>
+                                        <li><a href="<%=basePath%>orders_ordersList?page=${page+1}&rows=10">»</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <button class="btn btn-success btn-sm" type="submit">查找</button>
-                    <button class="btn btn-danger btn-sm" type="button"
-                            id="deleteOrdersButton">删除
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <!--表格显示-->
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th><input type="checkbox" id="selectAllButton"></th>
-                <th>订单编号</th>
-                <th>订单信息</th>
-                <th>订单价格</th>
-                <th>创建时间</th>
-                <th>订单状态</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${ordersGrid.items}" var="item">
-                <tr>
-                    <td><input type="checkbox" name="itemIds" value="${item.id}"></td>
-                    <td>${item.orderNum}</td>
-                    <td>${item.orderInformation}</td>
-                    <td>￥${item.orderPrice}</td>
-                    <td>${item.orderDate}</td>
-                    <td><c:if test="${item.orderState == 1}">
-                        <span style="color: blue">代发货</span>
-                    </c:if> <c:if test="${item.orderState == 2}">
-                        <span style="color: red">待收货</span>
-                    </c:if> <c:if test="${item.orderState == 3}">
-                        <span style="color: orange">已完成</span>
-                    </c:if></td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="doView(${item.id})">查看
-                        </button>
-                        <button type="button" class="btn btn-info btn-sm"
-                                onclick="doEdit(${item.id})">修改
-                        </button>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-
-        <!--分页条-->
-        <div style="text-align: center">
-            <div class="pagination">
-                <ul>
-                    <c:if test="${page>total&&page!=1}">
-                        <li><a
-                                href="<%=basePath%>orders_ordersList?page=${page-1==0?1:page-1}&rows=10">上一页</a>
-                        </li>
-                    </c:if>
-                    <c:set var="total" value="${ordersGrid.total/10}"></c:set>
-                    <c:forEach varStatus="i" begin="1" end="${total<1?1:total}">
-                        <li><a>第${i.count }页</a></li>
-                    </c:forEach>
-                    <c:if test="${page<total&&page!=1}">
-                        <li><a
-                                href="<%=basePath%>orders_ordersList?page=${page+1}&rows=10">下一页</a>
-                        </li>
-                    </c:if>
-                </ul>
-            </div>
-            <div class="pagination" style="float:right;">
-                <ul>
-                    <li><a>总商品数:${ordersGrid.total }个</a></li>
-                </ul>
             </div>
         </div>
     </div>
-</div>
-
-
-<!--==================================================================================================================-->
-<jsp:include page="../main_bottom.jsp"></jsp:include>
-
-<!--修改  模态框（Modal） -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">&times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">修改订单信息</h4>
-            </div>
-            <div class="modal-body" style="height: 0 auto;">
-                <form class="form-horizontal" id="myeditform" name="myform">
-                    <input type="hidden" id="id" name="id" value=""/>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单编号:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="orderNum" style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单信息:</label>
-                        <div class="col-sm-8">
-								<textarea rows="3" cols="20" name="orderInformation"
-                                          style="margin-top: 8px; width: 365px">
-								</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单价格:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="orderPrice" style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">创建时间:</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="orderDate" class="form-control form_datetime"
-                                   style="margin-top: 8px;">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">状态:</label>
-                        <div class="col-sm-8">
-                            <select name="orderState"
-                                    style="margin-top: 8px; width: 372px; height: 27px;">
-                                <option value="1" selected="selected">代发货</option>
-                                <option value="2">待收货</option>
-                                <option value="3">已完成</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" onclick="doSave()">提交更改</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal -->
-</div>
-
-<!-- 查看 模态框（Modal） -->
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">&times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">查看订单信息</h4>
-            </div>
-            <div class="modal-body" style="height: 0 auto;">
-                <form class="form-horizontal" id="myviewform" name="myform">
-                    <input type="hidden" id="id" name="id" value=""/>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单编号:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="orderNum"
-                                   readonly style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单信息:</label>
-                        <div class="col-sm-8">
-								<textarea rows="3" cols="20" name="orderInformation"
-                                          readonly style="margin-top: 8px; width: 365px">
-								</textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">订单价格:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="orderPrice" readonly
-                                   style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">创建时间:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="orderDate" readonly style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">状态:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="orderState" readonly
-                                   style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal -->
 </div>
 </body>
-<script type="text/javascript">
-    //初始化时间
-//    $(".form_datetime").datetimepicker({
-//        format: 'yyyy-mm-dd hh:ii:ss',
-//        todayHighlight: true,
-//        language: 'zh-CN',
-//        autoclose: true
-//    });
-
-
-    <%--/* 查看 */--%>
-    <%--function doView(id) {--%>
-        <%--$.ajax({--%>
-            <%--url: '<%=basePath%>admin/getOrders',--%>
-            <%--type: 'GET',--%>
-            <%--data: {id: id},--%>
-            <%--dataType: 'json',--%>
-            <%--success: function (json) {--%>
-                <%--if (json) {--%>
-                    <%--$('#myviewform').find("input[name='orderNum']").val(json.orderNum);--%>
-                    <%--$('#myviewform').find("textarea[name='orderInformation']").val(json.orderInformation);--%>
-                    <%--$('#myviewform').find("input[name='orderPrice']").val(json.orderPrice);--%>
-                    <%--$('#myviewform').find("input[name='orderDate']").val(json.orderDate);--%>
-                    <%--if (json.orderState == 1) {--%>
-                        <%--$('#myviewform').find("input[name='orderState']").val('代发货');--%>
-                    <%--}--%>
-                    <%--if (json.orderState == 2) {--%>
-                        <%--$('#myviewform').find("input[name='orderState']").val('待收货');--%>
-                    <%--}--%>
-                    <%--if (json.orderState == 3) {--%>
-                        <%--$('#myviewform').find("input[name='orderState']").val('已完成');--%>
-                    <%--}--%>
-                    <%--$('#viewModal').modal('toggle');--%>
-                <%--}--%>
-            <%--},--%>
-            <%--error: function () {--%>
-                <%--alert('请求超时或系统出错!');--%>
-                <%--$('#viewModal').modal('hide');--%>
-            <%--}--%>
-        <%--});--%>
-    <%--}--%>
-
-    <%--/* 修改 */--%>
-    <%--function doEdit(id) {--%>
-        <%--$.ajax({--%>
-            <%--url: '<%=basePath%>admin/getOrders',--%>
-            <%--type: 'GET',--%>
-            <%--data: {id: id},--%>
-            <%--dataType: 'json',--%>
-            <%--success: function (json) {--%>
-                <%--if (json) {--%>
-                    <%--$('#myeditform').find("input[name='id']").val(json.id);--%>
-                    <%--$('#myeditform').find("input[name='orderNum']").val(json.orderNum);--%>
-                    <%--$('#myeditform').find("textarea[name='orderInformation']").val(json.orderInformation);--%>
-                    <%--$('#myeditform').find("input[name='orderPrice']").val(json.orderPrice);--%>
-                    <%--$('#myeditform').find("input[name='orderDate']").val(json.orderDate);--%>
-                    <%--$('#myeditform').find("select[name='orderState']").val(json.orderState);--%>
-                    <%--$('#editModal').modal('toggle');--%>
-                <%--}--%>
-            <%--},--%>
-            <%--error: function () {--%>
-                <%--alert('请求超时或系统出错!');--%>
-                <%--$('#viewModal').modal('hide');--%>
-            <%--}--%>
-        <%--});--%>
-
-    <%--}--%>
-
-    //** 保存 *!/
-    <%--function doSave() {--%>
-        <%--$.ajax({--%>
-            <%--url: '<%=basePath%>admin/updateOrders',--%>
-            <%--type: 'POST',--%>
-            <%--data: $('#myeditform').serialize(),// 序列化表单值--%>
-            <%--dataType: 'json',--%>
-            <%--success: function (json) {--%>
-                <%--alert(json.msg);--%>
-                <%--$('#editModal').modal('toggle');--%>
-                <%--location.reload();--%>
-            <%--},--%>
-            <%--error: function () {--%>
-                <%--alert('请求超时或系统出错!');--%>
-                <%--$('#editModal').modal('toggle');--%>
-            <%--}--%>
-        <%--});--%>
-
-    <%--}*/--%>
-
-    //根据值 动态选中
-    <%--$("#myselected option[value='${searchorders.orderState}']").attr("selected", "selected");--%>
-
-
-</script>
-
+<!--==================================================================================================================-->
+<script src="<%=basePath%>/js/assets/js/amazeui.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/amazeui.datatables.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/dataTables.responsive.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/app.js"></script>
+<script src="<%=basePath%>/js/assets/js/theme.js"></script>
 </html>

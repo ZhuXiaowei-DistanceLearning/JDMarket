@@ -36,8 +36,8 @@ public class GoodsService {
         System.out.println(list);
     }*/
 
-    public List<Goods> queryByGoodsOrderByDate(Integer page, Integer rows, String sortBy, String desc, String search,Map<String,Object>... map) {
-        List<Goods> list = goodsMapper.findAll(page, rows, sortBy, desc, search,map);
+    public List<Goods> queryByGoodsOrderByDate(Integer page, Integer rows, String sortBy, String desc, String search, Map<String, Object>... map) {
+        List<Goods> list = goodsMapper.findAll(page, rows, sortBy, desc, search, map);
         list = list.stream().filter(e -> e.getStatus() == 1).collect(Collectors.toList());
         return list;
     }
@@ -72,7 +72,17 @@ public class GoodsService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         goods.setStartTime(sdf.format(new Date()));
         goods.setPolishTime(sdf.format(new Date()));
-        goodsMapper.saveOrUpdate(goods);
+        goodsMapper.save(goods);
+    }
+
+    public void editGoods(Goods goods, int i) {
+        Goods id = goodsMapper.findById(goods.getId());
+        id.setPrice(goods.getPrice());
+        id.setRealPrice(goods.getRealPrice());
+        id.setDescrible(goods.getDescrible());
+        id.setCatelogId(goods.getCatelogId());
+        id.setName(goods.getName());
+        goodsMapper.update(id);
     }
 
     public void updateGoodsInfo(int id, int status) {
@@ -107,5 +117,13 @@ public class GoodsService {
 
     public Goods queryGoodsById(int id) {
         return goodsMapper.findById(id);
+    }
+
+    public void opGoods(int id, Integer status) {
+        // 0 下架,1 上架
+        Goods goods = goodsMapper.findById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        goods.setStatus(3);
+        goodsMapper.update(goods);
     }
 }

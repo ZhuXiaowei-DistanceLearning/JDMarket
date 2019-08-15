@@ -13,7 +13,7 @@ public class Article {
     private int articleId;
     private String articleName;
     private String articleText;
-    private int articleAtime;
+    private String articleAtime;
     private int articleClicknum;
     private String className;
 
@@ -51,11 +51,11 @@ public class Article {
 
     @Basic
     @Column(name = "article_atime", nullable = false)
-    public int getArticleAtime() {
+    public String getArticleAtime() {
         return articleAtime;
     }
 
-    public void setArticleAtime(int articleAtime) {
+    public void setArticleAtime(String articleAtime) {
         this.articleAtime = articleAtime;
     }
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: zxw
@@ -40,13 +41,12 @@
             <div class="clear"></div>
         </div>
         <ul>
+            <c:forEach items="${articleList}" var="item">
             <li>
-                <a href="http://www.phpshe.com/demo/phpshe/article/2" title="PHPSHE B2C商城系统v1.7板演示站上线"
-                   target="_blank">PHPSHE B2C商城系统v1.7板演示站上线</a>05-01
+                <a href="#" title=""
+                   target="_blank">${item.articleName}</a><p>${item.articleAtime.substring(5)}</p>
             </li>
-            <li>
-                <a href="http://www.phpshe.com/demo/phpshe/article/1" title="关于简好" target="_blank">关于简好</a>05-01
-            </li>
+            </c:forEach>
         </ul>
     </div>
     <div class="top_fuwu">
@@ -69,3 +69,6 @@
 </div>
 <div class="clear"></div>
 </body>
+<script type="text/javascript">
+
+</script>

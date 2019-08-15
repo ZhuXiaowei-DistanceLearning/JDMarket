@@ -34,6 +34,8 @@ public class GoodsController extends BaseController<Goods> {
     private PurseService purseService;
     @Autowired
     private CommentsService commentsService;
+    @Autowired
+    private ArticleService articleService;
 
     private File myfile;
     private String myfileFileName;
@@ -41,6 +43,7 @@ public class GoodsController extends BaseController<Goods> {
     private String imgUrl;
     private String search;
     private String soryBy;
+    private Integer imageId;
 
     public String homeGoods() {
         // 商品种类数量
@@ -60,6 +63,8 @@ public class GoodsController extends BaseController<Goods> {
             goodsExtend.setImages(images);
             goodsAndImage.add(goodsExtend);
         }
+        List<Article> articleList = articleService.findArticleByClassName("1");
+        ServletActionContext.getRequest().setAttribute("articleList", articleList);
         ServletActionContext.getRequest().setAttribute("catelogGoods", goodsAndImage);
         // 获取其他发布列表
         for (int i = 1; i <= 7; i++) {
@@ -103,40 +108,43 @@ public class GoodsController extends BaseController<Goods> {
         User cur_user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         // 插入商品数据
         Goods goods = getModel();
-        if (goods.getPolishTime() != null && goods.getPolishTime() != "") {
-            goods.setUserId(cur_user.getId());
-            goods.setStatus(1);
-            goods.setId(0);
-            goodsService.addGoods(goods, 10);
-            int goodsId = goods.getId();
-            // 插入图片数据
-            Image image = new Image();
-            image.setGoodsId(goodsId);
-            image.setImgUrl(imgUrl);
-            imageService.insert(image);
-            return "publishGoods";
-        } else {
-            goods.setUserId(cur_user.getId());
-            goods.setStatus(1);
-            goodsService.addGoods(goods, 10);
-            int goodsId = goods.getId();
-            // 插入图片数据
-            Image image = new Image();
-            image.setGoodsId(goodsId);
-            image.setImgUrl(imgUrl);
-            imageService.insert(image);
-            // 查询目录信息
-            Integer goodsNum = cur_user.getGoodsNum();
-            Integer catelogId = goods.getCatelogId();
-            Catelog catelog = catelogService.queryByPrimaryKey(catelogId);
-            // 更新目录表中的商品数量
-            catelogService.updateCatelogNum(catelogId, catelog.getNumber() + 1);
-            // 更新用户商品
-            userService.updateGoodsNum(cur_user.getId(), goodsNum + 1);
-            cur_user.setGoodsNum(goodsNum + 1);
-            ServletActionContext.getRequest().setAttribute("cur_user", cur_user);
-            return "publishGoods";
-        }
+        // 修改商品
+        // 新增商品
+        goods.setUserId(cur_user.getId());
+        goods.setStatus(1);
+        goodsService.addGoods(goods, 10);
+        int goodsId = goods.getId();
+        // 插入图片数据
+        Image image = new Image();
+        image.setGoodsId(goodsId);
+        image.setImgUrl(imgUrl);
+        imageService.insert(image);
+        // 查询目录信息
+        Integer goodsNum = cur_user.getGoodsNum();
+        Integer catelogId = goods.getCatelogId();
+        Catelog catelog = catelogService.queryByPrimaryKey(catelogId);
+        // 更新目录表中的商品数量
+        catelogService.updateCatelogNum(catelogId, catelog.getNumber() + 1);
+        // 更新用户商品
+        userService.updateGoodsNum(cur_user.getId(), goodsNum + 1);
+        cur_user.setGoodsNum(goodsNum + 1);
+        ServletActionContext.getRequest().setAttribute("cur_user", cur_user);
+        return "publishGoods";
+    }
+
+    public String editMySell() {
+        User cur_user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
+        // 插入商品数据
+        Goods goods = getModel();
+        goodsService.editGoods(goods, 10);
+        int goodsId = goods.getId();
+        // 插入图片数据
+        Image image = new Image();
+        image.setGoodsId(goodsId);
+        image.setImgUrl(imgUrl);
+        image.setId(imageId);
+        imageService.update(image);
+        return "publishGoods";
     }
 
     /**
@@ -180,7 +188,6 @@ public class GoodsController extends BaseController<Goods> {
         GoodsExtend goodsExtend = new GoodsExtend();
         goodsExtend.setGoods(goods);
         goodsExtend.setImages(list);
-        Purse purse = purseService.queryByUserId(user.getId());
         ServletActionContext.getRequest().setAttribute("goodsExtend", goodsExtend);
         return "editGoods";
     }
@@ -196,6 +203,16 @@ public class GoodsController extends BaseController<Goods> {
     public String myGoodsInfo() {
         goodsService.updateGoodsInfo(getModel().getId(), getModel().getStatus());
         return "goodsDown";
+    }
+
+    /**
+     * 封禁
+     *
+     * @return
+     */
+    public String opGoods() {
+        goodsService.opGoods(getModel().getId(), getModel().getStatus());
+        return "ok";
     }
 
     public String updateGoodsTime() {
@@ -266,8 +283,9 @@ public class GoodsController extends BaseController<Goods> {
      * @return
      */
     public String goodsList() {
-        PageResult list = goodsService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
-        ServletActionContext.getRequest().getSession().setAttribute("goodsGrid", list);
+        PageResult pageResult = goodsService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
+        pageResult.setTotalPage((int) Math.ceil(pageResult.getTotal() / getRows()));
+        ServletActionContext.getRequest().getSession().setAttribute("goodsGrid", pageResult);
         return "goodsList";
     }
 
@@ -316,7 +334,10 @@ public class GoodsController extends BaseController<Goods> {
         // 获取最新发布的商品列表
         Map<String, Object> map = new HashMap<>();
         map.put("status", 1);
-        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, "startTime", "", search, map);
+        if (soryBy == null) {
+            soryBy = "startTime";
+        }
+        goodsList = goodsService.queryByGoodsOrderByDate(1, rows, soryBy, "", search, map);
         for (int i = 0; i < goodsList.size(); i++) {
             GoodsExtend goodsExtend = new GoodsExtend();
             Goods goods = goodsList.get(i);
@@ -375,5 +396,13 @@ public class GoodsController extends BaseController<Goods> {
 
     public void setSoryBy(String soryBy) {
         this.soryBy = soryBy;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 }

@@ -52,11 +52,8 @@
                     </c:forEach>
                 </div>
                 </c:if>
-                <c:if test="${useraddrList==null}" var="item">
-                    <div class="xzdz_btn"><a href="http://www.phpshe.com/demo/phpshe/index.php?mod=useraddr&act=add"
-                                             onclick="return pe_dialog(this, '新增地址', 630, 380)">+ 新增收货地址</a></div>
+                    <div class="xzdz_btn"><a href="<%=basePath%>/page_user_addUserAddr" target="_blank">+ 新增收货地址</a></div>
                     <div class="clear"></div>
-                </c:if>
             </div>
             <div class="xuxian mat20"></div>
             <div class="liucheng">支付方式</div>
@@ -137,7 +134,7 @@
                         <%--</div>--%>
                         <!--<div class="mat15">账户积分：<span class="c888">10积分，可抵：0.1元，本次使用：<input type="text" name="order_point_use" class="ds_input"> 积分</span></div>-->
                         <%--<div class="mat15">本次使用：<input type="text" name="order_point_use" class="ds_input"> 积分</span>--%>
-                            <%--<span class="c999 mal10">（积分余额：10个，可抵：0.1元）</span></div>--%>
+                        <%--<span class="c999 mal10">（积分余额：10个，可抵：0.1元）</span></div>--%>
                     </div>
                     <div class="fk_tb">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">

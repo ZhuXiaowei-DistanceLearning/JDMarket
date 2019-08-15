@@ -3,293 +3,265 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .modal-header {
-            text-align: center;
-        }
-
-        table td {
-            text-align: center;
-            border: 0px;
-        }
-    </style>
-    <title>钱包列表</title>
-    <!-- 分页 -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/matrix-style.css"/>
-    <link rel="stylesheet" href="<%=basePath%>css/matrix-media.css"/>
-    <link rel="stylesheet" href="<%=basePath%>font-awesome/css/font-awesome.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-    <script src="<%=basePath%>js/matrix.js" type="text/javascript"/>
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
-    <!-- 分页 -->
-    <link href="<%=basePath%>css/mypage.css" rel="stylesheet">
-    <link href="<%=basePath%>css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-
-    <!-- datetimepicker -->
-    <script type="text/javascript" src="<%=basePath%>js/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src='<%=basePath%>js/bootstrap-datetimepicker.zh-CN.js'></script>
-    <!-- 全选 base.js -->
-    <script type="text/javascript" src="<%=basePath%>js/custom/base.js"></script>
-
+    <title>仅用于学习-首页</title>
+    <link rel="icon" type="image/png" href="<%=basePath%>/js/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="<%=basePath%>/js/assets/i/app-icon72x72@2x.png">
+    <script src="<%=basePath%>/js/echarts.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.datatables.min.css"/>
+    <link rel="stylesheet" href="<%=basePath%>/js/assets/css/app.css">
+    <script src="<%=basePath%>/js/assets/js/jquery.min.js"></script>
 </head>
-
-<body>
+<body class="theme-white">
 <jsp:include page="../main_top.jsp"></jsp:include>
 <jsp:include page="../main_left.jsp"></jsp:include>
-<!--=============================================================================================================================================================================-->
-<!--main-container-part-->
-<div id="content" style="margin-right: 100px; margin-top: 40px;">
-    <!--breadcrumbs-->
-    <div id="content-header">
-        <div id="breadcrumb">
-            <a href="<%=basePath%>admin/indexs" title="主页" class="tip-bottom"><i
-                    class="icon-home"></i>主页</a> <a title="充值列表" class="tip-bottom">充值钱包</a>
-        </div>
-    </div>
-    <!--End-breadcrumbs-->
+<div class="am-g tpl-g">
+    <!-- 内容区域 -->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">用户列表显示</div>
 
-    <!-- Page table -->
-    <div class="container" style="width: 1000px;">
-        <!-- &lt;!&ndash; Marketing Icons Section &ndash;&gt;-->
 
-        <div class="col-lg-12">
-            <h2 class="page-header"
-                style="margin-top: 10px; text-align: center; font-family: '微软雅黑', Verdana, sans-serif, '宋体', serif;">
-                钱包列表显示</h2>
-        </div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button type="button" class="am-btn am-btn-default am-btn-success"
+                                                    onclick="addModal()"><span class="am-icon-plus"></span> 新增文章
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%--  <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                  <div class="am-form-group tpl-table-list-select">
+                                      <select data-am-selected="{btnSize: 'sm'}">
+                                          <option value="option1">所有类别</option>
+                                          <option value="option2">干货集合</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                  <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                      <input type="text" class="am-form-field ">
+                                      <span class="am-input-group-btn">
+                                                  <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                                                          type="button"></button>
+                                              </span>
+                                  </div>
+                              </div>--%>
 
-        <!--搜索栏-->
-        <form class="form-horizontal" id="myserchform" name="myform"
-              action="<%=basePath%>admin/searchPurse" method="post">
-            <div class="form-group">
-                <div class="col-sm-5" style="text-align: center;">
-                    <%-- <span>ID：</span> <input type="number" placeholder="请输入id~" name="id" value="${searchpurse.id}" />  --%>
-                    <input type="number" placeholder="请输用户id" name="userId" value="${searchpurse.userId}"
-                           class="form-control"/>
+                            <div class="am-u-sm-12">
+                                <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black "
+                                       id="example-r">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>文章名称</th>
+                                        <th>分类名称</th>
+                                        <th>发布日期</th>
+                                        <th>浏览量</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${articleList}" var="item">
+                                        <tr class="gradeX">
+                                            <td>${item.articleId}</td>
+                                            <td>${item.articleName}</td>
+                                            <td>
+                                                网站公告
+                                            </td>
+                                            <td>${item.articleAtime}</td>
+                                            <td>${item.articleClicknum}</td>
+                                            <td>
+                                                <div class="tpl-table-black-operation">
+                                                    <a href="#" onclick="edit(${item.articleId})">
+                                                        <i class="am-icon-pencil"></i> 编辑
+                                                    </a>
+                                                    <a href="#" class="tpl-table-black-operation-del"
+                                                       onclick="deleteModal(${item.articleId})">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        <li class="am-disabled"><a
+                                                href="<%=basePath%>admin_userList?page=1&rows=10">«</a></li>
+                                        <li class="am-active"><a
+                                                href="<%=basePath%>admin_userList?page=1&rows=10">1</a>
+                                        </li>
+                                        <li><a href="<%=basePath%>admin_userList?page=1&rows=10">»</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-5" style="text-align: left;">
-                    <select name="state" data-style="btn-info" class="form-control" id="myselected">
-                        <option value="">请选择审核状态</option>
-                        <option value="0">尚未审核</option>
-                        <option value="1">审核失败</option>
-                        <option value="2">审核成功</option>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-success btn-default" type="submit">查找</button>
-                    <!-- <button class="btn btn-danger btn-sm" type="button" id="deletePurseButton">删除</button>  -->
-                </div>
-            </div>
-        </form>
-
-        <!--表格显示-->
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <!-- <th><input type="checkbox" id="selectAllButton"></th> -->
-                <!-- <th>ID</th> -->
-                <th>用户ID</th>
-                <th>当前金额</th>
-                <th>充值金额</th>
-                <th>提现金额</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${purseGrid.items}" var="item">
-                <tr>
-                        <%-- <td><input type="checkbox" name="itemIds" value="${item.id}"></td> --%>
-                        <%-- <td>${item.id}</td> --%>
-                    <td>${item.userId}</td>
-                    <td>${item.balance}</td>
-                    <td>${item.recharge}</td>
-                    <td>${item.withdrawals}</td>
-                    <td>
-                        <c:if test="${item.state==null}"><span>-</span></c:if>
-                        <c:if test="${item.state==0}"><span class="btn-primary btn-info">尚待审核</span> </c:if>
-                        <c:if test="${item.state==1}"><span class="btn-primary btn-danger">审核失败</span></c:if>
-                        <c:if test="${item.state==2}"><span class="btn-primary  btn-success">审核成功</span></c:if>
-                    </td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${item.state==null}">
-                                <button type="button" class="btn btn-primary">无需审核</button>
-                            </c:when>
-                            <c:when test="${item.state==0}">
-                                <button type="button" class="btn btn-info" onclick="doEdit(${item.id})">立即审核</button>
-                            </c:when>
-                            <c:otherwise>
-                                <button type="button" class="btn btn-success">已经审核</button>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-
-        <!--分页条-->
-        <div style="text-align: right">
-            <div class="pagination">
-                <ul>
-                    <li><a>总钱包数:${purseGrid.total }个</a></li>
-                    <li><a>第${page }页</a></li>
-                    <%--<c:if test="${purseGrid.current ne 1 }">
-                        <li><a href="<%=basePath%>admin/purseList?pageNum=${purseGrid.current-1 }">上一页</a>
-                        </li>
-                    </c:if>
-
-                    <c:if test="${purseGrid.current < (purseGrid.total+9)/10-1 }">
-                        <li><a
-                            href="<%=basePath%>admin/purseList?pageNum=${purseGrid.current+1 }">下一页</a>
-                        </li>
-                    </c:if>--%>
-                </ul>
             </div>
         </div>
     </div>
 </div>
-
-
-<!--==================================================================================================================-->
-<jsp:include page="../main_bottom.jsp"></jsp:include>
-
-<!--修改  模态框（Modal） -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">审核信息</h4>
-            </div>
-            <div class="modal-body" style="height: 0 auto;">
-                <form class="form-horizontal" id="myeditform" name="myform">
-                    <input type="hidden" id="id" name="id" value=""/>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">用户ID:</label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly class="form-control" name="userId" style="margin-top: 8px;"/>
-                        </div>
+<!-- 添加模块窗口 -->
+<div class="am-modal am-modal-no-btn" id="doc-modal-1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">新增列表
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <div class="tpl-block">
+                <div class="am-g">
+                    <div class="tpl-form-body tpl-form-line">
+                        <form class="am-form tpl-form-line-form" action="<%=basePath%>/article_addArticle" method="post">
+                            <div class="am-form-group">
+                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章标题 <span
+                                        class="tpl-form-line-small-title">Article</span></label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" id="user-name" placeholder="article"
+                                           name="articleName">
+                                    <small>必填</small>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章内容 <span
+                                        class="tpl-form-line-small-title">content</span></label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" id="user-name" placeholder="产品"
+                                           name="articleText">
+                                    <small>必填</small>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3">
+                                    <input type="submit"
+                                           class="am-btn am-btn-primary tpl-btn-bg-color-success "></input>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">当前金额:</label>
-                        <div class="col-sm-8">
-                            <input type="number" class="form-control" name="balance" style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">充值金额:</label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly class="form-control" name="recharge" style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">提现金额:</label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly class="form-control" name="withdrawals"
-                                   style="margin-top: 8px;"/>
-                            <input type="hidden" class="form-control" name="state" style="margin-top: 8px;"/>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <div style="text-align:center">
-                    <div class="col-sm-2"></div>
-                    <button type="button" class="btn btn-success col-sm-4" onclick="doSavePass()">通过</button>
-                    <button type="button" class="btn btn-danger col-sm-4" onclick="doSaveRefuse()">拒绝</button>
                 </div>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal -->
 </div>
-</body>
+<%--修改模块窗口--%>
+<div class="am-modal am-modal-no-btn" id="editModel">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">修改文章
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <div class="tpl-block">
+                <div class="am-g">
+                    <div class="tpl-form-body tpl-form-line">
+                        <form class="am-form tpl-form-line-form" action="<%=basePath%>/article_editArticle" method="post">
+                            <div class="am-form-group">
+                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章标题 <span
+                                        class="tpl-form-line-small-title">Article</span></label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" id="editname" placeholder="article"
+                                           name="articleName">
+                                    <small>必填</small>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章内容 <span
+                                        class="tpl-form-line-small-title">content</span></label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" class="tpl-form-input" id="editText" placeholder="文章内容"
+                                           name="articleText" value="">
+                                    <small>必填</small>
+                                </div>
+                            </div>
+                            <input type="hidden" name="articleId" id="editId"/>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3">
+                                    <input type="submit"
+                                           class="am-btn am-btn-primary tpl-btn-bg-color-success "></input>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 删除Modal -->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"></div>
+        <div class="am-modal-bd">
+            你，确定要删除这条记录吗？
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+    function addModal() {
+        $("#doc-modal-1").modal();
+    }
 
-    /* 修改 */
-    function doEdit(id) {
-        $.ajax({
-            url: '<%=basePath%>admin/getPurse',
-            type: 'GET',
-            data: {id: id},
-            dataType: 'json',
-            success: function (json) {
-                if (json) {
-                    $('#myeditform').find("input[name='id']").val(json.id);
-                    $('#myeditform').find("input[name='userId']").val(json.userId);
-                    $('#myeditform').find("input[name='balance']").val(json.balance);
-                    $('#myeditform').find("input[name='recharge']").val(json.recharge);
-                    $('#myeditform').find("input[name='withdrawals']").val(json.withdrawals);
-                    $('#myeditform').find("input[name='state']").val(json.state);
-                    $('#editModal').modal('toggle');
-                }
+    function deleteModal(data) {
+        $("#my-confirm").modal({
+            onConfirm: function() {
+                $.ajax({
+                    url:"<%=basePath%>/article_deleteArticle?articleId="+data,
+                    type:"get",
+                    error:function(data){
+                        if(data.responseText=="success"){
+                            window.location.reload();
+                        }
+                    }
+                })
             },
-            error: function () {
-                alert('请求超时或系统出错!');
-                $('#editModal').modal('hide');
-            }
         });
     }
 
-    /* 通过 */
-    function doSavePass() {
+    function edit(data) {
         $.ajax({
-            url: '<%=basePath%>admin/updatePursePass',
-            type: 'POST',
-            data: $('#myeditform').serialize(),// 序列化表单值
-            dataType: 'json',
-            success: function (json) {
-                alert(json.msg);
-                $('#editModal').modal('toggle');
-                location.reload();
+            url: "<%=basePath%>/article_editPage?articleId=" + data,
+            type: "get",
+            success: function (data) {
+                $("#editname").val(data.articleName);
+                $("#editText").val(data.articleText);
+                $("#editId").val(data.articleId);
+                $("#editModel").modal();
             },
-            error: function () {
-                alert('请求超时或系统出错!');
-                $('#editModal').modal('toggle');
+            error:function(data){
+                $("#editname").val(data);
             }
-        });
+        })
     }
-
-    /* 不通过 */
-    function doSaveRefuse() {
-        $.ajax({
-            url: '<%=basePath%>admin/updatePurseRefuse',
-            type: 'POST',
-            data: $('#myeditform').serialize(),// 序列化表单值
-            dataType: 'json',
-            success: function (json) {
-                alert(json.msg);
-                $('#editModal').modal('toggle');
-                location.reload();
-            },
-            error: function () {
-                alert('请求超时或系统出错!');
-                $('#editModal').modal('toggle');
-            }
-        });
-    }
-
-    //根据值 动态选中
-    $("#myselected option[value='${searchpurse.state}']").attr("selected", "selected");
 </script>
+</body>
+<!--==================================================================================================================-->
+<script src="<%=basePath%>/js/assets/js/amazeui.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/amazeui.datatables.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/dataTables.responsive.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/app.js"></script>
+<script src="<%=basePath%>/js/assets/js/theme.js"></script>
 </html>

@@ -13,7 +13,6 @@
     <title>仅用于学习-首页</title>
     <link rel="icon" type="image/png" href="<%=basePath%>/js/assets/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="<%=basePath%>/js/assets/i/app-icon72x72@2x.png">
-    <script src="<%=basePath%>/js/echarts.min.js"></script>
     <link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.datatables.min.css"/>
     <link rel="stylesheet" href="<%=basePath%>/js/assets/css/app.css">
@@ -40,29 +39,29 @@
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
                                             <button type="button" class="am-btn am-btn-default am-btn-success"
-                                                    onclick="addModal()"><span class="am-icon-plus"></span> 新增文章
+                                                    onclick="addModal()"><span class="am-icon-plus"></span> 新增分类
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <%--  <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
-                                  <div class="am-form-group tpl-table-list-select">
-                                      <select data-am-selected="{btnSize: 'sm'}">
-                                          <option value="option1">所有类别</option>
-                                          <option value="option2">干货集合</option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-                                  <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                                      <input type="text" class="am-form-field ">
-                                      <span class="am-input-group-btn">
-                                                  <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
-                                                          type="button"></button>
-                                              </span>
-                                  </div>
-                              </div>--%>
+                            <%--<div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                <div class="am-form-group tpl-table-list-select">
+                                    <select data-am-selected="{btnSize: 'sm'}">
+                                        <option value="option1">所有类别</option>
+                                        <option value="option2">干货集合</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    <input type="text" class="am-form-field ">
+                                    <span class="am-input-group-btn">
+                                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                                                        type="button"></button>
+                                            </span>
+                                </div>
+                            </div>--%>
 
                             <div class="am-u-sm-12">
                                 <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black "
@@ -70,32 +69,45 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>文章名称</th>
-                                        <th>分类名称</th>
-                                        <th>发布日期</th>
-                                        <th>浏览量</th>
+                                        <th>名称</th>
+                                        <th>数量</th>
+                                        <th>状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${articleList}" var="item">
+                                    <c:forEach items="${catelogList}" var="item">
                                         <tr class="gradeX">
-                                            <td>${item.articleId}</td>
-                                            <td>${item.articleName}</td>
-                                            <td>
-                                                网站公告
+                                            <td>${item.id}</td>
+                                            <td>${item.name}</td>
+                                            <td>${item.number}
                                             </td>
-                                            <td>${item.articleAtime}</td>
-                                            <td>${item.articleClicknum}</td>
+                                            <td>
+                                                <c:if test="${item.status == 1}">
+                                                    <span style="color:blue">正在使用</span>
+                                                </c:if>
+                                                <c:if test="${item.status == 0}">
+                                                    <span style="color:red">作废</span>
+                                                </c:if>
+                                            </td>
                                             <td>
                                                 <div class="tpl-table-black-operation">
-                                                    <a href="#" onclick="edit(${item.articleId})">
+                                                    <a href="#" onclick="edit(${item.id})">
                                                         <i class="am-icon-pencil"></i> 编辑
                                                     </a>
-                                                    <a href="#" class="tpl-table-black-operation-del"
-                                                       onclick="deleteModal(${item.articleId})">
-                                                        <i class="am-icon-trash"></i> 删除
-                                                    </a>
+                                                    <c:if test="${item.status == 0}">
+                                                        <a href="#" class="tpl-table-black-operation-del"
+                                                           onclick="deleteModal(${item.id})">
+                                                            <i class="am-icon-trash"></i> 重新使用
+                                                        </a>
+                                                    </c:if>
+                                                    <c:if test="${item.status == 1}">
+                                                        <a href="#" class="tpl-table-black-operation-del"
+                                                           onclick="deleteModal(${item.id})">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </c:if>
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -125,29 +137,21 @@
 <!-- 添加模块窗口 -->
 <div class="am-modal am-modal-no-btn" id="doc-modal-1">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd">新增列表
+        <div class="am-modal-hd">新增分类
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
         </div>
         <div class="am-modal-bd">
             <div class="tpl-block">
                 <div class="am-g">
                     <div class="tpl-form-body tpl-form-line">
-                        <form class="am-form tpl-form-line-form" action="<%=basePath%>/article_addArticle" method="post">
+                        <form class="am-form tpl-form-line-form" action="<%=basePath%>/catelog_addCatelog"
+                              method="post">
                             <div class="am-form-group">
-                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章标题 <span
-                                        class="tpl-form-line-small-title">Article</span></label>
+                                <label for="user-name" class="am-u-sm-3 am-form-label"> 分类名称 <span
+                                        class="tpl-form-line-small-title">Catelog</span></label>
                                 <div class="am-u-sm-9">
                                     <input type="text" class="tpl-form-input" id="user-name" placeholder="article"
-                                           name="articleName">
-                                    <small>必填</small>
-                                </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章内容 <span
-                                        class="tpl-form-line-small-title">content</span></label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" class="tpl-form-input" id="user-name" placeholder="产品"
-                                           name="articleText">
+                                           name="name">
                                     <small>必填</small>
                                 </div>
                             </div>
@@ -174,26 +178,18 @@
             <div class="tpl-block">
                 <div class="am-g">
                     <div class="tpl-form-body tpl-form-line">
-                        <form class="am-form tpl-form-line-form" action="<%=basePath%>/article_editArticle" method="post">
+                        <form class="am-form tpl-form-line-form" action="<%=basePath%>/catelog_editCatelog"
+                              method="post">
                             <div class="am-form-group">
-                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章标题 <span
-                                        class="tpl-form-line-small-title">Article</span></label>
+                                <label for="user-name" class="am-u-sm-3 am-form-label"> 目录内容 <span
+                                        class="tpl-form-line-small-title">Catelog</span></label>
                                 <div class="am-u-sm-9">
                                     <input type="text" class="tpl-form-input" id="editname" placeholder="article"
-                                           name="articleName">
+                                           name="name">
                                     <small>必填</small>
                                 </div>
                             </div>
-                            <div class="am-form-group">
-                                <label for="user-name" class="am-u-sm-3 am-form-label"> 文章内容 <span
-                                        class="tpl-form-line-small-title">content</span></label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" class="tpl-form-input" id="editText" placeholder="文章内容"
-                                           name="articleText" value="">
-                                    <small>必填</small>
-                                </div>
-                            </div>
-                            <input type="hidden" name="articleId" id="editId"/>
+                            <input type="hidden" name="id" id="editId"/>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
                                     <input type="submit"
@@ -227,12 +223,12 @@
 
     function deleteModal(data) {
         $("#my-confirm").modal({
-            onConfirm: function() {
+            onConfirm: function () {
                 $.ajax({
-                    url:"<%=basePath%>/article_deleteArticle?articleId="+data,
-                    type:"get",
-                    error:function(data){
-                        if(data.responseText=="success"){
+                    url: "<%=basePath%>/catelog_deleteCatelog?id=" + data,
+                    type: "get",
+                    error: function (data) {
+                        if (data.responseText == "success") {
                             window.location.reload();
                         }
                     }
@@ -243,15 +239,14 @@
 
     function edit(data) {
         $.ajax({
-            url: "<%=basePath%>/article_editPage?articleId=" + data,
+            url: "<%=basePath%>/catelog_editPage?id=" + data,
             type: "get",
             success: function (data) {
-                $("#editname").val(data.articleName);
-                $("#editText").val(data.articleText);
-                $("#editId").val(data.articleId);
+                $("#editname").val(data.name);
+                $("#editId").val(data.id);
                 $("#editModel").modal();
             },
-            error:function(data){
+            error: function (data) {
                 $("#editname").val(data);
             }
         })

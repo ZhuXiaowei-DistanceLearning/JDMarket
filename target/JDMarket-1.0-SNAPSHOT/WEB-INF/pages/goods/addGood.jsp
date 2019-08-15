@@ -35,7 +35,7 @@
             <a href="javascript:;" class="sel">发布闲置<i></i></a>
         </div>
         <div class="hy_table">
-            <form id="goodsForm" method="post" action="<%=basePath%>/goods_publishGoods" enctype="multipart/form-data">
+            <form id="goodsForm" method="post" enctype="multipart/form-data">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td style="text-align:right;" width="150">商品名称：</td>
@@ -95,7 +95,9 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" name="imgUrl" id="imgUrl"/>
+                            <input type="hidden" name="imgUrl" id="imgUrl" value="${goodsExtend.images[0].imgUrl}"/>
+                            <input type="hidden" name="id" id="goodsId"value="${goodsExtend.goods.id}" />
+                            <input type="hidden" name="imageId" value="${goodsExtend.images[0].id}" />
                             <input type="button" id="addOrEditGoods" value="提 交" class="tjbtn"/>
                         </td>
                     </tr>
@@ -147,6 +149,11 @@
 
     $("#addOrEditGoods").click(function(){
         $("#catelog").val($("#cat option:selected").val());
+        if($("#goodsId").val()!=""){
+            $("#goodsForm").attr("action","<%=basePath%>/goods_editMySell")
+        }else{
+            $("#goodsForm").attr("action","<%=basePath%>/goods_publishGoods")
+        }
         $("#goodsForm").submit();
     })
 

@@ -1,4 +1,7 @@
 <%@ page language="java" import="com.zxw.pojo.User" pageEncoding="UTF-8" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.io.PrintWriter" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -44,7 +47,11 @@
 
                         </p>
                         <p>
-                            上次登录时间：2019-08-08 14:20
+                            上次登录时间：<%
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String date = sdf.format(new Date());
+                            %>
+                            <%=date%>
                         </p>
                     </div>
                 </div>

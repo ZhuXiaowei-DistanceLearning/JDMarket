@@ -50,6 +50,7 @@ public class VisitorService {
         String s = sdf.format(d);
         List list = visitorMapper.countPeople("time", format, s);
         List<PeopleCount> peopleCounts = new ArrayList<>();
+        //TODO 此处时间人数显示有问题，解决办法：通过设置多对多的表
         for (Object o : list) {
             PeopleCount p = new PeopleCount();
             Object[] arr = (Object[]) o;
@@ -57,6 +58,9 @@ public class VisitorService {
             Long along = Long.valueOf(arr[1].toString());
             Integer integer = Integer.valueOf(arr[1].toString());
             p.setRows(Integer.valueOf(arr[1].toString()));
+            if(p.getRows()==0){
+                p.setRows(0);
+            }
             peopleCounts.add(p);
         }
         return peopleCounts;

@@ -30,4 +30,8 @@ public class ImageService {
     public void insert(Image image) {
         imageMapper.save(image);
     }
+
+    public void update(Image image) {
+        imageMapper.update(image);
+    }
 }

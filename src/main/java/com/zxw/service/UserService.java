@@ -62,4 +62,15 @@ public class UserService {
         long count = userMapper.count();
         return new PageResult(count, list);
     }
+
+    public void userBan(int id) {
+        User user = userMapper.findById(id);
+        if (user.getStatus() == (byte) 0) {
+            user.setStatus((byte) 1);
+            userMapper.update(user);
+        } else {
+            user.setStatus((byte) 0);
+            userMapper.update(user);
+        }
+    }
 }

@@ -58,6 +58,7 @@
             <!--商品分类查询-->
             <result name="goodsCatelog">/WEB-INF/pages/goods/goodsList.jsp</result>
             <result name="goodsList">/WEB-INF/pages/admin/goods/goods_list.jsp</result>
+            <result name="ok" type="redirectAction">goods_goodsList.action?page=1&amp;rows=10</result>
         </action>
         <action name="user_*" class="userController" method="{1}">
             <result name="success" type="redirect">goods_homeGoods.action</result>
@@ -119,11 +120,12 @@
             <result name="logout">page_common_user_login.action</result>
             <!--用户列表-->
             <result name="userList">/WEB-INF/pages/admin/user/user_list.jsp</result>
+            <result name="ok" type="redirectAction">admin_userList.action?page=1&amp;rows=10</result>
         </action>
         <action name="userAddr_*" class="userAddrController" method="{1}">
             <!--所有地址-->
             <result name="findAll">/WEB-INF/pages/user/userAddr.jsp</result>
-            <result name="addAddr" type="redirect">userAddr_findAll.action</result>
+            <result name="addAddr" type="redirect">userAddr_findAll.action?page=1&amp;rows=10</result>
         </action>
         <action name="comment_*" class="commentsController" method="{1}">
             <!--所有地址-->
@@ -133,7 +135,22 @@
             <!--所有地址-->
             <result name="success" type="redirect">goods_queryGoodsById.action</result>
         </action>
-        <action name="page_*_*">
+        <action name="article_*" class="articleController" method="{1}">
+            <!--文章列表-->
+            <result name="success">/WEB-INF/pages/admin/purse/purse_list.jsp</result>
+            <!--跳转-->
+            <result name="ok" type="redirectAction">article_getArticle.action?page=1&amp;rows=10&amp;className=1</result>
+        </action>
+        <action name="catelog_*" class="catelogController" method="{1}">
+            <!--目录列表-->
+            <result name="success">/WEB-INF/pages/admin/goods/catelog_list.jsp</result>
+            <!--跳转-->
+            <result name="ok" type="redirectAction">catelog_getCatelog.action?page=1&amp;rows=10</result>
+        </action>
+        <action name="page_*_*" class="pageController">
+            <result name="success" type="redirectAction">redirect_{1}_{2}.action</result>
+        </action>
+        <action name="redirect_*_*">
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
         </action>
     </package>

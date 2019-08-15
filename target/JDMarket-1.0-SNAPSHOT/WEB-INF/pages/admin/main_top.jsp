@@ -15,38 +15,109 @@
 %>
 <c:set var="admin" value="<%=admin%>"></c:set>
 <body>
-<!--Header-part-->
-<div id="headers" >
-	<div style="float:letf;height:50px;background-color:#323232;">
-		<div style="float:left;background-color:#FFB53E;height:50px;width:220px;">
-			<a href="<%=basePath%>page_admin_index">
-				<p style="font-size:30px;text-align:center;">首页</p>
-			</a>
-		</div>
-		<h1 style="text-align:center;margin-top: 10px;margin-bottom: 0px;">鲁大二手工坊管理系统</h1>
+<!-- 头部 -->
+<header>
+	<!-- logo -->
+	<div class="am-fl tpl-header-logo">
+		<a href="<%=basePath%>/page_admin_index"><img src="<%=basePath%>/upload/logo.png"></a>
 	</div>
-</div>
-<!--close-Header-part-->
-<!--top-Header-menu-->
-<div id="user-nav" class="navbar navbar-inverse" >
-	<ul class="nav" style="height:50px;">
-		<li class="dropdown" id="profile-messages"><a title="" href="#"
-													  data-toggle="dropdown" data-target="#profile-messages"
-													  class="dropdown-toggle"> <i class="icon icon-user"></i>
-			<span class="text">${admin.username }</span><b class="caret"></b> </a>
-			<ul class="dropdown-menu">
-				<li><a href="<%=basePath%>admin_info"><i class="icon-user"></i>个人信息</a></li>
-				<li class="divider"></li>
-				<li><a href="<%=basePath%>admin_modify"><i class="icon-check"></i>修改密码</a></li>
-				<li class="divider"></li>
-				<li><a href="<%=basePath%>admin_logout"
-					   onclick="return confirm('确认退出吗？');"><i class="icon-key"></i>退出</a>
+	<!-- 右侧内容 -->
+	<div class="tpl-header-fluid">
+		<!-- 侧边切换 -->
+		<div class="am-fl tpl-header-switch-button am-icon-list">
+                        <span>
+
+                        </span>
+		</div>
+		<!-- 搜索 -->
+		<div class="am-fl tpl-header-search">
+			<form class="tpl-header-search-form" action="javascript:;">
+				<button class="tpl-header-search-btn am-icon-search"></button>
+				<input class="tpl-header-search-box" type="text" placeholder="搜索内容...">
+			</form>
+		</div>
+		<!-- 其它功能-->
+		<div class="am-fr tpl-header-navbar">
+			<ul>
+				<!-- 欢迎语 -->
+				<li class="am-text-sm tpl-header-navbar-welcome">
+					<a href="javascript:;">${admin.username} </a>
+				</li>
+
+				<!-- 新邮件 -->
+				<li class="am-dropdown tpl-dropdown" data-am-dropdown>
+					<a href="javascript:;" class="am-dropdown-toggle tpl-dropdown-toggle"
+					   data-am-dropdown-toggle>
+						<i class="am-icon-envelope"></i>
+						<span class="am-badge am-badge-success am-round item-feed-badge">1</span>
+					</a>
+					<!-- 弹出列表 -->
+					<ul class="am-dropdown-content tpl-dropdown-content">
+						<li class="tpl-dropdown-menu-messages">
+							<a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
+								<div class="menu-messages-content">
+									<div class="menu-messages-content-title">
+										<span>朱小威&nbsp;&nbsp;|&nbsp;&nbsp; 学号：2018200280</span>
+									</div>
+								</div>
+							</a>
+						</li>
+						<li class="tpl-dropdown-menu-messages">
+							<a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
+								<i class="am-icon-circle-o"></i> 进入列表…
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<!-- 新提示 -->
+				<li class="am-dropdown" data-am-dropdown>
+					<a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
+						<i class="am-icon-bell"></i>
+						<span class="am-badge am-badge-warning am-round item-feed-badge">1</span>
+					</a>
+
+					<!-- 弹出列表 -->
+					<ul class="am-dropdown-content tpl-dropdown-content">
+						<li class="tpl-dropdown-menu-notifications">
+							<a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+								<div class="tpl-dropdown-menu-notifications-title">
+									<span> 朱小威&nbsp;&nbsp;|&nbsp;&nbsp; 学号：2018200280</span>
+								</div>
+							</a>
+						</li>
+
+						<li class="tpl-dropdown-menu-notifications">
+							<a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
+								<i class="am-icon-bell"></i> 进入列表…
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<!-- 退出 -->
+				<li class="am-text-sm">
+					<a href="<%=basePath%>/admin_logout">
+						<span class="am-icon-sign-out"></span> 退出
+					</a>
 				</li>
 			</ul>
-		</li>
-		<li class=""><a title="" href="<%=basePath%>admin_logout"
-						onclick="return confirm('确认退出吗？');"><i
-				class="icon icon-share-alt"></i> <span class="text">退出</span> </a></li>
-	</ul>
+		</div>
+	</div>
+
+</header>
+<!-- 风格切换 -->
+<div class="tpl-skiner">
+	<div class="tpl-skiner-toggle am-icon-cog">
+	</div>
+	<div class="tpl-skiner-content">
+		<div class="tpl-skiner-content-title">
+			选择主题
+		</div>
+		<div class="tpl-skiner-content-bar">
+			<span id="theme" class="skiner-color skiner-white" data-color="theme-white"></span>
+			<span class="skiner-color skiner-black" data-color="theme-black"></span>
+		</div>
+	</div>
 </div>
 </body>

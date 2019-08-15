@@ -110,8 +110,9 @@ public class OrdersController extends BaseController<Orders> {
      * @return
      */
     public String ordersList() {
-        PageResult list = ordersService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
-        ServletActionContext.getRequest().getSession().setAttribute("ordersGrid", list);
+        PageResult pageResult = ordersService.findAll(getiPage().getPage(), getiPage().getRows(), null, null, null);
+        pageResult.setTotalPage((int) Math.ceil(pageResult.getTotal() / getRows()));
+        ServletActionContext.getRequest().getSession().setAttribute("ordersGrid", pageResult);
         return "ordersList";
     }
 

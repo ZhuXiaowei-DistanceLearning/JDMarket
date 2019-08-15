@@ -36,9 +36,17 @@ public class AdminController extends BaseController<Admin> {
 
     public String userList() {
         PageResult pageResult1 = userService.findAll(getiPage());
+        pageResult1.setTotalPage((int) Math.ceil(pageResult1.getTotal() / getRows()));
         ServletActionContext.getRequest().getSession().setAttribute("userGrid", pageResult1);
-        ServletActionContext.getRequest().getSession().setAttribute("ipage", getiPage());
         return "userList";
+    }
+
+    /**
+     * 封禁用户
+     */
+    public String userBan(){
+        userService.userBan(getModel().getId());
+        return "ok";
     }
 
     public String login() {

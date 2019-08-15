@@ -47,7 +47,7 @@
             </div>
             <!--<p class="top_tel fr">15839823500</p>-->
             <div class="sear fr" style="margin: 57px 120px 0 0;">
-                <form method="get" action="<%=basePath%>/goods_homeGood">
+                <form method="get" action="<%=basePath%>/goods_queryBySearch">
                     <div class="inputbg fl">
                         <input type="text" name="search" value="" class="fl searinput c666"/></div>
                     <input type="submit" class="fl sear_btn" value="搜 索"/>

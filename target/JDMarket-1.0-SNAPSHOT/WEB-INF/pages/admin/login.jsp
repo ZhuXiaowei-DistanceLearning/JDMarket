@@ -6,74 +6,71 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html>
-<html lang="zh">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-<title>Admin Login</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
-<link rel="stylesheet" href="<%=basePath%>css/matrix-login.css"/>
-<link rel="stylesheet" href="<%=basePath%>css/bootstrap-responsive.min.css"/>
-<link rel="stylesheet" href="<%=basePath%>font-awesome/css/font-awesome.css" />
-</head>
-<body>
-	<div id="loginbox">
-	<h1 style="text-align:center;">鲁大二手工坊管理系统</h1>
-		<form id="loginform" class="form-vertical" action="<%=basePath%>admin_login" method="post" role="form">
-			<div class="control-group normal_text">
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					<div class="main_input_box">
-						<span class="add-on bg_lg"><i class="icon-user"></i> </span> <input
-							type="text"  name="phone" id="phone"
-							class="required" value="" placeholder="账号" />
-					</div>
-				</div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					<div class="main_input_box">
-						<span class="add-on bg_ly"><i class="icon-lock"></i> </span> <input
-							type="password" placeholder="密码" name="password"
-							id="password" />
-					</div>
-				</div>
-			</div>
-			<div class="form-actions">
-				<input type="submit" class="btn btn-success" value="Login" style="margin-left:80%">
-			</div>
-		</form>
-	</div>
-    <script src="<%=basePath%>js/jquery.min.js"/>
-	<script src="<%=basePath%>js/matrix.login.js" type="text/javascript" charset="utf-8"></script>
-	<script src="<%=basePath%>js/jquery.validate.js"/>
-	<script src="<%=basePath%>js/jquery.md5.js"/>
-	<script type="text/javascript">
-    $("#loginform").validate({
-        rules: {
-        	phone: "required",
-            password: {
-                required: true,
-                minlength: 6
-            },
-        },
-        messages: {
-        	phone:  "请输入用户名",
-            password: {
-                required: "请输入密码",
-                minlength: jQuery.format("密码不能小于{0}个字符")
-            }
-        }
-    });
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>仅用于学习-登录</title>
+	<link rel="icon" type="image/png" href="<%=basePath%>/js/assets/i/favicon.png">
+	<link rel="apple-touch-icon-precomposed" href="<%=basePath%>/js/assets/i/app-icon72x72@2x.png">
+	<script src="<%=basePath%>/js/echarts.min.js"></script>
+	<link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="<%=basePath%>/js/assets/css/amazeui.datatables.min.css"/>
+	<link rel="stylesheet" href="<%=basePath%>/js/assets/css/app.css">
+	<script src="<%=basePath%>/js/assets/js/jquery.min.js"></script>
 
-    function encrypt(){
-    	/// var pwd = $.md5($("#password").val());
-    	$("#password").val(pwd);
-    	return true;
-    };
-</script>
+</head>
+
+<body class="theme-white">
+<script src="assets/js/theme.js"></script>
+<div class="am-g tpl-g">
+	<!-- 风格切换 -->
+	<div class="tpl-skiner">
+		<div class="tpl-skiner-toggle am-icon-cog">
+		</div>
+		<div class="tpl-skiner-content">
+			<div class="tpl-skiner-content-title">
+				选择主题
+			</div>
+			<div class="tpl-skiner-content-bar">
+				<span class="skiner-color skiner-white" data-color="theme-white"></span>
+				<span class="skiner-color skiner-black" data-color="theme-black"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl-login">
+		<div class="tpl-login-content">
+			<div style="background: url(<%=basePath%>/upload/logo.png) center no-repeat;height: 165px;margin: 0 auto;margin-bottom: 20px;">
+			</div>
+			<form class="am-form tpl-form-line-form" method="post" action="<%=basePath%>/admin_login">
+				<div class="am-form-group">
+					<input type="text" class="tpl-form-input" id="user-name" placeholder="请输入账号" name="phone">
+				</div>
+
+				<div class="am-form-group">
+					<input type="password" class="tpl-form-input" id="user-name" placeholder="请输入密码" name="password">
+				</div>
+				<div class="am-form-group tpl-login-remember-me">
+					<%--<input id="remember-me" type="checkbox">--%>
+					<%--<label for="remember-me">
+						记住密码
+					</label>--%>
+				</div>
+				<div class="am-form-group">
+					<input type="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn"
+							></input>
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script src="<%=basePath%>/js/assets/js/amazeui.min.js"></script>
+<script src="<%=basePath%>/js/assets/js/app.js"></script>
+
 </body>
 
 </html>
