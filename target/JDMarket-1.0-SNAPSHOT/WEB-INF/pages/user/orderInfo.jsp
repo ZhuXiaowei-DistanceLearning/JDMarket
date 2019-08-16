@@ -57,6 +57,9 @@
                         <c:when test="${orders.orderState==3}">
                             <span class="mar20"><span class="corg">已完成</span></span>
                         </c:when>
+                        <c:when test="${orders.orderState==4}">
+                            <span class="mar20"><span class="corg">买家已取消</span></span>
+                        </c:when>
                     </c:choose>
 
                 </td>
@@ -101,6 +104,12 @@
                 <td align="right" class="c888">发货时间：</td>
                 <td>${orders.orderStime}</td>
             </tr>
+            <c:if test="${orders.orderState==4}">
+                <tr>
+                    <td align="right" class="c888">取消时间：</td>
+                    <td>${orders.orderClosetext}</td>
+                </tr>
+            </c:if>
             <tr>
                 <td align="right" class="c888" width="80">付款方式：</td>
                 <td>余额支付</td>

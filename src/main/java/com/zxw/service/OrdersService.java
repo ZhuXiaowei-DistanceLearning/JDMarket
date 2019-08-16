@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zxw on 2019/8/5.
@@ -32,7 +35,7 @@ public class OrdersService {
         return list;
     }
 
-    public List<Orders> getOrdersByUserIdAndGoods(int id) {
+    public List<Orders> getOrdersByUserIdAndGoods(int id, Map<String, Object>... map) {
         List<Orders> ordersList = new ArrayList<>();
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Goods.class);
         detachedCriteria.add(Restrictions.eq("userId", id));
@@ -58,16 +61,20 @@ public class OrdersService {
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Orders.class);
         detachedCriteria.add(Restrictions.eq("orderNum", goodsId));
         Orders orders = ordersMapper.findByCriteria(detachedCriteria).get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Integer state = orders.getOrderState();
         // 1.未发货 2.发货 3.已完成
         if (state == 0) {
             orders.setOrderState(1);
+            orders.setOrderPtime(sdf.format(new Date()));
             ordersMapper.update(orders);
         } else if (state == 1) {
             orders.setOrderState(2);
+            orders.setOrderStime(sdf.format(new Date()));
             ordersMapper.update(orders);
         } else if (state == 2) {
             orders.setOrderState(3);
+            orders.setOrderFtime(sdf.format(new Date()));
             ordersMapper.update(orders);
         }
     }
@@ -92,5 +99,13 @@ public class OrdersService {
 
     public Orders findById(int id) {
         return ordersMapper.findById(id);
+    }
+
+    public void cancelOrder(int id) {
+        Orders orders = ordersMapper.findById(id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        orders.setOrderState(4);
+        orders.setOrderClosetext(sdf.format(new Date()));
+        ordersMapper.update(orders);
     }
 }

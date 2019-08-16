@@ -126,4 +126,15 @@ public class GoodsService {
         goods.setStatus(3);
         goodsMapper.update(goods);
     }
+
+    /**
+     * 取消订单
+     * @param id
+     * @param status
+     */
+    public void cancelGoods(int id, Integer status) {
+        Goods id1 = goodsMapper.findById(id);
+        id1.setStatus(status);
+        goodsMapper.update(id1);
+    }
 }

@@ -26,11 +26,10 @@
     <div class="fr huiyuan_main">
     <div class="hy_tt">
         <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=pay" class="sel">账户充值<i></i></a>
-        <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=cashout&act=add" >申请提现<i></i></a>
-        <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=cashout" >提现记录<i></i></a>
+        <a>ejcbsx6100@sandbox.com</a>
     </div>
     <div class="hy_table">
-        <form method="post" id="form" target="_blank">
+        <form method="get" id="form" target="_blank" action="<%=basePath%>/page_wappay_pay">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td style="text-align:right;" width="150">账户余额：</td>
@@ -39,7 +38,7 @@
                 <tr>
                     <td style="text-align:right;">充值金额：</td>
                     <td>
-                        <input type="text" name="order_money" value="" class="inputall input150" /> 元
+                        <input type="text" name="money" value="" class="inputall input150" /> 元
                         <span id="order_money_show" class="mal10"></span>
                     </td>
                 </tr>
@@ -47,13 +46,8 @@
                     <td style="text-align:right;">支付方式：</td>
                     <td>
                         <label for="alipay" class="fl mar10" style="width:145px;height:45px;line-height:45px;padding-left:10px;border:1px solid #eaeaea;background:#f8f8f8;border-radius:3px">
-                            <input type="radio" class="fl mar10 mat15" name="order_payment" id="alipay" value="alipay" />
+                            <input type="radio" class="fl mar10 mat15" name="order_payment" id="alipay" value="com.alipay" />
                             <span class="fl"><img src="http://www.phpshe.com/demo/phpshe/include/plugin/payment/alipay/logo.png" class="mat8" /></span>
-                            <div class="clear"></div>
-                        </label>
-                        <label for="wechat" class="fl mar10" style="width:145px;height:45px;line-height:45px;padding-left:10px;border:1px solid #eaeaea;background:#f8f8f8;border-radius:3px">
-                            <input type="radio" class="fl mar10 mat15" name="order_payment" id="wechat" value="wechat" />
-                            <span class="fl"><img src="http://www.phpshe.com/demo/phpshe/include/plugin/payment/wechat/logo.png" class="mat8" /></span>
                             <div class="clear"></div>
                         </label>
                     </td>
@@ -61,9 +55,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <input type="hidden" name="pe_token" value="08f3b9a67fe3e3618753aae425b2b46d" />
-                        <input type="hidden" name="pesubmit" />
-                        <input type="button" value="提 交"  class="tjbtn" />
+                        <input type="submit" value="提 交"  class="tjbtn" />
                     </td>
                 </tr>
             </table>

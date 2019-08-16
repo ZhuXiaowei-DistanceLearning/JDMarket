@@ -35,6 +35,13 @@
 
     <!-- 锁定版本 -->
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.3.0.ALL</version>
+        </dependency>
+
         <!-- fastJSON -->
         <dependency>
             <groupId>com.alibaba</groupId>

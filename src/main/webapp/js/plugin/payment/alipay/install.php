@@ -1,6 +1,6 @@
 <?php
 $config['name'] = '支付宝';
-$config['type'] = 'alipay';
+$config['type'] = 'com.alipay';
 $config['desc'] = '即时到帐接口，买家交易金额直接转入卖家支付宝账户';
 //$config['model']['alipay_name']['name'] = '支付宝账户';
 //$config['model']['alipay_name']['type'] = 'text';

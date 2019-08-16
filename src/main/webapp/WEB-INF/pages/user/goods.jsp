@@ -25,8 +25,8 @@
     <div class="fr huiyuan_main">
         <div class="hy_tt">
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}"
-               class="sel">全部订单<span>(${fn:length(orders)})</span><i></i></a> |
-            <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待付款<span>(${waitPay})</span><i></i></a>
+               class="sel">全部订单<span>(${fn:length(ordersOfSell)})</span><i></i></a> |
+          <%--  <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待付款<span>(${waitPay})</span><i></i></a>
             |
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">待发货<span>(${waitSend})</span><i></i></a>
             |
@@ -34,7 +34,7 @@
             |
             <a href="<%=basePath%>orders_findStateByOrder?id=${items.orderState}">交易完成<span>(${finish})</span><i></i></a>
             |
-            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj">待评价<span>(0)</span><i></i></a>
+            <a href="http://www.phpshe.com/demo/phpshe/user.php?mod=order&state=wpj">待评价<span>(0)</span><i></i></a>--%>
         </div>
         <div class="mat15">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_ordertt1">
@@ -90,6 +90,9 @@
                         </c:if>
                         <c:if test="${item.orderState==3}">
                             <span class="corg">已完成</span>
+                        </c:if>
+                        <c:if test="${item.orderState==4}">
+                            <span class="corg">买家已取消</span>
                         </c:if>
                         <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
                     </td>

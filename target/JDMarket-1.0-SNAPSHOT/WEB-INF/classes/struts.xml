@@ -148,10 +148,10 @@
             <result name="ok" type="redirectAction">catelog_getCatelog.action?page=1&amp;rows=10</result>
         </action>
         <action name="page_*_*" class="pageController">
-            <result name="success" type="redirectAction">redirect_{1}_{2}.action</result>
-        </action>
-        <action name="redirect_*_*">
             <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
         </action>
+      <!--  <action name="redirect_*_*">
+            <result name="success">/WEB-INF/pages/{1}/{2}.jsp</result>
+        </action>-->
     </package>
 </struts>

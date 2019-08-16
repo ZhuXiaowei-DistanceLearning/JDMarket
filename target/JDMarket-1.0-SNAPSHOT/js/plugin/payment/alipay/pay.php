@@ -10,9 +10,9 @@
  *************************注意*****************
  
  *如果您在接口集成过程中遇到问题，可以按照下面的途径来解决
- *1、开发文档中心（https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.KvddfJ&treeId=62&articleId=103740&docType=1）
- *2、商户帮助中心（https://cshall.alipay.com/enterprise/help_detail.htm?help_id=473888）
- *3、支持中心（https://support.open.alipay.com/alipay/support/index.htm）
+ *1、开发文档中心（https://doc.open.com.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.KvddfJ&treeId=62&articleId=103740&docType=1）
+ *2、商户帮助中心（https://cshall.com.alipay.com/enterprise/help_detail.htm?help_id=473888）
+ *3、支持中心（https://support.open.com.alipay.com/com.alipay/support/index.htm）
 
  *如果想使用扩展功能,请按文档要求,自行添加到parameter数组即可。
  **********************************************
@@ -20,7 +20,7 @@
 
 include('../../../../common.php');
 pe_lead('hook/order.hook.php');
-require_once("alipay.config.php");
+require_once("com.alipay.config.php");
 require_once("lib/alipay_submit.class.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -65,7 +65,7 @@ $parameter = array(
 	"total_fee"	=> $total_fee,
 	"body"	=> $body,
 	"_input_charset"	=> trim(strtolower($alipay_config['input_charset']))
-	//其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.kiX33I&treeId=62&articleId=103740&docType=1
+	//其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.com.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.kiX33I&treeId=62&articleId=103740&docType=1
     //如"参数名"=>"参数值"
 );
 if ($pe['mobile']) $parameter['app_pay'] = 'Y';

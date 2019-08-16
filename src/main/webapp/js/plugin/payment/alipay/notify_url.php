@@ -16,7 +16,7 @@
  */
 include('../../../../common.php');
 pe_lead('hook/order.hook.php');
-require_once("alipay.config.php");
+require_once("com.alipay.config.php");
 require_once("lib/alipay_notify.class.php");
 
 //计算得出通知验证结果
@@ -29,7 +29,7 @@ if ($verify_result) {
 	//支付宝交易号
 	$order_outid = pe_dbhold($_POST['trade_no']);
     if ($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
-		order_callback_pay($order_id, $order_outid, 'alipay');
+		order_callback_pay($order_id, $order_outid, 'com.alipay');
     }     
 	echo "success";		//请不要修改或删除
 }

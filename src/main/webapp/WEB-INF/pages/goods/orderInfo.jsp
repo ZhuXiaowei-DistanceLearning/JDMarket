@@ -72,7 +72,7 @@
                     </li>
                     <li class="js_radio">
                         <label for="order_payment_alipay">
-                            <input type="radio" name="orderPayment" value="alipay" id="order_payment_alipay"
+                            <input type="radio" name="orderPayment" value="com.alipay" id="order_payment_alipay"
                                    style="display:none"/>
                             <img src="http://www.phpshe.com/demo/phpshe/include/plugin/payment/alipay/logo.png"
                                  class="fl"/>

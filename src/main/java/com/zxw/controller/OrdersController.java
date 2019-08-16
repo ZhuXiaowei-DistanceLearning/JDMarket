@@ -76,6 +76,7 @@ public class OrdersController extends BaseController<Orders> {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         Orders orders = getModel();
+        orders.setId(0);
         orders.setUserId(user.getId());
         orders.setOrderState(0);
         orders.setOrderDate(sdf.format(new Date()));
@@ -126,9 +127,9 @@ public class OrdersController extends BaseController<Orders> {
         Goods goods = goodsService.queryGoodsByPrimaryKey(getModel().getGoodsId());
         orders.setOrderPrice(getModel().getOrderPrice());
         // 更新用户余额
-        purseService.updatePurseOfDel(user.getId(),getModel().getOrderPrice());
+        purseService.updatePurseOfDel(user.getId(), getModel().getOrderPrice());
         // 更新商品状态信息
-        goodsService.updateGoodsInfo(goods.getId(),goods.getStatus());
+        goodsService.updateGoodsInfo(goods.getId(), goods.getStatus());
         // 更新订单状态
         orders.setOrderPtime(sdf.format(new Date()));
         ordersService.updateDeliverInfo(orders.getOrderNum());
@@ -151,7 +152,7 @@ public class OrdersController extends BaseController<Orders> {
     /**
      * 去付款
      */
-    public String goPay(){
+    public String goPay() {
         User user = (User) ServletActionContext.getRequest().getSession().getAttribute("cur_user");
         Purse purse = purseService.queryByUserId(user.getId());
         Orders orders = ordersService.findById(getModel().getId());
@@ -186,4 +187,10 @@ public class OrdersController extends BaseController<Orders> {
         return "orderInfo";
     }
 
+    public String cancelOrder() {
+        ordersService.cancelOrder(getModel().getId());
+        goodsService.cancelGoods(getModel().getGoodsId(),1);
+        writePageBean2Json("success");
+        return NONE;
+    }
 }

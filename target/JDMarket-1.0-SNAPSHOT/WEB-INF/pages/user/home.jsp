@@ -50,7 +50,7 @@
                             上次登录时间：<%
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             String date = sdf.format(new Date());
-                            %>
+                        %>
                             <%=date%>
                         </p>
                     </div>
@@ -75,8 +75,8 @@
                     <div>积分余额：<a href="user.php?mod=pointlog" class="c999">10 个</a></div>
                 </div>
                 <div class="u_ye_r">
-                    <a href="user.php?mod=pay">充值</a>
-                    <a href="user.php?mod=cashout&act=add" class="btntx">提现</a>
+                    <a href="<%=basePath%>/purse_getMoney">充值</a>
+                    <a href="<%=basePath%>/purse_getMoney" class="btntx">提现</a>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -101,7 +101,8 @@
                     <tr>
                         <td style="text-align:left;">
                             <div class="dingdan_list" style="padding-top:0;border-top:0">
-                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" class="fl mar5 dingdan_img"
+                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}"
+                                   class="fl mar5 dingdan_img"
                                    target="_blank"><img
                                         src="<%=basePath%>/upload/${item.imgUrl}"/></a>
                                 <div class="fl dingdan_name">
@@ -129,16 +130,24 @@
                                 <span class="corg">等待发货</span>
                             </c:if>
                             <c:if test="${item.orderState==2}">
+                                <span class="corg">等待收货</span>
+                            </c:if>
+                            <c:if test="${item.orderState==3}">
                                 <span class="corg">已完成</span>
                             </c:if>
-                            <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
+                            <c:if test="${item.orderState==4}">
+                                <span class="corg">已取消</span>
+                            </c:if>
+                            <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a>
+                            </p>
                         </td>
                         <td width="100">
                             <c:choose>
                                 <c:when test="${item.orderState==0}">
-                                    <a class="tag_org" href="<%=basePath%>/orders_goPay?id=${item.id}&goodsId=${item.goods.id}">立即付款</a>
+                                    <a class="tag_org"
+                                       href="<%=basePath%>/orders_goPay?id=${item.id}&goodsId=${item.goods.id}">立即付款</a>
                                     <p class="mat5"><a class="c999"
-                                                       href="<%=basePath%>/focus_clearCart?goodsId=${item.goods.id}">取消订单</a>
+                                                       onclick="cancle(${item.id},${item.goods.id})">取消订单</a>
                                     </p>
                                 </c:when>
                                 <c:when test="${item.orderState==1}">
@@ -149,6 +158,9 @@
                                 </c:when>
                                 <c:when test="${item.orderState==3}">
                                     <span class="tag_org">订单已完成</span>
+                                </c:when>
+                                <c:when test="${item.orderState==4}">
+                                    <span class="tag_org">订单已取消</span>
                                 </c:when>
                             </c:choose>
                         </td>
@@ -169,7 +181,8 @@
                     <tr>
                         <td style="text-align:left;">
                             <div class="dingdan_list" style="padding-top:0;border-top:0">
-                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}" class="fl mar5 dingdan_img"
+                                <a href="<%=basePath%>/goods_queryGoodsById?id=${item.goods.id}"
+                                   class="fl mar5 dingdan_img"
                                    target="_blank"><img
                                         src="<%=basePath%>/upload/${item.imgUrl}"/></a>
                                 <div class="fl dingdan_name">
@@ -202,7 +215,11 @@
                             <c:if test="${item.orderState==3}">
                                 <span class="corg">已完成</span>
                             </c:if>
-                            <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a></p>
+                            <c:if test="${item.orderState==4}">
+                                <span class="corg">已取消</span>
+                            </c:if>
+                            <p><a href="<%=basePath%>/user_orderInfo?goodsId=${item.goods.id}" target="_blank">订单详情</a>
+                            </p>
                         </td>
                         <td width="100">
                             <c:if test="${item.orderState==0}">
@@ -217,6 +234,9 @@
                             </c:if>
                             <c:if test="${item.orderState==3}">
                                 <p class="tag_org">已完成</p>
+                            </c:if>
+                            <c:if test="${item.orderState==4}">
+                                <p class="tag_org">买家已取消</p>
                             </c:if>
                         </td>
                     </tr>
@@ -258,6 +278,21 @@
         $("body,html").animate({"scrollTop": 0});
     }
     pe_loadscript("http://www.phpshe.com/demo/phpshe/api.php?mod=cron");
+</script>
+<script type="text/javascript">
+    function cancle(id, goodsId) {
+        $.ajax({
+            url: "<%=basePath%>/orders_cancelOrder?id=" + id + "&goodsId=" + goodsId,
+            type: "get",
+            success: function (data) {
+                window.location.reload();
+            }, error: function (data) {
+                if (data.responseText == "success") {
+                    window.location.reload();
+                }
+            }
+        })
+    }
 </script>
 </div>
 </div>
